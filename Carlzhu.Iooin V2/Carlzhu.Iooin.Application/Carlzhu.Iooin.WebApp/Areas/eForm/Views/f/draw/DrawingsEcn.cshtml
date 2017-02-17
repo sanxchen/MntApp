@@ -1,0 +1,20 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.draw.FormDrawingsEcn
+@{
+    Layout = "/Areas/eForm/Views/f/formLayout/_DrawingBaseEdit.cshtml";
+}
+<tr>
+    <td>@Html.LabelFor(model => model.ProductNo)</td>
+    <td>@Html.TextBoxFor(model => model.ProductNo)</td>
+    <td>@Html.ValidationMessageFor(model => model.ProductNo)</td>
+    <td>@Html.LabelFor(model => model.ProductName)</td>
+    <td>@Html.TextBoxFor(model => model.ProductName)</td>
+    <td>@Html.ValidationMessageFor(model => model.ProductName)</td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.EcnNo)</td>
+    <td>@Html.TextBoxFor(model => model.EcnNo)</td>
+    <td>@Html.ValidationMessageFor(model => model.EcnNo)</td>
+    <td>@Html.LabelFor(model => model.PublishEmp)</td>
+    <td>@Html.TextBoxFor(model => model.PublishEmp)</td>
+    <td>@Html.ValidationMessageFor(model => model.PublishEmp)</td>
+</tr>

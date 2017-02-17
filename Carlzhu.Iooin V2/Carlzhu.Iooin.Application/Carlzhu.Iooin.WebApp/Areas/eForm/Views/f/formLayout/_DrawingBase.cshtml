@@ -1,0 +1,39 @@
+﻿@using Carlzhu.Iooin.Entity.FORM
+@using Carlzhu.Iooin.Framework.Data.Repository
+@model Carlzhu.Iooin.Entity.FORM.f.draw.DrawingsBase
+
+
+<tr>
+    <th>@Html.LabelFor(model => model.Customer.CustomerName)</th>
+    <td>@(new Carlzhu.Iooin.Business.TpaModule.TpaCustomerBll().GetCustomerNameByNo(Model.CustomerNo))</td>
+
+    <th>@Html.LabelFor(model => model.PageSize)</th>
+    <td>@Html.DisplayTextFor(model => model.PageSize)</td>
+</tr>
+<tr>
+    <th>@Html.LabelFor(model => model.DrawVer)</th>
+    <td>@Html.DisplayTextFor(model => model.DrawVer)</td>
+
+    <th>@Html.LabelFor(model => model.Reason)</th>
+    <td>@Html.DisplayTextFor(model => model.Reason)</td>
+
+</tr>
+<tr>
+    <th>@Html.LabelFor(model => model.FileGroup)</th>
+    <td colspan="3">
+        @foreach (var file in new Carlzhu.Iooin.Business.BaseModule.FilesFileGroupBll().GetFileListByGroupGuid(Model.FileGroup))
+        {
+            var ff = DataFactory.Database().FindEntity<Files>(file.Md5);
+
+            @Html.Partial("~/Areas/eForm/Views/F/formLayout/_FileDetails.cshtml", ff);
+        }
+    </td>
+</tr>
+
+<tr><td colspan="4"><hr /></td></tr>
+@RenderBody()
+
+
+
+
+

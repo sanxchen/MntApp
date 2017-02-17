@@ -1,0 +1,77 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.Form
+@{
+    ViewBag.Title = "编辑表单-" + Model.FormNo;
+    Layout = "../Shared/_Bpm.cshtml";
+}
+<link href="~/Content/Bpm.css" rel="stylesheet" />
+<div class="template">
+    <div class="memubar" id="savememu">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default" hreflang="Save"><i class="glyphicon glyphicon-floppy-saved"></i>保存</button>
+            <button type="button" class="btn btn-default" hreflang="Cancel"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+        </div>
+    </div>
+    <div class="content" id="printarea">
+        <div class="form">
+            @using (Html.BeginForm("EditForm", "F", FormMethod.Post, new { id = "cctv", enctype = "multipart/form-data" }))
+            {
+                @Html.HiddenFor(model=>model.FormId)
+                @Html.HiddenFor(model=>model.FormNo)
+                //Ting
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+                <input type="submit" value="保存" id="submit"  style="display:none" />
+
+                <div class="formname">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>
+                                <small>[Form @Model.FormId.ToString().PadLeft(3, '0')]</small>&nbsp; @(Model.FormType.FormName)申请单
+                                <input type="checkbox" name="isemergents" style="margin-top: 3px;" title="急"/>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="applyinfo">
+                    <div class="row">
+                        <div class="col-md-3"><span>表单号：</span>@Model.FormNo</div>
+                        <div class="col-md-3"><span>申请人：</span>@string.Format("{0}/{1}", Model.BaseEmployee.BaseDepartment.DepartmentId, Model.BaseEmployee.BaseDepartment.FullName)</div>
+                        <div class="col-md-3"><span>申请部门：</span>@string.Format("{0}/{1}", Model.BaseEmployee.EmpNo, Model.BaseEmployee.RealName)</div>
+                        <div class="col-md-3"><span>申请时间：</span>@Model.CreateTime</div>
+                    </div>
+                </div>
+                <div class="formbody">
+                    <div>
+                        <table class="table table-bordered table-condensed @(Model.FormType.IsModel ? "model" : "list")">
+                            @*@Html.Action("EditForm", "F", new { formNo = Model.FormNo })*@
+                            @Html.Action("FormComm", "F", new { formNo = Model.FormNo, method = "Edit" })
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $("#FileGroup").click(function() {
+            UpFile("#FileGroup", 3, "@(Model.FormType.AllowFileType)", "@(Model.FormType.ReqFileExp)");
+        });
+
+        $("#savememu button").click(function () {
+            var method = $(this).attr("hreflang");
+            switch (method) {
+                case "Save":
+                    $("#submit").click();
+                    break;
+                case "Cancel":
+                    location.reload();
+                    break;
+                default:
+            }
+        });
+    </script>
+}
+

@@ -1,0 +1,49 @@
+﻿@using Carlzhu.Iooin.Business.HrmsModule
+@using Carlzhu.Iooin.Util
+@using Carlzhu.Iooin.Util.MvcHtml
+@model Carlzhu.Iooin.Entity.FORM.f.FormWorkLeave
+<tr>
+    <td>@Html.DisplayNameFor(model => model.EmpNo)</td>
+    @*<td>@Html.DropDownList("EmpNo", new EmployeeBll().GetDepartmentEmployeesByEmpNo(ManageProvider.Provider.Current().UserId, true))</td>*@
+    <td>@Html.DropDownList("EmpNo", new EmployeeBll().GetScopUser())</td>
+    <td>@Html.ValidationMessageFor(model => model.EmpNo)</td>
+    <td>@Html.DisplayNameFor(model => model.Sheet)</td>
+    <td>@Html.EnumDropDownList("Sheet", Carlzhu.Iooin.Entity.FORM.f.FormWorkLeave.SheetEnum.晚班)</td>
+    <td>@Html.ValidationMessageFor(model => model.Sheet)</td>
+</tr>
+<tr>
+    <td>@Html.DisplayNameFor(model => model.StartTime)</td>
+    <td>@Html.TextBoxFor(model => model.StartTime, null, new { CLASS = "datetimepicker", READONLY = "readonly" })</td>
+    <td>@Html.ValidationMessageFor(model => model.StartTime)</td>
+
+    <td>@Html.DisplayNameFor(model => model.EndTime)</td>
+    <td>@Html.TextBoxFor(model => model.EndTime, null, new { CLASS = "datetimepicker", READONLY = "readonly" })</td>
+    <td>@Html.ValidationMessageFor(model => model.EndTime)</td>
+</tr>
+
+<tr>
+    <td>@Html.DisplayNameFor(model => model.LeaveType)</td>
+    <td>@Html.EnumDropDownList("LeaveType", Carlzhu.Iooin.Entity.FORM.f.FormWorkLeave.LeaveTypEnum.事假, new int[] { 6, 7 })</td>
+    <td>@Html.ValidationMessageFor(model => model.LeaveType)</td>
+    <td>@Html.DisplayNameFor(model => model.SumTime)</td>
+    <td>@Html.TextBoxFor(model => model.SumTime, null, new { @readonly = "READONLY" })&nbsp;<span class="pull-right text-info">[注]预估计间，请以考勤为准</span></td>
+    <td>@Html.ValidationMessageFor(model => model.SumTime)</td>
+
+</tr>
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#SumTime").click(function () {
+            var emp = $("#EmpNo").val();
+            var start = $("#StartTime").val();
+            var end = $("#EndTime").val();
+
+            $.post("/hrms/attendnce/EstimateRestTime", { empNo: emp, startTime: start, endTime: end }, function (data) {
+                $("#SumTime").val(data);
+            });
+        });
+
+    });
+
+</script>

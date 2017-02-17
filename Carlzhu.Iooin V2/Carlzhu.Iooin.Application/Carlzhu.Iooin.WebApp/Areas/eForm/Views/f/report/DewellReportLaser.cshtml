@@ -1,0 +1,29 @@
+﻿@using Carlzhu.Iooin.Entity.FORM
+@using Carlzhu.Iooin.Entity.FORM.f
+@using Carlzhu.Iooin.Entity.FORM.f.report
+@model IEnumerable<Carlzhu.Iooin.Entity.FORM.f.report.FormDewellReportLaser>
+@{
+    var t = (List<FormDewellReportLaser>)Model;
+    
+
+}
+
+
+
+@Html.Partial("/Areas/eForm/Views/f/formLayout/report/_editHeader.cshtml", new ViewDataDictionary() { { "Model", t.FirstOrDefault() } })
+
+<tr>
+    @Html.Partial("/Areas/eForm/Views/f/formLayout/report/_editCommTh.cshtml", new Carlzhu.Iooin.Entity.FORM.f.report.FormDewellReport())
+        @*my*@
+
+
+        <th>@Html.DisplayNameFor(model => model.ShutdownReason)</th>
+        <th>@Html.DisplayNameFor(model => model.DownTime)</th>
+        <th>@Html.DisplayNameFor(model => model.RunningSpeed)</th>
+        <th>@Html.DisplayNameFor(model => model.DeckNo)</th>
+
+
+    </tr>
+
+
+@Html.Partial("/Areas/eForm/Views/f/formLayout/report/_editBody.cshtml", new ViewDataDictionary() { { "Method", ViewBag.FormType }, { "Model", t } })

@@ -1,0 +1,73 @@
+﻿
+@model Carlzhu.Iooin.Entity.FORM.f.FormTransactionDepartment
+
+<tr style="display: none;">
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td colspan="6" class="text-danger">@Html.Label("异动类型")</td>
+</tr>
+<tr style="height: 40px;">
+    <td colspan="6">
+        <div class=""></div>
+    </td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.TransactionEmp)</td>
+    <td>@Html.TextBoxFor(model => model.TransactionEmp)</td>
+    <td>@Html.ValidationMessageFor(model => model.TransactionEmp)</td>
+    <td>@Html.LabelFor(model => model.EnableDateTime)</td>
+    <td>@Html.TextBoxFor(model => model.EnableDateTime, new { @class = "datepicker", @readonly = "readonly" })</td>
+    <td>@Html.ValidationMessageFor(model => model.EnableDateTime)</td>
+</tr>
+<tr>
+    <td colspan="6" class="text-danger">@Html.Label("现部门信息")</td>
+</tr>
+<tr style="height: 80px;">
+    <td colspan="6">
+        <div class="">
+            
+        </div>
+    </td>
+</tr>
+<tr>
+    <td colspan="6" class="text-danger">@Html.Label("转调后部门信息")</td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.AfterDepart)</td>
+    <td>@Html.TextBoxFor(model => model.AfterDepart)</td>
+    <td>@Html.ValidationMessageFor(model => model.AfterDepart)</td>
+    <td>@Html.LabelFor(model => model.AfterPosition)</td>
+    <td>@Html.TextBoxFor(model => model.AfterPosition)</td>
+    <td>@Html.ValidationMessageFor(model => model.AfterPosition)</td>
+</tr>
+<tr>
+    <td>Hello</td>
+    <td colspan="5">
+        <input id="ParentName" type="text" class="txt icontree"/>
+    </td>
+</tr>
+
+<script type="text/javascript">
+    $(function () {
+        $("#ParentName").focus(function () {
+            var objId = this.id;
+            comboBoxTree(objId, "150px");
+            var itemtree = {
+                onnodeclick: function (item) {
+                    //$("#ParentId").val(item.id);
+                    //$('#ParentName').val(item.text);
+                },
+                url: "@Url.Content("~/CommonModule/Department/TreeJson2")"
+            };
+            var ele = $("#comboBoxTree" + objId);
+            ele.height = 100;
+            ele.treeview(itemtree);
+        });
+    });
+</script>

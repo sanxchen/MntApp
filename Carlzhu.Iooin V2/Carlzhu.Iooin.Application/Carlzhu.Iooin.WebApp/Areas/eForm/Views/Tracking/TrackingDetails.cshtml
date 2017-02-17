@@ -1,0 +1,75 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.Form
+@{
+    ViewBag.Title = "表单详情-" + Model.FormNo;
+    Layout = "../Shared/_Bpm.cshtml";
+}
+
+<ol class="breadcrumb">
+    <li>@Html.RouteLink("Flow", new { Controller = "Applying", Action = "Index", area = "eForm" }, null)</li>
+    <li>@Html.RouteLink("追寻表单", new { Controller = "Tracking", Action = "Applyed", area = "eForm" }, null)</li>
+    <li>@Html.Raw(ViewBag.RequestType)</li>
+    <li class="disabled">@Model.FormNo</li>
+</ol>
+
+<div class="template">
+    <div class="memubar">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default" hreflang="print"><i class="glyphicon glyphicon-print"></i>打印</button>
+            <button type="button" class="btn btn-default" hreflang="Exit"><i class="glyphicon glyphicon-log-out"></i>离开</button>
+        </div>
+    </div>
+
+    <div class="content" id="printarea">
+        <div class="form">
+            <div class="formname">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>
+                            <small>[Form @Model.FormId.ToString().PadLeft(3, '0')]</small>&nbsp; @(Model.FormType.FormName)申请单
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="applyinfo">
+                <div class="row">
+                    <div class="col-md-3"><span>表单号：</span>@Model.FormNo</div>
+                    <div class="col-md-3"><span>申请人：</span>@string.Format("{0}/{1}", Model.BaseEmployee.EmpNo, Model.BaseEmployee.RealName)</div>
+                    <div class="col-md-3"><span>申请部门：</span>@string.Format("{0}/{1}", Model.BaseEmployee.BaseDepartment.DepartmentId, Model.BaseEmployee.BaseDepartment.FullName)</div>
+                    <div class="col-md-3"><span>申请时间：</span>@Model.CreateTime</div>
+                </div>
+            </div>
+            <div>
+                @Html.Partial("~/Areas/eForm/Views/FormComm/FormBody.cshtml", Model)
+            </div>
+        </div>
+
+        <div class="signrecords">
+            <div class="panel panel-info">
+                <div class="panel-head text-center">签核记录</div>
+                <div class="panel-body">
+                    @Html.Action("GetSignRecoredsByFormNo", "Signing", new { formNo = Model.FormNo })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(".memubar button").click(function () {
+        switch ($(this).attr("hreflang")) {
+            case "print":
+                $("#layout_head,.breadcrumb,.memubar,.copyright").css("display", "none");
+                window.print();
+                $("#layout_head,.breadcrumb,.memubar,.copyright").css("display", "");
+                break;
+            case "Exit":
+                location.href = '@Url.Action("Index", "Tracking", new {area = "eForm"})';
+                break;
+            default:
+        }
+    });
+
+</script>

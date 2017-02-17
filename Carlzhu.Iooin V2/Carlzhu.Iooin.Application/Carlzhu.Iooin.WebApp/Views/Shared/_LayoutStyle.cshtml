@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--IE兼容模式-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="icon" href="/Content/Images/favicon.ico">
+
+    <title>@(" - " + ViewBag.Title)</title>
+
+    @Styles.Render("~/carlzhu/defaultStyles/")
+    @Scripts.Render("~/carlzhu/defaultScripts/")
+
+    <style type="text/css">
+        #top {
+            height: 6px;
+            border: 1px solid #8b0000;
+            background-color: #8b0000;
+            font-family: "微软雅黑";
+        }
+    </style>
+</head>
+<body>
+    <div class="layoutcontent">
+        <section id="top"></section>
+        @RenderBody()
+    </div>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

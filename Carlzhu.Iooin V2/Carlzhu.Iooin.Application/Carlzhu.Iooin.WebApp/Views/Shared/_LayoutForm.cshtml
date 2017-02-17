@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <!--框架必需start-->
+    <link href="~/Content/framework.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="~/Scripts/framework.js"></script>
+    <!--框架必需end-->
+    <!--树形组件start-->
+    <link href="~/Scripts/framework/tree/tree.css" rel="stylesheet" />
+    <script src="~/Scripts/framework/tree/tree.js"></script>
+    <!--树形组件end-->
+    <!--日期组件start-->
+    <script src="~/Scripts/framework/datepicker/WdatePicker.js"></script>
+    <!--日期组件start-->
+    <!--表单验证组件start-->
+    <script src="~/Scripts/framework/validator/validator.js"></script>
+    <!--表单验证组件end-->
+    <!--布局组件start-->
+    <script src="~/Scripts/framework/layout/splitter.js"></script>
+    <!--布局组件end-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Loadlayout();
+        });
+    </script>
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>

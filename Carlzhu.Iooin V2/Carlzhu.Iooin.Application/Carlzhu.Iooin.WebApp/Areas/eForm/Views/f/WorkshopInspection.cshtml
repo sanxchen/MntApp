@@ -1,0 +1,41 @@
+﻿
+@model Carlzhu.Iooin.Entity.FORM.f.FormWorkshopInspection
+
+<tr>
+    <td>@Html.DisplayNameFor(model => model.ManNo)</td>
+    <td>@Html.TextBoxFor(model => model.ManNo)</td>
+    <td>@Html.ValidationMessageFor(model => model.ManNo)</td>
+    <td>@Html.DisplayNameFor(model => model.ProductType)</td>
+    <td>
+        <select name="ProductType">
+            <option value="量产">量产</option>
+            <option value="打样">打样</option>
+        </select>
+    </td>
+    <td>@Html.ValidationMessageFor(model => model.ProductType)</td>
+</tr>
+
+<tr>
+    <td>@Html.DisplayNameFor(model => model.ProductNo)</td>
+    <td>@Html.TextBoxFor(model => model.ProductNo)</td>
+    <td>@Html.ValidationMessageFor(model => model.ProductNo)</td>
+    <td>@Html.DisplayNameFor(model => model.Engineering)</td>
+    <td>@Html.TextBoxFor(model => model.Engineering)</td>
+    <td>@Html.ValidationMessageFor(model => model.Engineering)</td>
+</tr>
+
+<tr>
+    <td>@Html.DisplayNameFor(model => model.Machine)</td>
+    <td>@Html.TextBoxFor(model => model.Machine)</td>
+    <td>@Html.ValidationMessageFor(model => model.Machine)</td>
+    <td>@Html.DisplayNameFor(model => model.TransferMachine)</td>
+    <td>@Html.TextBoxFor(model => model.TransferMachine)</td>
+    <td>@Html.ValidationMessageFor(model => model.TransferMachine)</td>
+</tr>
+
+<tr>
+    <td>@Html.DisplayNameFor(model => model.SendUser)</td>
+    <td>@Html.TextBoxFor(model => model.SendUser)</td>
+    <td>@Html.ValidationMessageFor(model => model.SendUser)</td>
+    <td></td><td></td><td></td>
+</tr>

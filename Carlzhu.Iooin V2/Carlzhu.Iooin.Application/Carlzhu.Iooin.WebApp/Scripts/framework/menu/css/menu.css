@@ -1,0 +1,108 @@
+
+
+/* Main Menu */
+/*-----------------------------------*/
+
+/* Level 0 */
+.menu {
+    z-index: 1000;
+    margin: 15px auto;
+}
+
+.ie8 .menu {
+}
+/* IE8 understands dropdown feature only without gradient */
+.menu a:hover, .menu a.hover {
+    color: #444 !important;
+}
+
+.menu li {
+    position: relative;
+}
+
+.menu > li {
+    float: left;
+    width: 16.666666666666664%;
+    /*border-top: 1px solid #d1cccc;*/
+}
+
+    .menu > li:hover, .menu > li.hover {
+        /*border-top-color: #d1cccc;*/
+        z-index: 1;
+    }
+
+    .menu > li > a {
+        display: block;
+        font-size: 10px;
+        color: #444;
+        text-align: center;
+        text-transform: uppercase;
+        line-height: 18px;
+        padding: 0px 5px;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+
+
+    .menu > li:hover > a,
+    .menu > li.hover > a {
+        color: #444;
+        text-decoration: none;
+    }
+
+.menu-icon {
+    display: block;
+    width: 32px;
+    height: 32px;
+    margin: 0 auto 5px;
+    background: url(../images/icons/menu-icons.png) 0 0 no-repeat;
+}
+
+
+
+.menu-icon-2 {
+    background-position: 0 -30px;
+}
+
+.menu-icon-3 {
+    background-position: 0 -60px;
+}
+
+.menu-icon-4 {
+    background-position: 0 -90px;
+}
+
+.menu-icon-5 {
+    background-position: 0 -120px;
+}
+
+.menu-icon-6 {
+    background-position: 0 -150px;
+}
+
+
+
+.menu > li:hover > a .menu-icon, .menu > li.hover > a .menu-icon {
+    background-position: -30px 0;
+}
+
+.menu > li:hover > a .menu-icon-2, .menu > li.hover > a .menu-icon-2 {
+    background-position: -30px -30px;
+}
+
+.menu > li:hover > a .menu-icon-3, .menu > li.hover > a .menu-icon-3 {
+    background-position: -30px -60px;
+}
+
+.menu > li:hover > a .menu-icon-4, .menu > li.hover > a .menu-icon-4 {
+    background-position: -30px -90px;
+}
+
+.menu > li:hover > a .menu-icon-5, .menu > li.hover > a .menu-icon-5 {
+    background-position: -30px -120px;
+}
+
+.menu > li:hover > a .menu-icon-6, .menu > li.hover > a .menu-icon-6 {
+    background-position: -30px -150px;
+}

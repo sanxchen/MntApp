@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "旧文件导入";
+    Layout = "../Shared/_eSystem.cshtml";
+}
+
+<style type="text/css">
+    td label {
+        height: 22px;
+        line-height: 22px;
+    }
+
+    .col-md-6 {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<ol class="breadcrumb">
+    <li>@Html.RouteLink("eSystem",   new { Controller = "Home", Action = "Index" ,area="eSystem"}, null)</li>
+    <li class="active">@Html.RouteLink("旧版本导入",  new { Controller = "Pdm", Action = "OldImport" ,area="eSystem"}, null)</li>
+</ol>
+<div class="col-md-6">
+    <div class="panel panel-info">
+        <div class="panel-heading">旧版本导入<span class="pull-right">@Html.ActionLink("模版下载", "PublishedTemplate", "Download", null, new { TITLE = "下载导入模版" })</span></div>
+        <div class="panel-body">
+            <div>
+                <ul class="list-group text-danger">
+                    <li class="list-group-item">1.请不要修改导入模版中的Sheet名与字段顺序</li>
+                    <li class="list-group-item">2.模版中所涉及项均为必填项，缺填将导致导入失败</li>
+                    <li class="list-group-item">3.导入中有日期字段，请保证格式为yyyy-mm-dd,否决系统可能识别错误</li>
+                </ul>
+            </div>
+
+            <div>
+                <div class="input-group">
+                    <span class="input-group-addon">导入文件</span>
+                    @Html.TextBox("FileGroup", null, new { READONLY = "READONLY", placeholder = "点击上传文件", title = "点击上传文件", CLASS = "form-control" })
+                    @Html.DropDownList("sheet", new List<SelectListItem>()
+                    {
+                        new SelectListItem {Text = "BOM",Value = "BOM"},
+                        new SelectListItem {Text = "SOP",Value = "SOP"},
+                        new SelectListItem {Text = "包装工艺卡",Value = "包装工艺卡"},
+                        new SelectListItem {Text = "工艺流程图",Value = "工艺流程图"},
+                        new SelectListItem {Text = "检规指导书",Value = "检规指导书"},
+                        new SelectListItem {Text = "客户图纸",Value = "客户图纸"},
+                        new SelectListItem {Text = "内部图纸",Value = "内部图纸"},
+                        new SelectListItem {Text = "内部型材图",Value = "内部型材图"},
+                        new SelectListItem {Text = "外来文件",Value = "外来文件"},
+                        new SelectListItem {Text = "ECN",Value = "ECN"},
+                        new SelectListItem {Text = "控制计划",Value = "控制计划"},
+                    }, null, new { CLASS = "form-control" })
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-footer">
+            <input type="button" class="btn  btn-block btn-default" value="导入" id="import" />
+        </div>
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+
+    $("#FileGroup").click(function () {
+        UpFile("#FileGroup", 1, "xls",null);
+    });
+
+
+
+    $("#import").click(function () {
+        var fileGroup = $("#FileGroup").val();
+        if (fileGroup == "")
+            rightCornerMsg("请先进行文件上传！！！！", "error");
+        else {
+            jConfirm("确认导入数据?", "友情提醒", function (e) {
+                if (e) {
+                    $.ajaxLoading({
+                        url: '@Url.Action("OldImport", "Pdm")',
+                        data: { fileGroup: fileGroup, sheet: $("#sheet").val() },
+                        loadingdata: "数据正在导入中，请勿刷新或关闭。",
+                        success: function (result) {
+                            alert(result);
+                        }
+                    });
+                }
+            });
+        }
+    });
+
+</script>

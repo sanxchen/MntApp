@@ -1,0 +1,83 @@
+﻿
+
+<body onbeforeunload="PageClose()" onselectstart="return false;" style="-moz-user-select: none; overflow: hidden;">
+    <div id="ajax-loader" style="cursor: progress; position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; background: #fff; z-index: 100; overflow: hidden;">
+        <img src="/Content/Images/ajax-loader.gif" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto;" />
+    </div>
+    <!-- header -->
+    <div class="header">
+        <div class="logo fleft">
+         
+        </div>
+        <div id="Headermenu">
+            <ul id="topnav">
+                <li id="metnav_1" class="list">
+                    <a id="nav_1"  href="/">
+                        <span class="c1"></span>
+                        系统首页
+                    </a>
+                </li>
+               
+            </ul>
+        </div>
+    </div>
+    <div class="taskbarTabs">
+        <div id="navigationtitle">
+            <div id="CurrentTime" style="float: left; padding-left: 12px;"></div>
+            <div disabled style="float: right;" class="btn-nav-toggle">
+                <i></i>
+                <b></b>
+            </div>
+        </div>
+        <div style="float: left">
+            <div id="dww-menu" class="mod-tab">
+                <div class="mod-hd">
+                    <ul id="tabs_container" class="tab-nav"></ul>
+                </div>
+                <input id="ModuleId" type="hidden" />
+            </div>
+            <div class="rightMenu">
+                <ul>
+                    <li onclick="top.frames[tabiframeId()].Replace()">刷新当前</li>
+                    <li onclick="ThisCloseTab()">关闭当前</li>
+                    <li onclick="AllcloseTab()">全部关闭</li>
+                    <li onclick="othercloseTab()">除此之外全部关闭</li>
+                    <div class='m-split'></div>
+                    <li>退出</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="mainPannel">
+        <div class="navigation">
+            <ul id="accordion" class="accordion"></ul>
+        </div>
+        <div id="overlay_navigation"></div>
+        <div id="ContentPannel"></div>
+    </div>
+    <div id="footer" class="cs-south">
+
+        @Html.Action("SwitchFooter", new RouteValueDictionary() { { "footer", Model.ToString() } })
+        <div class="number" style="width: 40%; text-align: center; float: left; line-height: 25px;">
+           @Html.Partial("_CopyRight")
+        </div>
+        <div style="width: 30%; text-align: right; float: right;">
+            <div style="padding-right: 2px;">
+                <div title="在线用户（@HttpContext.Current.Application["OnLineCount"].ToString()）人" class="bottom_icon">
+                    <img src="~/Content/Images/bottom_icon_usergroup.png" />
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <!--载进度条start-->
+
+    <div id="loading_background" class="loading_background" style="display: none;"></div>
+    <div id="loading" onclick="Loading(false);">
+        <img src="/Content/Images/loading.gif" style="vertical-align: middle;" />&nbsp;<span>正在拼了命为您加载…</span>&nbsp;
+    </div>
+    <div id="loadingGird">
+        <img src="/Content/Images/loading.gif" style="vertical-align: middle;" />&nbsp;正在拼了命为您加载…&nbsp;
+    </div>
+</body>

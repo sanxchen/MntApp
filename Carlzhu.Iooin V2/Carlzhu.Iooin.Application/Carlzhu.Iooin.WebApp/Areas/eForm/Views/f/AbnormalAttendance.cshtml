@@ -1,0 +1,55 @@
+﻿@using Carlzhu.Iooin.Entity.FORM.f
+@model Carlzhu.Iooin.Entity.FORM.f.FormAbnormalAttendance
+
+
+<tr>
+    <th>@Html.DisplayNameFor(model => model.EmpNo)</th>
+    <td>@Html.TextBoxFor(model => model.EmpNo)</td>
+    <td>@Html.ValidationMessageFor(model => model.EmpNo)</td>
+    <th>姓名</th>
+    <td id="empinfo"></td>
+    <td></td>
+</tr>
+<tr>
+    <th>@Html.DisplayNameFor(model => model.TimeStart)</th>
+    <td>@Html.TextBoxFor(model => model.TimeStart, null, new { CLASS = "datetimepicker", READONLY = "readonly" })</td>
+    <td>@Html.ValidationMessageFor(model => model.TimeStart)</td>
+
+    <th>@Html.DisplayNameFor(model => model.TimeEnd)</th>
+    <td>@Html.TextBoxFor(model => model.TimeEnd, null, new { CLASS = "datetimepicker", READONLY = "readonly" })</td>
+    <td>@Html.ValidationMessageFor(model => model.TimeStart)</td>
+</tr>
+<tr>
+    <th>@Html.DisplayNameFor(model => model.AbnormalType)</th>
+    <td>@Html.DropDownList("AbnormalType",Carlzhu.Iooin.Util.MvcHtml.SelectListExtendExpress.EnumToList(typeof(FormAbnormalAttendance.TypeEnum)))</td>
+    <td></td>
+    <th>@Html.DisplayNameFor(model => model.TempCard)</th>
+    <td>@Html.TextBoxFor(model => model.TempCard)</td>
+    <td>@Html.ValidationMessageFor(model => model.TempCard)</td>
+</tr>
+
+
+
+
+
+
+<script type="text/javascript">
+    $(function () {
+        var empinfo = $("#empinfo");
+        $("#EmpNo").change(function () {
+            var empNo = $(this).val();
+
+            if (/^\d{7}$/.test(empNo)) {
+                $.post('@Url.Action("SetForm", "Employee",new {area="Hrms"})', { keyValue: empNo }, function (data) {
+                    if (data == "error") {
+                        empinfo.text("查无此人");
+                    } else {
+                        data = eval("(" + data + ")");
+                        empinfo.text(data.DepartmentCode + "/" + data.Name);
+                    }
+
+                });
+            }
+        });
+    })
+</script>

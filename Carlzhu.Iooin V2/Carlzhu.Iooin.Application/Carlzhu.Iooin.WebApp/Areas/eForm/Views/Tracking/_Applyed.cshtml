@@ -1,0 +1,154 @@
+﻿
+@using Carlzhu.Iooin.Business.FormModule
+@using Carlzhu.Iooin.InteractiveAdapter
+@using Webdiyer.WebControls.Mvc
+@model PagedList<Carlzhu.Iooin.Entity.FORM.Form>
+@{
+    var row = ((int)(ViewData["Page"] ?? 1) - 1) * 15;
+}
+
+
+
+<style type="text/css">
+    .toolbar {
+        width: 100px;
+        text-align: center;
+    }
+
+        .toolbar a i {
+            margin: auto 5px;
+        }
+    /*.toolbar a {
+            text-decoration: none;
+            padding: 0 10px;
+            margin: 0 3px;
+        }*/
+</style>
+
+<table class="table table-bordered table-condensed table-responsive">
+    <tr>
+        <th>#</th>
+        <th>@Html.DisplayNameFor(model => model.FormType.FormName)</th>
+        <th style="width: 160px;">@Html.DisplayNameFor(model => model.FormNo)</th>
+        <th style="width: 160px;">@Html.DisplayNameFor(model => model.BaseEmployee.RealName)</th>
+        <th style="width: 160px;">当前签核人</th>
+        <th class="text-center">@Html.DisplayNameFor(model => model.CreateTime)</th>
+        <th class="text-center">@Html.DisplayNameFor(model => model.CloseTime)</th>
+        <th>@Html.DisplayNameFor(model => model.FormStatus)</th>
+        <th>签核进度</th>
+        <th style="text-align:center;">操作</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        var processbar = new Signing().SignProgress(item.FormNo);
+        <tr>
+            <td>@(++row)</td>
+            <td>[@item.FormId]&nbsp;@item.FormType.FormName</td>
+            <td style="width: 100px;"><span><i class="glyphicon glyphicon-eye-open"></i></span> @Html.RouteLink(item.FormNo, new { Action = "Details", Controller = "Tracking", area = "eForm", p = (string.Format("{0},{1}", item.FormNo, "applyed").Encrypt()) }, null) &raquo;</td>
+            <td>@item.BaseEmployee.Account @item.BaseEmployee.RealName</td>
+            <td>
+                @{
+                    if (item.FormStatus == (int)Carlzhu.Iooin.Entity.FORM.Form.StatusEnum.签核中)
+                    {
+                        foreach (var formSign in new Signing().GetCurrentSignEmp(item.FormNo))
+                        {
+                            <p>@string.Format("{0}/{1} {2}", formSign.BaseEmployee.DepartmentId, formSign.BaseEmployee.Account, formSign.BaseEmployee.RealName)</p>
+                        }
+                    }
+
+                }
+            </td>
+            <td class="text-center" style="width: 150px;">@item.CreateTime</td>
+            <td class="text-center" style="width: 150px;">@item.CloseTime</td>
+            <td style="width: 100px;">@(Enum.GetName(typeof(Carlzhu.Iooin.Entity.FORM.Form.StatusEnum), item.FormStatus))</td>
+            <td>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: @processbar%;"></div>
+                </div>
+            </td>
+            <td class="toolbar">
+                @*<i class='glyphicon glyphicon-phone-alt'></i>
+                    <i class='glyphicon glyphicon-flash'></i>
+                    <i class='glyphicon glyphicon-send'></i>
+                    <i class='glyphicon glyphicon-edit'></i>
+                    <i class='glyphicon glyphicon-trash'></i>*@
+
+
+                @Html.Raw(string.Format("{0}{1}{2}",
+                             (item.FormStatus == (int)(Carlzhu.Iooin.Entity.FORM.Form.StatusEnum.未送出) ? "<a class='y send' href='javascript:;' data='" + (string.Format("send,{0}", item.FormNo).Encrypt()) + "' title='送签' ><i class='glyphicon glyphicon-send'></i></a><a class='edit' href='/eForm/Tracking/ApplyOperators?p=" + (string.Format("edit,{0}", item.FormNo).Encrypt()) + "'  title='修改' ><i class='glyphicon glyphicon-edit'></i></a><a class='y del' href='javascript:;' data='" + (string.Format("del,{0}", item.FormNo).Encrypt()) + "' title='删除表单' ><i class='glyphicon glyphicon-trash'></i></a>" : null),
+                             (item.FormStatus == (int)(Carlzhu.Iooin.Entity.FORM.Form.StatusEnum.签核中) ? "<a class='y urge' href='javascript:;' data='" + (string.Format("urge,{0}", item.FormNo).Encrypt()) + "'  title='崔签'><i class='glyphicon glyphicon-phone-alt'></i></a><a class='y cancel' href='javascript:;' data='" + (string.Format("cancel,{0}", item.FormNo).Encrypt()) + "' title='撤消表单' ><i class='glyphicon glyphicon-flash'></i></a>" : null),
+                             (item.FormStatus == (int)(Carlzhu.Iooin.Entity.FORM.Form.StatusEnum.已撤消) ? "<a class='y del' href='javascript:;' data='" + (string.Format("del,{0}", item.FormNo).Encrypt()) + "' title='删除表单' ><i class='glyphicon glyphicon-trash'></i></a>" : null)
+                             ))
+
+
+
+                @*@Html.Raw(string.Format("{0}{1}{2}{3}{4}",
+    (item.FormStatus == (int)(Carlzhu.Iooin.Entity.FORM.Form.StatusEnum.签核中) ? "<a class='y urge' href='javascript:;' data='" + (string.Format("urge,{0}", item.FormNo).Encrypt()) + "'  title='崔签'><i class='glyphicon glyphicon-phone-alt'></i></a>" : null),
+    (item.FormStatus == (int)(Carlzhu.Iooin.Entity.FORM.Form.StatusEnum.签核中) ? "<a class='y cancel' href='javascript:;' data='" + (string.Format("cancel,{0}", item.FormNo).Encrypt()) + "' title='撤消表单' ><i class='glyphicon glyphicon-flash'></i></a>" : null),
+    (item.FormStatus == (int)(Carlzhu.Iooin.Entity.FORM.Form.StatusEnum.未送出) ? "<a class='y send' href='javascript:;' data='" + (string.Format("send,{0}", item.FormNo).Encrypt()) + "' title='送签' ><i class='glyphicon glyphicon-send'></i></a>" : null),
+    (item.FormStatus == (int)(Carlzhu.Iooin.Entity.FORM.Form.StatusEnum.未送出) ? "<a class='edit' href='/eForm/Tracking/ApplyOperators?p=" + (string.Format("edit,{0}", item.FormNo).Encrypt()) + "'  title='修改' ><i class='glyphicon glyphicon-edit'></i></a>" : null),
+    (item.FormStatus != (int)(Carlzhu.Iooin.Entity.FORM.Form.StatusEnum.签核中) ? "<a class='y del' href='javascript:;' data='" + (string.Format("del,{0}", item.FormNo).Encrypt()) + "' title='删除表单' ><i class='glyphicon glyphicon-trash'></i></a>" : null)
+    ))*@
+            </td>
+        </tr>
+                    }
+
+</table>
+
+
+
+<div>
+    <div style="float:left;width:50%">共 @Model.TotalPageCount 页 @Model.TotalItemCount 条记录，当前为第 @Model.CurrentPageIndex 页</div>
+    @Ajax.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "id",
+    ShowPageIndexBox = true,
+    PageIndexBoxType = PageIndexBoxType.DropDownList,
+    ShowGoButton = false
+},
+        new MvcAjaxOptions
+        {
+            UpdateTargetId = "dataarea",
+            HttpMethod = "Post",
+            DataFormId = "searchForm"
+        }, new { style = "float:right" })
+</div>
+
+<script src="~/Scripts/carlzhu.common.js"></script>
+<script type="text/javascript">
+    $(".toolbar a.y").click(function () {
+        var e = $(this);
+        var method = e.attr("class");
+        $.ajaxLoading({
+            url: '@Url.Action("ApplyOperators", "Tracking", new { area = "eForm" })',
+            data: { p: e.attr("data") },
+            loadingdata: "后台数据处理中，请等待。。。",
+            success: function (result) {
+                if (result == "success") {
+                    switch (method) {
+                        case "y urge":
+                            rightCornerMsg("崔签成功！！！", "success");
+                            break;
+                        case "y cancel":
+                            rightCornerMsg("撤消成功！！！", "success");
+                            location.reload();
+                            break;
+                        case "y send":
+                            rightCornerMsg("送签成功！！！", "success");
+                            $(e).parent().parent("tr").remove();
+                            location.reload();
+                            break;
+                        case "y del":
+                            rightCornerMsg("删除成功！！！", "success");
+                            $(e).parent().parent("tr").remove();
+                            break;
+                        default:
+                    }
+                } else {
+                    rightCornerMsg("操作未能成功执行请重试...", "error");
+                }
+            }
+        });
+    });
+</script>

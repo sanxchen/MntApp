@@ -1,0 +1,118 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.FormWorkLeave
+<tr>
+    <th>@Html.DisplayNameFor(model => model.EmpNo)</th>
+    <td>@Html.DisplayTextFor(model => model.EmpNo)</td>
+    <th>@Html.DisplayNameFor(model => model.Sheet)</th>
+    <td>@Html.DisplayTextFor(model => model.Sheet)</td>
+</tr>
+<tr>
+    <th>@Html.DisplayNameFor(model => model.StartTime)</th>
+    <td>@Html.DisplayTextFor(model => model.StartTime)</td>
+
+    <th>@Html.DisplayNameFor(model => model.EndTime)</th>
+    <td>@Html.DisplayTextFor(model => model.EndTime)</td>
+</tr>
+
+<tr>
+    <th>@Html.DisplayNameFor(model => model.LeaveType)</th>
+    <td>@(Enum.GetName(typeof(Carlzhu.Iooin.Entity.FORM.f.FormWorkLeave.LeaveTypEnum), Model.LeaveType))</td>
+
+    <th>@Html.DisplayNameFor(model => model.SumTime)</th>
+    <td>@Html.DisplayTextFor(model => model.SumTime)&nbsp;<span class="pull-right text-info">[注]预估计间，请以考勤为准</span></td>
+</tr>
+<tr></tr>
+
+
+<tr>
+    <th colspan="4">
+        <div class="panel panel-info" id="overtimeInfo">
+            <table class="table table-bordered table-condensed table-striped" id="tbOvertimeDetail">
+                <tr>
+                    <th colspan="8">
+                        请假人加班信息（近三个月）
+                    </th>
+                </tr>
+                <tr>
+                    <th>平时加班</th>
+                    <th>周末加班</th>
+                    <th>假日加班</th>
+                    <th>合计</th>
+                    <th class="abs">已调休时数</th>
+                    <th class="abs">剩余可调休时数</th>
+                    <th class="abs">已请假时数</th>
+                    <th class="abs">异常次数</th>
+                </tr>
+                <tr>
+                    <td id="overtime">0.0</td>
+                    <td id="weekendovertime">0.0</td>
+                    <td id="holidayovertime">0.0</td>
+                    <td id="sumtime">0.0</td>
+                    <td id="off" class="abs">未加载</td>
+                    <td id="surplus" class="abs">未加载</td>
+                    <td id="compassionateLeave" class="abs">未加载</td>
+                    <td id="" class="abs">未加载</td>
+                </tr>
+            </table>
+        </div>
+    </th>
+</tr>
+
+
+<style type="text/css">
+    #overtimeInfo {
+        padding: 20px 15px;
+    }
+    #tbOvertimeDetail tr th, #tbOvertimeDetail tr td {
+        height: 25px;
+        font-weight: bold;
+        text-align: center;
+        display: table-cell;
+        vertical-align: inherit;
+    }
+
+    #tbOvertimeDetail tr th {
+        background: #008b8b;
+        color: white;
+    }
+
+    #tbOvertimeDetail tr th.abs {
+        background: #083e7c;
+        color: white;
+        height: 25px;
+    }
+
+    #tbOvertimeDetail tr td {
+        background: #d2ffdb;
+        text-align: center;
+        color: #065b17;
+        font-weight: bold;
+        font-size: 13px;
+    }
+    #tbOvertimeDetail tr td.abs {
+        background: #cfe5ff;
+        text-align: center;
+        color: red;
+        font-weight: bold;
+        font-size: 13px;
+    }
+</style>
+
+
+<script type="text/javascript">
+    $(function() {
+        $.post('/hrms/Attendnce/OvertimeByArea', { empNo: '@Model.EmpNo', startTime: '@Model.StartTime' }, function (data) {
+            data = eval("(" + data + ")");
+            $("#overtime").text(data[0]["overtime"]);
+            $("#weekendovertime").text(data[0]["weekendovertime"]);
+            $("#holidayovertime").text(data[0]["holidayovertime"]);
+            $("#sumtime").text(data[0]["sumtime"]);
+            $("#off").text(data[0]["off"]);
+            $("#compassionateLeave").text(data[0]["compassionateleave"]);
+            $("#surplus").text(data[0]["sumtime"] - data[0]["off"]);
+            
+            //[{"overtime":43.0,"weekendovertime":129.5,"holidayovertime":0.0}]
+        });
+
+    });
+
+</script>

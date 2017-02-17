@@ -1,0 +1,528 @@
+﻿@{
+    ViewBag.Title = "明捷精密机械有限公司通讯录";
+    Layout = "~/Views/Shared/_LayoutStyle.cshtml";
+}
+
+<style type="text/css">
+    .ltd {
+        text-align: center;
+        margin: 10px auto;
+        font-size: 20px;
+    }
+
+    .main table th, .main table td {
+        text-align: center;
+        vertical-align: middle;
+        margin: 0px;
+        padding: 2px;
+    }
+
+        .main table th b {
+            font-size: 22px;
+        }
+        .manager {
+            background-color: aqua;
+        }
+</style>
+
+<div>
+    <div class="ltd">
+        <b>苏州明捷精密机械有限公司</b>
+        <br />
+        <b>SUZHOU MINICUT PRECISION ENGINEERING CO;LTD</b>
+    </div>
+    <div class="main">
+        <table class="table table-bordered table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th colspan="11"><b>电话一览表</b></th>
+                </tr>
+                <tr>
+                    <th>部门</th>
+                    <th>姓名</th>
+                    <th>分机</th>
+                    <th>手机</th>
+                    <th>Email</th>
+                    <th></th>
+                    <th>部门</th>
+                    <th>姓名</th>
+                    <th>分机</th>
+                    <th>手机</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>总经理</td>
+                    <td>何华军</td>
+                    <td>6666</td>
+                    <td>13812639389</td>
+                    <td><a href="mailto:King.he@minicut.com.cn">King.he@minicut.com.cn</a></td>
+                    <td rowspan="43" style="background-color: #ffffff;"></td>
+                    <td rowspan="18">工 程部</td>
+                    <td>沈  佳</td>
+                    <td>8300</td>
+                    <td>13862038884</td>
+                    <td><a href='mailto:Jason.shen@minicut.com.cn'>Jason.shen@minicut.com.cn</a></td>
+                </tr>
+                <tr>
+                    <td rowspan="8">业务部</td>
+                    <td>杜宝峰</td>
+                    <td>8600</td>
+                    <td>13004573879</td>
+                    <td><a href="mailto:Dell.du@minicut.com.cn">Dell.du@minicut.com.cn</a></td>
+
+                    <td>张长福</td>
+                    <td>8511</td>
+                    <td>13914001609</td>
+                    <td><a href="mailto:Changfu.Zhang@Minicut.com.cn">Changfu.Zhang@Minicut.com.cn</a></td>
+                </tr>
+                <tr>
+
+                    <td>张巧</td>
+                    <td>5555</td>
+                    <td>13914074308</td>
+                    <td><a href="mailto:Ann.zhang@minicut.com.cn">Ann.zhang@minicut.com.cn</a></td>
+
+
+                    <td>吴  俊</td>
+                    <td>8310</td>
+                    <td>18651183733</td>
+                    <td><a href='mailto:Jun.wu@minicut.com.cn'>Jun.wu@minicut.com.cn</a></td>
+                </tr>
+                <tr>
+
+                    <td>肖春</td>
+                    <td>8610</td>
+                    <td>18351033172</td>
+                    <td><a href="mailto:Chun.xiao@minicut.com.cn">Chun.xiao@minicut.com.cn</a></td>
+
+
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+
+                    <td>唐  亮</td>
+                    <td>8613</td>
+                    <td>18626102637</td>
+                    <td><a href="mailto:Peer.tang@minicut.com.cn">Peer.tang@minicut.com.cn</a></td>
+
+                    <td>张峻齐</td>
+                    <td>8311</td>
+                    <td>18550035159</td>
+                    <td><a href='mailto:Carl.zhang@minicut.com.cn'>Carl.zhang@minicut.com.cn</a></td>
+                </tr>
+                <tr>
+
+                    <td>罗成雷</td>
+                    <td>8616</td>
+                    <td>13616279005</td>
+                    <td><a href="mailto:Aeneas.luo@minicut.com.cn">Aeneas.luo@minicut.com.cn</a></td>
+
+                    <td>朱俊华</td>
+                    <td>8512</td>
+                    <td>13584844226</td>
+                    <td><a href='mailto:Sky.zhu@minicut.com.cn'>Sky.zhu@minicut.com.cn</a></td>
+                </tr>
+                <tr>
+
+                    <td>顾月青</td>
+                    <td>8615</td>
+                    <td>13913536413</td>
+                    <td><a href="mailto:Becks.gu@Minicut.com.cn">Becks.gu@Minicut.com.cn</a></td>
+
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+
+                    <td>徐逸杰</td>
+                    <td>8611</td>
+                    <td>13771747088</td>
+                    <td><a href="mailto:Rocky.xu@minicut.com.cn">Rocky.xu@minicut.com.cn</a></td>
+
+                    <td>蔡鹏炜</td>
+                    <td>8312</td>
+                    <td>13405162501</td>
+                    <td><a href='mailto:Pengwei.cai@Minicut.com.cn'>Pengwei.cai@Minicut.com.cn</a></td>
+                </tr>
+                <tr>
+             <td></td><td></td><td></td><td></td>
+
+                    <td>韩建峰</td>
+                    <td>8312</td>
+                    <td>15851463339</td>
+                    <td><a href='mailto:Jianfeng.han@minicut.com.cn'>Jianfeng.han@minicut.com.cn</a></td>
+                </tr>
+                <tr>
+                    <td rowspan="9">品质部</td>
+                    <td>汤庆宇</td>
+                    <td>8100</td>
+                    <td>18014043553</td>
+                    <td><a href="mailto:Tony.tang@minicut.com.cn">Tony.tang@minicut.com.cn</a></td>
+
+                    <td>杨坤明</td>
+                    <td>8311</td>
+                    <td>15850801728</td>
+                    <td><a href='mailto:Gallon.Yang@Minicut.com.cn'>Gallon.Yang@Minicut.com.cn</a></td>
+                </tr>
+                <tr>
+                    <td>金菊霞</td>
+                    <td>8120</td>
+                    <td>13862103012</td>
+                    <td><a href="mailto:Juxia.jin@minicut.com.cn">Juxia.jin@minicut.com.cn</a></td>
+
+                    <td>蒯浩强</td>
+                    <td>8312</td>
+                    <td>15962199570</td>
+                    <td><a href='mailto:Haoqiang.kuai@minicut.com.cn'>Haoqiang.kuai@minicut.com.cn</a></td>
+                </tr>
+                <tr>
+                    <td>张丽娜</td>
+                    <td>8121</td>
+                    <td>18115566796</td>
+                    <td><a href="mailto:Tina.zhang@minicut.com.cn">Tina.zhang@minicut.com.cn</a></td>
+
+                    <td>周文明</td>
+                    <td>8512</td>
+                    <td>13773260103</td>
+                    <td><a href='mailto:Wenming.zhou@minicut.com.cn'>Wenming.zhou@minicut.com.cn</a></td>
+                </tr>
+                <tr>
+                    <td>徐溪</td>
+                    <td>8123</td>
+                    <td>15051472553</td>
+                    <td><a href="mailto:Xi.xu@minicut.com.cn">Xi.xu@minicut.com.cn</a></td>
+
+                    <td>邬菊明</td>
+                    <td>8512</td>
+                    <td>13812603919</td>
+                    <td><a href='mailto:Juming.wu@minicut.com.cn'>Juming.wu@minicut.com.cn</a></td>
+                </tr>
+                <tr>
+                    <td>鲁秋芳</td>
+                    <td>8111</td>
+                    <td>13812906213</td>
+                    <td><a href="mailto:Betty.lu@minicut.com.cn">Betty.lu@minicut.com.cn</a></td>
+
+
+
+                    <td>马云珠</td>
+                    <td>8311</td>
+                    <td>18761918625</td>
+                    <td><a href='mailto:Yunzhu.ma@minicut.com.cn'>Yunzhu.ma@minicut.com.cn</a></td>
+                </tr>
+                <tr>
+                    <td>马  幸</td>
+                    <td>8130</td>
+                    <td>15062451794</td>
+                    <td><a href="mailto:Qc@minicut.com.cn">Xing.ma@minicut.com.cn</a></td>
+
+                    <td>孙  琼</td>
+                    <td>8310</td>
+                    <td>13626194831</td>
+                    <td><a href='mailto:Qiong.sun@minicut.com.cn'>Qiong.sun@minicut.com.cn</a></td>
+                </tr>
+                <tr>
+                    <td>徐  娟</td>
+                    <td>8123</td>
+                    <td>15190078586</td>
+                    <td><a href="mailto:Ellen.xu@minicut.com.cn">Ellen.xu@minicut.com.cn</a></td>
+
+                    <td>模具车间</td>
+                    <td>8041</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>王  悦</td>
+                    <td>8110</td>
+                    <td>13506216634</td>
+                    <td><a href="mailto:Yue.wang@minicut.com.cn">Yue.wang@minicut.com.cn</a></td>
+
+                    <td colspan="4"></td>
+                </tr>
+                <tr>
+                    <td>徐  婷</td>
+                    <td>8130</td>
+                    <td>13815255614</td>
+                    <td><a href="mailto:Ting.xu@minicut.com.cn">Ting.xu@minicut.com.cn</a></td>
+
+                    <td colspan="4"></td>
+                </tr>
+                <tr>
+                    <td colspan="4"></td>
+                    <td></td>
+                    <td colspan="4"></td>
+                </tr>
+                <tr>
+                    <td rowspan="4">采购部</td>
+                    <td>袁寿洋</td>
+                    <td>8500</td>
+                    <td>13306218019</td>
+                    <td><a href="mailto:Yanger.yuan@minicut.com.cn">Yanger.yuan@minicut.com.cn</a></td>
+
+                    <td rowspan="4">生产部</td>
+                    <td>吴江蓝</td>
+                    <td>8200</td>
+                    <td>13962189600</td>
+                    <td><a href='mailto:Mike.wu@minicut.com.cn'>Mike.wu@minicut.com.cn</a></td>
+                </tr>
+                <tr>
+
+                    <td>徐惠刚</td>
+                    <td>8513</td>
+                    <td>13776114018</td>
+                    <td><a href="mailto:Stone.xu@minicut.com.cn">Stone.xu@minicut.com.cn</a></td>
+
+                    <td>吴黎明</td>
+                    <td>8210</td>
+                    <td>15050127163</td>
+                    <td><a href='mailto:Liming.wu@minicut.com.cn'>Liming.wu@minicut.com.cn</a></td>
+                </tr>
+                <tr>
+
+                    <td>许秀梅</td>
+                    <td>8510</td>
+                    <td>13606207827</td>
+                    <td><a href="mailto:Ring.mei@minicut.com.cn">Ring.mei@minicut.com.cn</a></td>
+
+                    <td>何  洁</td>
+                    <td>8210</td>
+                    <td>15850127689</td>
+                    <td><a href='mailto:Erin.he@minicut.com.cn'>Erin.he@minicut.com.cn</a></td>
+                </tr>
+                <tr>
+
+                    <td>李  政</td>
+                    <td>8511</td>
+                    <td>15370336242</td>
+                    <td><a href="mailto:Zheng.li@minicut.com.cn">Zheng.li@minicut.com.cn</a></td>
+
+                    <td>施喜红</td>
+                    <td>8211</td>
+                    <td>18761968520</td>
+                    <td><a href='mailto:Chosy.shi@minicut.com.cn'>Chosy.shi@minicut.com.cn</a></td>
+                </tr>
+                <tr>
+                    <td rowspan="5">仓 库</td>
+                    <td>郑健胜</td>
+                    <td>8520</td>
+                    <td>15995876744</td>
+                    <td><a href="mailto:Jiangsheng.zheng@minicut.com.cn">Jiangsheng.zheng@minicut.com.cn</a></td>
+
+                    <td rowspan="4">制二</td>
+                    <td>陈昌民</td>
+                    <td>8211</td>
+                    <td>18761971846</td>
+                    <td><a href='mailto:Tiger.chen@minicut.com.cn'>Tiger.chen@minicut.com.cn</a></td>
+                </tr>
+                <tr>
+
+                    <td>杨英英</td>
+                    <td>8520</td>
+                    <td>15250445737</td>
+                    <td><a href="mailto:Yingying.yang@minicut.com.cn">Yingying.yang@minicut.com.cn</a></td>
+
+                    <td>储少怀</td>
+                    <td>8212</td>
+                    <td>13584851047</td>
+                    <td><a href='mailto:Wolf.chu@minicut.com.cn'>Wolf.chu@minicut.com.cn</a></td>
+                </tr>
+                <tr>
+
+                    <td>谢  磊</td>
+                    <td></td>
+                    <td>15151543469</td>
+                    <td></td>
+
+                    <td>甘  浩</td>
+                    <td>8212</td>
+                    <td>15995807496</td>
+                    <td><a href='mailto:Hao.gan@minicut.com.cn'>Hao.gan@minicut.com.cn</a></td>
+
+
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+
+                    <td colspan="4"></td>
+
+                    <td rowspan="2">制三</td>
+                    <td>吴亚辉</td>
+                    <td></td>
+                    <td>13862055299</td>
+                    <td><a href='mailto:Bird.wu@minicut.com.cn'>Bird.wu@minicut.com.cn</a></td>
+                </tr>
+                <tr>
+                    <td rowspan="5">车 队</td>
+                    <td>支燕平</td>
+                    <td></td>
+                    <td>13606207862</td>
+                    <td></td>
+                    <td>陆润淋</td>
+                    <td></td>
+                    <td>13771787790</td>
+                    <td></td>
+                </tr>
+                <tr>
+
+                
+                    <td>谢永贵</td>
+                    <td></td>
+                    <td>13771850107</td>
+                    <td></td>
+
+                    <td>锯  片</td>
+                    <td>张  怀</td>
+                    <td>8231</td>
+                    <td>13914056375</td>
+                    <td></td>
+                </tr>
+                <tr>
+
+
+                    <td>郑  勇</td>
+                    <td></td>
+                    <td>15050184686</td>
+
+                    <td></td>
+                    
+                    <td colspan="5"></td>
+                </tr>
+                <tr>
+                    
+                    
+                    <td>&nbsp;</td>
+                    <td></td>
+                    <td>&nbsp;</td>
+                    <td></td>
+                    <td rowspan="2">包  装</td>
+                    <td>沈建芳</td>
+                    <td>8230</td>
+                    <td>13962147453</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="4"></td>
+
+
+                    <td>张伟皊</td>
+                    <td>8230</td>
+                    <td>13222207768</td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <td rowspan="4">财 务部</td>
+                    <td>邵铁峰</td>
+                    <td>8800</td>
+                    <td>13862009033</td>
+                    <td><a href="mailto:Tianfeng.shao@minicut.com.cn">Tianfeng.shao@minicut.com.cn</a></td>
+
+                    <td rowspan="2">设备</td>
+                    <td>刀具库</td>
+                    <td>8090</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>胡晓红</td>
+                    <td>8810</td>
+                    <td>13606207823</td>
+                    <td><a href="mailto:Minihxh@minicut.com.cn">Minihxh@minicut.com.cn</a></td>
+
+                    <td>张  九</td>
+                    <td>8090</td>
+                    <td>18625265189</td>
+                    <td></td>
+                </tr>
+                <tr>
+
+                    <td>周芳芳</td>
+                    <td>8800</td>
+                    <td>13862080955</td>
+                    <td><a href="mailto:Ff.zhou@minicut.com.cn">Ff.zhou@minicut.com.cn</a></td>
+
+                    <td rowspan="2"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+
+                    <td colspan="4"></td>
+
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td rowspan="5">人 事部</td>
+                    <td>陈佳林</td>
+                    <td>8700</td>
+                    <td>18012771911</td>
+                    <td><a href='mailto:Sanx.chen@minicut.com.cn'>Sanx.chen@minicut.com.cn</a></td>
+
+
+                    <td>食  堂</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+
+                    <td>周建玲</td>
+                    <td>8710</td>
+                    <td>15950053343</td>
+                    <td><a href="mailto:Jolin.zhou@minicut.com.cn">Jolin.zhou@minicut.com.cn</a></td>
+
+                    <td>门  卫</td>
+                    <td></td>
+                    <td>1111</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>张玲玉</td>
+                    <td>8710</td>
+                    <td>15850166829</td>
+                    <td><a href="mailto:Lingyu.zhang@minicut.com.cn">Lingyu.zhang@minicut.com.cn</a></td>
+                    <td colspan="5"></td>
+                </tr>
+    
+                <tr>
+                    <td>朱仁贵</td>
+                    <td>1234</td>
+                    <td>13812910362</td>
+                    <td><a href='mailto:Carl.zhu@minicut.com.cn'>Carl.zhu@minicut.com.cn</a></td>
+
+                    <td colspan="5"></td>
+
+                </tr>
+                <tr>
+                    <td colspan="5" style="text-align: left; font-size: 20px;"><b>公司电话：0512-65658097   公司传真：0512-65658205</b></td>
+                    <td colspan="5" style="text-align: left; font-size: 20px;"><b>公司地址：苏州市吴中区胥江工业园新峰路99号</b></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

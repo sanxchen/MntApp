@@ -1,0 +1,16 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.report.FormDewellReport
+@{
+    var i = (int)ViewData["row"];
+}
+
+<td><label>@i <input type="checkbox" name=@string.Format("IsValid{0}", i) @((!string.IsNullOrEmpty(Model.EmpNo)) ? "checked='checked'" : "") /></label>@Html.Hidden(string.Format("RowId{0}", i), Model.RowId)</td>
+<td>@Html.TextBox(string.Format("ProductNo{0}", i), Model.ProductNo)</td>
+<td>@Html.TextBox(string.Format("OrderNo{0}", i), Model.OrderNo)</td>
+<td>@Html.TextBox(string.Format("ManNo{0}", i), Model.ManNo)</td>
+<td>@Html.TextBox(string.Format("StandardWorkingHours{0}", i), Model.StandardWorkingHours, new { placeholder = "数值可小数" })</td>
+<td>@Html.TextBox(string.Format("BadQuantity{0}", i), Model.BadQuantity, new { placeholder = "数值可小数" })</td>
+<td>@Html.TextBox(string.Format("GoodQuality{0}", i), Model.GoodQuality, new { placeholder = "数值可小数" })</td>
+<td>@Html.TextBox(string.Format("UnitPrice{0}", i), Model.UnitPrice, new { placeholder = "数值可小数" })</td>
+<td>@Html.TextBox(string.Format("BadReason{0}", i), Model.BadReason)</td>
+<td>@Html.TextBox(string.Format("BaEffectiveWorkingHours{0}", i), Model.BaEffectiveWorkingHours, new { placeholder = "数值可小数" })</td>
+<td>@Html.TextBox(string.Format("AttendanceHours{0}", i), Model.AttendanceHours, new { placeholder = "数值可小数" })</td>

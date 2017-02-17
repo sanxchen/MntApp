@@ -1,0 +1,73 @@
+﻿@using Carlzhu.Iooin.Business.HrmsModule
+@using Carlzhu.Iooin.Entity.CommonModule
+@using Carlzhu.Iooin.Entity.FORM
+@model IEnumerable<Carlzhu.Iooin.Entity.FORM.FormSign>
+
+
+
+<style type="text/css">
+    table.table tbody tr td {
+        vertical-align: middle;
+    }
+</style>
+
+<table class="table table-striped table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th style="width:80px">实签人角色</th>
+            <th>签核人</th>
+            <th>实际签核人</th>
+            <th class="text-center" style="width:265px;">签核意见</th>
+            <th class="text-center" style="width:70px">签核结果</th>
+            <th class="text-center" style="width:140px;">签核时间</th>
+        </tr>
+    </thead>
+    <tbody>
+        @try
+        {
+            var i = 0;
+            foreach (var sign in Model)
+            {
+                BaseEmployee actualEmployee = null;
+                try
+                {
+                    actualEmployee = sign.SignEmpNo == sign.ActualSignEmpNo ? sign.BaseEmployee : new EmployeeBll().Single(sign.ActualSignEmpNo);
+                    sign.BaseEmployee = new EmployeeBll().Single(sign.SignEmpNo);
+                    //if (actualEmployee == null)
+                    //{
+                    //    actualEmployee = new EmployeeBll().Single(sign.SignEmpNo);
+                    //}
+
+                }
+                catch (Exception)
+                {
+                    actualEmployee = null;
+                }
+                finally
+                {
+                    <tr>
+                        <td>@(++i)</td>
+                        <td>@(actualEmployee == null ? null : actualEmployee.Duty)</td>
+                        <td>
+                            @if (sign.SourceType != 0)
+                            {
+                                BaseEmployee sourcEmployee = new EmployeeBll().Single(sign.SourceEmpNo);
+                                <p>@(sign.BaseEmployee == null ? null : (sourcEmployee.DepartmentId + "/" + sourcEmployee.Account + " " + sourcEmployee.RealName))<abbr class="glyphicon glyphicon-share-alt" title="@Enum.GetName(typeof(FormSign.SourceTypeEnum), sign.SourceType) :@sign.SourceReason"></abbr></p>
+                            }
+                            <p>  @(sign.BaseEmployee == null ? null : (sign.BaseEmployee.DepartmentId + "/" + sign.BaseEmployee.Account + " " + sign.BaseEmployee.RealName))</p>
+                        </td>
+                        <td>@(actualEmployee == null ? null : (actualEmployee.DepartmentId + "/" + actualEmployee.Account + " " + actualEmployee.RealName))</td>
+                        <td>@sign.SignMark</td>
+                        <td class="text-center">@(Enum.GetName(typeof(FormSign.SignResultEnum), sign.SignResult))</td>
+                        <td class="text-center">@(sign.SignTime == null ? "" : DateTime.Parse(sign.SignTime.ToString()).ToString("yyyy/MM/dd HH:mm:ss"))</td>
+                    </tr>
+                }
+            }
+        }
+        catch (Exception)
+        {
+            <tr><td colspan="7">签核人为空...</td></tr>
+        }
+    </tbody>
+</table>

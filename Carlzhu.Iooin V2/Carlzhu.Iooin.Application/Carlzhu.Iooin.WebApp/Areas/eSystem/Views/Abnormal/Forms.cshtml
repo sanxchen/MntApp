@@ -1,0 +1,118 @@
+﻿@using Carlzhu.Iooin.Entity.FORM
+@using Carlzhu.Iooin.Entity.FORM.f
+@model FormNcr
+@{
+    ViewBag.Title = "异常详情";
+    Layout = "~/Views/Shared/_LayoutStyle.cshtml";
+    const int agree = (int)Form.StatusEnum.签核完成;
+    const int signing = (int)Form.StatusEnum.签核中;
+
+
+    var part =Carlzhu.Iooin.Business.BaseUtility.ContextFactory.ContextHelper.FormNcrParts.Where(c => c.ParentFormNo == Model.FormNo && (c.Form.FormStatus == agree || c.Form.FormStatus == signing)).ToList();
+    var partOne = part.LastOrDefault(c => c.ReplyType == 31);
+    var partTwo = part.LastOrDefault(c => c.ReplyType == 35);
+    var partThree = part.LastOrDefault(c => c.ReplyType == 36);
+    var partFour = part.LastOrDefault(c => c.ReplyType == 37);
+
+
+}
+@Html.ActionLink("所有异常", "Index", "Abnormal", null, new { @style = "position: fixed; right: 0;top:0", @class = "btn  btn-success" })
+
+<div class="row">
+    <div class="col-md-offset-2 col-md-8">
+        <table class="table  table-condensed table-striped">
+            <tr>
+                <td colspan="8">
+                    <h3 class="text-center">苏州明捷精密机械有限公司</h3>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8">
+                    <h4 class="text-center">质量异常单 NCR</h4>
+                </td>
+            </tr>
+            @Html.Partial("NcrDetails", Model)
+
+
+
+            <tr><th colspan="8">临时措施：</th></tr>
+
+            @((partOne == null) ?
+                Html.Partial("PartEdit", new FormPath() { FormId = 31, FormNo = Model.FormNo }) : Html.Partial("PartDetails", partOne ?? new FormNcrPart()))
+
+            <!--Part B-->
+
+            <tr><th colspan="8">不良品原因分析：</th></tr>
+
+            @((partTwo == null && partOne != null && partOne.Form.FormStatus == 3) ?
+                                Html.Partial("PartEdit", new FormPath() { FormId = 35, FormNo = Model.FormNo }) : Html.Partial("PartDetails", partTwo ?? new FormNcrPart()))
+
+            <!--Part C-->
+
+            <tr><th colspan="8">改善对策及预防措施：</th></tr>
+
+            @((partThree == null && partTwo != null && partTwo.Form.FormStatus == 3) ?
+                                Html.Partial("PartEdit", new FormPath() { FormId = 36, FormNo = Model.FormNo }) : Html.Partial("PartDetails", partThree ?? new FormNcrPart()))
+
+
+            <!--Part D-->
+
+            <tr><th colspan="8">改善结果确认：</th></tr>
+
+            @((partFour == null && partThree != null && partThree.Form.FormStatus == 3) ?
+                                Html.Partial("CloseEdit", new FormPath() { FormId = 37, FormNo = Model.FormNo }) : Html.Partial("PartDetails", partFour ?? new FormNcrPart()))
+
+
+
+
+
+            <tr>
+                <td colspan="8" class="text-left">
+                    <p>
+                        注：
+                    </p>
+                    <p>1.原因分析及预防措施,质量工程师及相应的工程师需参与分析改善,最终由品管确认改善结果.</p>
+                    <p>2.此报告回复时间需在3个工作日内完成.</p>
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+</div>
+
+<style type="text/css">
+    tr th, tr td, * {
+        color: #000;
+    }
+
+    table, table tr, table tr td, table tr th {
+        color: #000000;
+        border: 1px solid #000;
+    }
+
+    table {
+        border: 3px double #000000;
+    }
+
+    div.picture {
+    }
+
+        div.picture div.picList {
+            float: left;
+            margin-right: 20px;
+            width: 150px;
+            height: 150px;
+            position: relative;
+        }
+
+            div.picture div.picList img {
+                width: 150px;
+                height: 140px;
+            }
+
+            div.picture div.picList p {
+                height: 20px;
+                text-align: center;
+            }
+</style>

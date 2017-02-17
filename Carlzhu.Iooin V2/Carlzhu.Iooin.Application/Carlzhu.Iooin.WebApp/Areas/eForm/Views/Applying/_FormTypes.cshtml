@@ -1,0 +1,14 @@
+﻿@using Carlzhu.Iooin.InteractiveAdapter
+@model IEnumerable<Carlzhu.Iooin.Entity.FORM.FormType>
+
+
+<ul>
+    @foreach (var a in Model)
+    {
+        <li>
+            @Html.ActionLink("[FORM " + a.FormId + "] " + a.FormName, "Apply", "Applying",
+         new { p = (string.Format("{0}", a.FormId)).Encrypt() }, null)
+        </li>
+
+    }
+</ul>

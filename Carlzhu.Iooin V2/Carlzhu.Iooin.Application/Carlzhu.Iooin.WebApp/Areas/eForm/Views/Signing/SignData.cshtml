@@ -1,0 +1,175 @@
+﻿
+@using Carlzhu.Iooin.Business.FormModule
+@using Carlzhu.Iooin.InteractiveAdapter
+@using Carlzhu.Iooin.Util
+@model IEnumerable<Carlzhu.Iooin.Entity.FORM.FormSign>
+
+<style type="text/css">
+        table tr .agree {
+            background: url('/content/images/icon16/accept.png') no-repeat center center;
+            cursor: pointer;
+            width: 20px;
+        }
+
+
+
+        table tr .reject {
+          background: url('/content/images/icon16/reject.png') no-repeat center center;
+            cursor: pointer;
+            width: 20px;
+        }
+
+            table tr .agree:hover, table tr .reject:hover {
+                border-bottom: 1px double #008b8b;
+            }
+
+
+
+
+
+
+
+        table tr td.tags {
+            text-align: center;
+        }
+
+            table tr td.tags span {
+                margin: 0 auto;
+                display: block;
+                width: 20px;
+                height: 20px;
+                cursor: pointer;
+            }
+
+            table tr td.tags .tags0 {
+                background: url('/content/images/icon16/green_tag.png') no-repeat center center;
+            }
+
+            table tr td.tags .tags1 {
+                background: url('/content/images/icon16/yellow_tag.png') no-repeat center center;
+            }
+
+            table tr td.tags .tags2 {
+                background: url('/content/images/icon16/red_tag.png') no-repeat center center;
+            }
+
+
+
+    .status sup {
+        vertical-align: top;
+        margin: 0;
+        padding: 0.5px;
+        font: 0.3em "黑体", "华文行楷"，"宋体";
+        color: #a52a2a;
+        border: 1px double red;
+        -ms-border-radius: 3px;
+        border-radius: 3px;
+        -webkit-box-shadow: #141414 2px 2px 2px;
+        -ms-box-shadow: #141414 2px 2px 2px;
+        box-shadow: #141414 2px 2px 2px;
+    }
+</style>
+
+
+<table class="table table-bordered table-condensed table-responsive   table-hover">
+    <thead>
+        <tr>
+            <th colspan="2">速签</th>
+            <th>@Html.DisplayNameFor(model => model.Form.FormType.FormName)</th>
+            <th>@Html.DisplayNameFor(model => model.Form.CreateEmpNo)</th>
+            <th>@Html.DisplayNameFor(model => model.Form.CreateTime)</th>
+            <th>@Html.DisplayNameFor(model => model.CreateTime)</th>
+            <th>@Html.DisplayName("上位签核人")</th>
+            <th>@Html.DisplayNameFor(model => model.FormNo)</th>
+            <th style="width:60px;">@Html.DisplayName("本站天数")</th>
+            <th style="text-align: center;">@Html.DisplayNameFor(model => model.Tag)</th>
+            <th style="text-align:center;">签核进度</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        var processbar = new Signing().SignProgress(item.FormNo);
+        string directName = null;
+        if (item.SourceType == 1) { directName = "转"; }
+        if (item.SourceType == 2 || item.SourceType == 4) { directName = "加"; }
+        if (item.SourceType == 3) { directName = "平"; }
+
+        int stay = (DateTime.Now - item.CreateTime).Days;
+
+
+        <tr id="@item.FormNo" data="@((string.Format("{0},{1}", item.FormNo, item.RowId)).Encrypt())" >
+            <td class="agree"></td>
+            <td class="reject"></td>
+            <td class="status">
+                [@item.Form.FormType.FormId] @item.Form.FormType.FormName
+
+                @(item.Form.IsEmergents ? Html.Raw("<sup>急</sup>") : null)
+                @(item.SignEmpNo == ManageProvider.Provider.Current().UserId ? null : Html.Raw("<sup>代</sup>"))
+                @(item.SourceType != 0 ? Html.Raw("<sup>" + directName + "</sup>") : null)
+                @(stay == 0 ? Html.Raw("<sup>新</sup>") : null)
+            </td>
+            <td>@item.Form.BaseEmployee.Account @item.Form.BaseEmployee.RealName</td>
+            <td>@item.Form.CreateTime.ToString("yyyy/MM/dd  -  HH:mm:ss")</td>
+            <td>@item.CreateTime.ToString("yyyy/MM/dd  -  HH:mm:ss")</td>
+            <td>@(new Signing().UpSignEmployee(item.FormNo, item.RowId))</td>
+            <td>
+                <span><i class="glyphicon glyphicon-eye-open"></i></span>    @Html.RouteLink(item.FormNo,  new
+                {
+                    Action = "SignDetails",
+                    Controller = "Signing",
+                    area="eForm",
+                    p = (string.Format("{0},{1}", item.FormNo, item.RowId).Encrypt())
+                }, null) &raquo;
+            </td>
+            <td style="text-align:center">@(stay)</td>
+            <td class="tags"><span class="@("tags"+item.Tag)" lang="@item.RowId"></span></td>
+            <td>
+                <div class="progress progress-striped">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="@processbar" aria-valuemin="0" aria-valuemax="100" style="width: @processbar%;"></div>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script type="text/javascript">
+
+    $("td.agree,td.reject").click(function () {
+        var pro = $(this).parent("tr");
+        $.ajaxLoading({
+            url: "/eForm/Signing/" + $(this).attr("class"),
+            data: { p: pro.attr("data") },
+            loadingdata: "数据处理中，请等待。。。",
+            success: function (data) {
+                if (data == "success") {
+                    $("table tr td:contains('" + pro.attr("id") + "')").parent("tr").remove();
+                    rightCornerMsg('操作成功', 'success');
+                } else {
+                    rightCornerMsg('操作失败', 'error');
+                }
+            }
+        });
+
+    });
+
+
+
+
+
+    $(".tags span").click(function () {
+        var ele = $(this);
+        $.post("/eForm/Signing/UpdateTags", {
+            item: ele.attr("lang"),
+            tags: ele.attr("class")
+        }, function (data) {
+            if (data.result == "success") {
+                ele.attr("class", "tags" + data.tag);
+                rightCornerMsg('操作成功', 'success');
+            } else {
+                rightCornerMsg('操作失败', 'error');
+            }
+        });
+    });
+
+</script>

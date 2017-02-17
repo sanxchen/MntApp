@@ -1,0 +1,57 @@
+﻿@using Carlzhu.Iooin.WebApp.Controllers
+@using Kendo.Mvc.UI
+
+@{
+    var current = Carlzhu.Iooin.Util.ManageProvider.Provider.Current();
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Kendo.cshtml";
+}
+
+
+
+@(Html.Kendo().Scheduler<TaskViewModel>()
+      .Name("scheduler")
+      .Date(DateTime.Now)
+      .StartTime(new DateTime(2013, 6, 13, 7, 00, 00))
+      .Height(600)
+      .Views(views =>
+      {
+          views.DayView();
+          views.WorkWeekView(workWeekView => workWeekView.Selected(true));
+          views.WeekView();
+          views.MonthView();
+          views.AgendaView();
+          views.TimelineView();
+      })
+      .Timezone("Etc/UTC")
+      .Resources(resource =>
+      {
+          resource.Add(m => m.OwnerID)
+              .Title("Owner")
+              .DataTextField("Text")
+              .DataValueField("Value")
+              .DataColorField("Color")
+              .BindTo(new[] {
+                  new { Text = current.UserName, Value = current.UserId, Color = "#f8a398" } ,
+              });
+      })
+      .DataSource(d => d
+          .Model(m =>
+          {
+              m.Id(f => f.TaskID);
+              m.Field(f => f.Title).DefaultValue("No title");
+              m.Field(f => f.OwnerID).DefaultValue(current.UserId);
+              m.Field(f => f.Title).DefaultValue("No title");
+              m.RecurrenceId(f => f.RecurrenceID);
+          })
+          .Read("Read", "Scheduler")
+          .Create("Create", "Scheduler")
+          .Destroy("Destroy", "Scheduler")
+          .Update("Update", "Scheduler")
+          .Filter(filters =>
+          {
+              filters.Add(model => model.OwnerID).IsEqualTo(1).Or().IsEqualTo(int.Parse(current.UserId));
+          })
+      ))
+
+

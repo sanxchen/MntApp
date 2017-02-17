@@ -1,0 +1,46 @@
+﻿select 
+a.itnbr as [品名], 
+a.itdsc as [品号],
+a.spdsc as [规格], 
+isnull(b.WIP,0) as [总WIP],
+isnull(c.INWIP,0) as [厂内WIP],
+isnull(d.OUTWIP,0) as [厂外WIP],
+isnull(f.godqty,0) as [待入库良品],
+isnull(f.badqty,0) as [待入库不良品],
+isnull(e.WAREQTY,0) as [库存]
+from invmas a
+left outer join 
+	(select itnbrf AS itnbr,sum(wipqty) AS WIP from manbor WHERE manno not in  (select manno from manmas where manstatus in ('J')) group by itnbrf having sum(wipqty)>0) b 
+on a.itnbr=b.itnbr 
+left outer join 
+	(select itnbrf AS itnbr,sum(wipqty) INWIP from manbor where wrcode  like 'ZZ%' and manno not in  (select manno from manmas where manstatus in ('J')) group by itnbrf having sum(wipqty)>0) c  --厂内
+on a.itnbr=c.itnbr
+left outer join
+	(select itnbrf AS itnbr,sum(wipqty) OUTWIP from manbor where wrcode  not like 'ZZ%' and manno not in  (select manno from manmas where manstatus in ('J')) group by itnbrf having sum(wipqty)>0) d --厂外
+on a.itnbr=d.itnbr
+left outer join 
+	(SELECT itnbr,sum(onhand1) WAREQTY FROM invbal WHERE wareh='AO1' GROUP BY itnbr HAVING sum(onhand1)>0)  e 
+on a.itnbr=e.itnbr
+left outer join 
+( SELECT  
+         sfcfsd.itnbr as itnbr,   
+        sum( (case when sfcfsd.godinyn = 'Y' and sfcfsd.wrcode = sfcfsd.nwrcode then (sfcfsd.godqty - sfcfsd.godattqty) else 0.00 end )) as godqty,   
+        sum( (case when sfcfsd.badinyn = 'Y' then (sfcfsd.badqty - sfcfsd.badattqty) else 0.00 end )) as badqty
+    FROM sfcfsd,   
+         sfcfsh  
+   WHERE 
+		( sfcfsh.facno = sfcfsd.facno ) and  
+         ( sfcfsh.prono = sfcfsd.prono ) and  
+         ( sfcfsh.fshno = sfcfsd.fshno ) and  
+         ((case when sfcfsd.godinyn = 'Y' and sfcfsd.wrcode = sfcfsd.nwrcode then (sfcfsd.godqty - sfcfsd.godattqty) else 0.00 end ) > 0.00 OR  
+         (case when sfcfsd.badinyn = 'Y' then (sfcfsd.badqty - sfcfsd.badattqty) else 0.00 end ) > 0.00) AND  
+         sfcfsd.stats in ('2','3') AND  
+         sfcfsd.assyn <> 'Y'  AND
+		 sfcfsd.manno not in  (select manno from manmas where manstatus in ('J'))
+		group by sfcfsd.itnbr ) f
+on a.itnbr=f.itnbr 
+
+
+where  a.useyn='Y' 
+group by a.itnbr,a.itdsc,a.spdsc,b.WIP,c.INWIP,d.OUTWIP,f.godqty,f.badqty,e.WAREQTY,a.useyn
+--group  by a.itnbr,a.itdsc,a.spdsc,[总WIP],[厂内WIP],[厂外WIP],[待入库良品], [待入库不良品],[库存]

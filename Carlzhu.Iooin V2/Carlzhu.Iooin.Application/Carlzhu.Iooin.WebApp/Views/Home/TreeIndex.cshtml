@@ -1,0 +1,184 @@
+﻿@{Layout = "~/Views/Shared/_Layout.cshtml";}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />
+    <title>By Minicut</title>
+    <link href="/Content/Images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <!--框架必需start-->
+    <link href="~/Content/accordionTree.css" rel="stylesheet" />
+    <link href="~/Content/framework.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="~/Scripts/framework.js"></script>
+    <link href="~/Content/startmenu.css" rel="stylesheet" />
+    <!--框架必需end-->
+    <!--树形组件start-->
+    <link href="~/Scripts/framework/tree/tree.css" rel="stylesheet" />
+    <script src="~/Scripts/framework/tree/tree.js"></script>
+    <!--树形组件end-->
+    <!--引入弹窗组件start-->
+    <script src="~/Scripts/framework/lhgdialog/lhgdialog.min.js"></script>
+    <!--引入弹窗组件end-->
+    <!--自定义滚动条组件start-->
+    <script src="~/Scripts/framework/scrollbar/scrollbar.js"></script>
+    <!--自定义滚动条组件end-->
+    <!--日期组件start-->
+    <script src="~/Scripts/framework/datepicker/WdatePicker.js"></script>
+    <!--日期组件start-->
+    <script src="~/Scripts/Index.js"></script>
+    <script>
+        /**初始化**/
+        $(document).ready(function () {
+            ServerCurrentTime()
+            AddTabMenu('Imain', '@Url.Content("~/Home/TreePage")', '欢迎首页', "house.png", 'false');
+            GetAccordionMenu();
+            InitializeImpact();
+            ShortcutsList();
+            var interval = setInterval("IconSong('icon_message')", 400);
+            $("#div_icon_message").click(function () {
+                clearInterval(interval);
+                window.open('http://www.Iooin.com/', '_blank');
+            })
+            $(".popup li").click(function () {
+                linkAddTabMenu()
+            })
+        });
+
+        //点击菜单连接（隐藏导航菜单）
+        function linkAddTabMenu() {
+            $('.btn-nav-toggle').removeAttr('disabled');
+            $('.btn-nav-toggle').removeClass('harvest');
+            $('.btn-nav-toggle').trigger("click");
+            //点击Tab事件
+            $('#tabs_container li').click(function () {
+                var id = $(this).attr('id');
+                if (id == 'tabs_Imain') {
+                    $('.btn-nav-toggle').attr('disabled', 'disabled');
+                    //点击首页（显示导航菜单）
+                    $(".navigation").css('position', '');
+                    $(".navigation").css('width', '204px');
+                    $('.accordion').show();
+                    $('.btn-nav-toggle').addClass('harvest');
+                    $('.btn-nav-toggle').find('b').hide();
+                    $('.btn-nav-toggle').find('i').show();
+                    $('.btn-nav-toggle').attr('title', '');
+                } else {
+                    $('.btn-nav-toggle').removeAttr('disabled');
+                    //（隐藏导航菜单）
+                    $(".navigation").css('position', 'absolute');
+                    $('.btn-nav-toggle').removeClass('harvest');
+                    $('.btn-nav-toggle').trigger("click");
+                }
+            });
+        }
+
+        //初始化界面UI效果
+        function InitializeImpact() {
+            //设置自应高度
+            resizeU();
+            $(window).resize(resizeU);
+
+            function resizeU() {
+                var divkuangH = $(window).height();
+                $(".mainPannel").height(divkuangH - 130);
+                $(".navigation").height(divkuangH - 130);
+                $("#ContentPannel").height(divkuangH - 130);
+            }
+
+            //手风琴效果
+            var Accordion = function (el, multiple) {
+                this.el = el || {};
+                this.multiple = multiple || false;
+                var links = this.el.find('.link');
+                links.on('click', { el: this.el, multiple: this.multiple }, this.dropdown)
+            }
+            Accordion.prototype.dropdown = function (e) {
+                //计算高度
+                var accordionheight = ($("#accordion").children("ul li").length * 36);
+                var navigationheight = $(".navigation").height()
+                $('#accordion li').children('.submenu').height(navigationheight - accordionheight - 1);
+                $(this).next().slideToggle();
+                $(this).parent().toggleClass('open');
+                if (!e.data.multiple) {
+                    $(this).parent().parent().find('.submenu').not($(this).next()).slideUp().parent().removeClass('open');
+                };
+                GetTreeMenu($(this).next().attr('id'));
+            }
+            var accordion = new Accordion($('#accordion'), false);
+            $(".submenu a").click(function () {
+                $('.submenu a').removeClass('action');
+                $(this).addClass('action');
+            })
+            $("#accordion li:first").find('div').trigger("click"); //默认第一个展开
+            $('.btn-nav-toggle').click(function () {
+                if (!$('.btn-nav-toggle').attr('disabled') && !$(this).hasClass("harvest")) {
+                    $(this).addClass('harvest');
+                    $(".navigation").animate({ width: 0 }, 100);
+                    $('.accordion').hide();
+                    $(this).find('b').show();
+                    $(this).find('i').hide();
+                } else {
+                    $(this).removeClass('harvest');
+                    $(".navigation").animate({ width: 204 }, 100);
+                    $('.accordion').show();
+                    $(this).find('b').hide();
+                    $(this).find('i').show();
+                }
+            }).hover(function () {
+                if ($(this).hasClass("harvest")) {
+                    $(this).attr('title', '隐藏导航');
+                    $(this).removeClass('harvest');
+                    $(".navigation").animate({ width: 204 }, 100);
+                    $('.accordion').show();
+                    $(this).find('b').hide();
+                    $(this).find('i').show();
+                    $(".navigation").css('position', 'absolute');
+                }
+            }, function () {
+            });
+        }
+
+        /*导航菜单begin====================*/
+        //手风琴
+        function GetAccordionMenu() {
+            var html = "";
+            getAjax("/Home/LoadAccordionMenu", "", function (data) {
+                var accordionJson = eval("(" + data + ")");
+                $.each(accordionJson, function (i) {
+                    if (accordionJson[i].ParentId == '9f8ce93a-fc2d-4914-a59c-a6b49494108f') {
+                        html += "<li title=" + accordionJson[i].FullName + ">";
+                        html += "<div class=\"link\"><img class='img' src='../Content/Images/Icon16/" + accordionJson[i].Icon + "'>";
+                        html += "<span>" + accordionJson[i].FullName + "</span><i class=\"chevron-down\"></i>";
+                        html += "</div>";
+                        html += "<div id=\"" + accordionJson[i].ModuleId + "\" class=\"submenu bottomline\"></div>";
+                        html += "</li>";
+                    }
+                });
+            })
+            $("#accordion").append(html);
+        }
+
+        //树形菜单
+        function GetTreeMenu(ModuleId) {
+            var itemtree = {
+                onnodeclick: function (item) {
+                    if (!!item.Location) {
+                        var filename = item.img.replace(/.*(\/|\\)/, "");
+                        AddTabMenu(item.id, RootPath() + item.Location, item.text, filename, 'true');
+                        linkAddTabMenu();
+                    }
+                    //点击展开
+                    $("#" + ModuleId + " .bbit-tree-selected").children('.bbit-tree-ec-icon').trigger("click");
+                },
+                url: "@Url.Content("~/Home/LoadTreeMenu?ModuleId=")" + ModuleId
+            };
+            $("#" + ModuleId).treeview(itemtree);
+        }
+        /*导航菜单end====================*/
+    </script>
+</head>
+
+@Html.Partial("_Body", "_TreeFooter");
+
+</html>

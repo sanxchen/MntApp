@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        body, table {
+            font-size: 12px;
+        }
+
+        table {
+            table-layout: fixed;
+            empty-cells: show;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+
+        td {
+            height: 30px;
+        }
+
+        h1, h2, h3 {
+            font-size: 12px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .table {
+            border: 1px solid #cad9ea;
+            color: #666;
+        }
+
+            .table th {
+                background-repeat: repeat-x;
+                height: 30px;
+            }
+
+            .table td, .table th {
+                border: 1px solid #cad9ea;
+                padding: 0 1em 0;
+            }
+
+            .table tr.alter {
+                background-color: #f5fafe;
+            }
+    </style>
+</head>
+<body>
+    <table width="60%" class="table">
+        <tr>
+            <th>料号</th>
+            <th>客户</th>
+            <th>异生时间</th>
+            <th>批量数</th>
+            <th>抽样数</th>
+            <th>不良数</th>
+            <th>不良率</th>
+            <th>发生地点</th>
+            <th>检验员</th>
+        </tr>
+        <tr>
+            <td>@partno</td>
+            <td>@customer</td>
+            <td>@catchtime</td>
+            <td>@batchno</td>
+            <td>@samplingno</td>
+            <td>@defectno</td>
+            <td>@defect</td>
+            <td>@point</td>
+            <td>@user</td>
+        </tr>
+        <tr>
+            <th colspan="9" style="text-align:left">品质问题描述</th>
+        </tr>
+        <tr class="alter">
+            <td colspan="9" style="text-align:left">@mark</td>
+        </tr>
+    </table>
+</body>
+</html>

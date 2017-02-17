@@ -1,0 +1,28 @@
+﻿@using Carlzhu.Iooin.Util.MvcHtml
+@model Carlzhu.Iooin.Entity.FORM.f.FormAbnormalAttendance
+
+
+<tr>
+    <th>@Html.DisplayNameFor(model => model.BaseEmployee.RealName)</th>
+    <td>@string.Format("{0}/{1}/{2}", Model.BaseEmployee.DepartmentId, Model.BaseEmployee.RealName, Model.EmpNo)</td>
+    <th>本月已异常数</th>
+    <td>
+        @Html.Action("SetForm", "Attendnce", new RouteValueDictionary() { { "area", "hrms" }, { "empNo", Model.EmpNo }, { "endTime", Model.TimeEnd } })
+    </td>
+</tr>
+
+<tr>
+    <th>@Html.DisplayNameFor(model => model.TimeStart)</th>
+    <td>@Html.DisplayTextFor(model => model.TimeStart)</td>
+    <th>@Html.DisplayNameFor(model => model.TimeEnd)</th>
+    <td>@Html.DisplayTextFor(model => model.TimeEnd)</td>
+</tr>
+
+<tr>
+    <th>@Html.DisplayNameFor(model => model.AbnormalType)</th>
+    <td>@EnumUtil.GetEnumShowName(typeof(Carlzhu.Iooin.Entity.FORM.f.FormAbnormalAttendance.TypeEnum), Model.AbnormalType)</td>
+    <th>@Html.DisplayNameFor(model => model.TempCard)</th>
+    <td>@Html.DisplayTextFor(model => model.TempCard)</td>
+</tr>
+
+

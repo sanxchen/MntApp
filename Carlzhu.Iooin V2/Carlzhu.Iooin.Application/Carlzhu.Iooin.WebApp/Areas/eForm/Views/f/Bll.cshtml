@@ -1,0 +1,43 @@
+﻿@using Carlzhu.Iooin.Entity.FORM.f
+@model IEnumerable<FormBll>
+@{
+    List<SelectListItem> supplierList = (ViewBag.DropSupplier as List<SelectListItem>);
+}
+
+<thead>
+    <tr>
+        <th>@Html.DisplayName("项次")</th>
+        <th>@Html.DisplayNameFor(model => model.SupplierCode)</th>
+        <th>@Html.DisplayNameFor(model => model.InvoiceNo)</th>
+        <th>@Html.DisplayNameFor(model => model.AmountOfMoney)</th>
+        <th>@Html.DisplayNameFor(model => model.Mark)</th>
+    </tr>
+</thead>
+<tbody>
+    @{
+
+        var t = (List<FormBll>)Model;
+
+        int count = t.Count;
+        for (int i = 0; i < count; i++)
+        {
+            @Html.Partial("/Areas/eForm/Views/f/BllEdit.cshtml", t[i], new ViewDataDictionary() { { "row", i + 1 }, { "supplierList", supplierList } })
+        }
+        for (int i = count + 1; i < 10; i++)
+        {
+            @Html.Partial("~/Areas/eForm/Views/f/BllEdit.cshtml", new FormBll(), new ViewDataDictionary() { { "row", i }, { "supplierList", supplierList } })
+        }
+
+    }
+
+
+    <tr>
+        <td colspan="5" style="text-align: right;">文件编号：MJ4028-2</td>
+    </tr>
+    
+</tbody>
+
+
+
+
+

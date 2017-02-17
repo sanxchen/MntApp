@@ -1,0 +1,22 @@
+﻿
+@model Carlzhu.Iooin.Entity.FORM.f.report.FormDewellReportBending
+
+
+
+
+
+@{
+    var i = (int)ViewData["row"];
+}
+
+<tr>
+    @Html.Partial("/Areas/eForm/Views/f/formLayout/report/_editCommTd.cshtml", Model, new ViewDataDictionary() { { "row", i } })
+
+    <td>@Html.TextBox(string.Format("ShutdownReason{0}", i), Model.ShutdownReason)</td>
+    <td>@Html.TextBox(string.Format("DownTime{0}", i), Model.DownTime, new { placeholder = "数值可小数" })</td>
+    <td>@Html.TextBox(string.Format("BendingKnifeNumber{0}", i), Model.BendingKnifeNumber, new { placeholder = "数值可小数" })</td>
+    <td>@Html.TextBox(string.Format("DieChangingTimes{0}", i), Model.DieChangingTimes, new { placeholder = "数值可小数" })</td>
+    <td>@Html.TextBox(string.Format("ProductSpecifications{0}", i), Model.ProductSpecifications)</td>
+
+
+</tr>

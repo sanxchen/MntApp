@@ -1,0 +1,32 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.F
+
+
+@Html.Action("EditForm", "F", new { area = "eForm", formNo = Model.FormNo })
+
+@if (Model.Form.FormType.IsModel)
+{
+    <tr><td class="markarea"><hr /></td></tr>
+    <tr><th class="markarea">备注</th></tr>
+    <tr>
+        <td class="markarea">
+            @Html.TextAreaFor(model => model.Mark, new { PLACEHOLDER = "最多输入512个文字", TITLE = "表单之外要求请写在这里", CLASS = "form-control", ROW = "3", maxlength = 512 })
+        </td>
+    </tr>
+}
+else
+{
+    <tr>
+        <td class="markarea">
+            <p class="bg-warning text-warning"><b>注</b>：请将要保存的项打勾，请不要将没有内容的项打勾，多选会产生保存异常。</p>
+    </tr>
+}
+
+
+
+
+
+
+<script type="text/javascript">
+    //合并备注单元格
+    $(".markarea").attr("colspan", $("table tr:first-child td").length + $("table tr:first-child th").length);
+</script>

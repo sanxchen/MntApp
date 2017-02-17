@@ -1,0 +1,31 @@
+﻿@using System.Web.Mvc.Html
+@using Carlzhu.Iooin.Business.BaseModule
+@using Carlzhu.Iooin.Entity.FORM
+@using Carlzhu.Iooin.Framework.Data.Repository
+@model Carlzhu.Iooin.Entity.FORM.f.FormEquipmentSop
+
+<tr>
+    <td>@Html.LabelFor(model => model.EquipmentName)</td>
+    <td>@Html.DisplayTextFor(model => model.EquipmentName)</td>
+
+    <td>@Html.LabelFor(model => model.Ver)</td>
+    <td>@Html.DisplayTextFor(model => model.Ver)</td>
+
+</tr>
+<tr>
+
+    <td>@Html.LabelFor(model => model.PageCount)</td>
+    <td>@Html.DisplayTextFor(model => model.PageCount)</td>
+    <td>@Html.LabelFor(model => model.Author)</td>
+    <td>@Html.DisplayTextFor(model => model.BaseEmployee.RealName)</td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.FileGroup)</td>
+    <td colspan="3">
+        @foreach (var file in new FilesFileGroupBll().GetFileListByGroupGuid(Model.FileGroup))
+        {
+            @Html.Partial("~/Areas/eForm/Views/F/formLayout/_FileDetails.cshtml",  DataFactory.Database().FindEntity<Files>(file.Md5));
+        }
+    </td>
+</tr>
+

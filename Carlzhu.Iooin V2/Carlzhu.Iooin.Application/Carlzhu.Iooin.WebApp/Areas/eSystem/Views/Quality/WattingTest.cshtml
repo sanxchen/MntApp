@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Carlzhu.Iooin.Entity.FORM.f.FormWorkshopInspection>
+@{
+    ViewBag.Title = "WattingTest";
+    Layout = "~/Areas/eSystem/Views/Shared/_eSystem.cshtml";
+}
+
+<ol class="breadcrumb">
+    <li>@Html.RouteLink("Quality", new { Controller = "Pdm", Action = "Index", area = "eSystem" }, null)</li>
+    <li class="active">待检产品</li>
+    <li class="pull-right">@Html.RouteLink("历史查看", new { Controller = "Quality", Action = "HistoryRecords", area = "eSystem" }, null)</li>
+</ol>
+
+
+
+<table class="table table-bordered table-condensed table-striped table-responsive">
+    <thead>
+        <tr>
+            <td>#</td>
+            <th>@Html.DisplayNameFor(model => model.FormNo)</th>
+            <th>@Html.DisplayNameFor(model => model.ProductNo)</th>
+            <th>@Html.DisplayNameFor(model => model.ManNo)</th>
+            <th>@Html.DisplayNameFor(model => model.ProductType)</th>
+            <th>@Html.DisplayNameFor(model => model.Engineering)</th>
+            <th>@Html.DisplayNameFor(model => model.Machine)</th>
+            <th>@Html.DisplayNameFor(model => model.TransferMachine)</th>
+            <th>@Html.DisplayNameFor(model => model.StartDateTime)</th>
+            <th>@Html.DisplayNameFor(model => model.EndDateTime)</th>
+            <th>@Html.DisplayNameFor(model => model.DetectionResult)</th>
+            <th>@Html.DisplayNameFor(model => model.Checker)</th>
+            <th>检验</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var formWorkshopInspection in Model)
+        {
+            <tr>
+                <td>@formWorkshopInspection.RowId</td>
+                <td>@formWorkshopInspection.FormNo</td>
+                <td>@formWorkshopInspection.ProductNo</td>
+                <td>@formWorkshopInspection.ManNo</td>
+                <td>@formWorkshopInspection.ProductType</td>
+                <td>@formWorkshopInspection.Engineering</td>
+                <td>@formWorkshopInspection.Machine</td>
+                <td>@formWorkshopInspection.TransferMachine</td>
+                <td>@formWorkshopInspection.StartDateTime</td>
+                <td>@formWorkshopInspection.EndDateTime</td>
+                <td>@formWorkshopInspection.DetectionResult</td>
+                <td>@formWorkshopInspection.Checker</td>
+                <td>
+                    @Html.Raw(string.IsNullOrEmpty(formWorkshopInspection.StartDateTime.ToString()) ? "<a data-id='" + @formWorkshopInspection.RowId + "' href='javascript:void(0)' id='testing'>检测</a>" : "<a href='/eSystem/Quality/Test/" + formWorkshopInspection.RowId + "'>检测中...</a>")
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            $("#testing").click(function () {
+                var t = $(this).data("id");
+                jPrompt("请输入工号开始检测", "", "检测", function (e) {
+
+                    $.post("/eSystem/Quality/TestStart/", { id: t, emp: e }, function (data) {
+                        if (data === "success") {
+                            rightCornerMsg("开始检测", "success");
+                        }
+                        else { rightCornerMsg("请输入正确的工号", "error"); }
+                    });
+
+                });
+            });
+        });
+
+    </script>
+}
+

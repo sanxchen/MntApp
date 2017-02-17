@@ -1,0 +1,59 @@
+﻿@using System.Threading.Tasks
+
+@using Carlzhu.Iooin.Entity
+@model Carlzhu.Iooin.Entity.FORM.f.FormPdAbnor
+
+
+
+
+
+<tr>
+    <td>@Html.DisplayNameFor(model => model.AbnormalType)</td>
+    <td>@Enum.GetName(typeof(Carlzhu.Iooin.Entity.FORM.f.FormPdAbnor.EnumAbnormalType), Model.AbnormalType)</td>
+
+
+    <td></td><td></td>
+</tr>
+
+<tr>
+    <td>@Html.DisplayNameFor(model => model.WorkshopCode)</td>
+    <td>@Html.DisplayTextFor(model => model.Workshop.Name)</td>
+
+    <td>@Html.DisplayNameFor(model => model.PartNo)</td>
+    <td>@Html.DisplayTextFor(model => model.PartNo)</td>
+
+</tr>
+
+<tr>
+
+
+    <td>@Html.DisplayNameFor(model => model.WorkTag)</td>
+    <td>@Html.DisplayTextFor(model => model.WorkTag)</td>
+
+    <td>@Html.DisplayNameFor(model => model.WorkProcess)</td>
+    <td>@Html.DisplayTextFor(model => model.WorkProcess)</td>
+
+</tr>
+
+
+
+
+<tr>
+    <td>@Html.DisplayNameFor(model => model.ResponsibilityDept)</td>
+    <td>@Html.DisplayTextFor(model => model.Department.DepartmentName)</td>
+
+    <td>@Html.DisplayNameFor(model => model.AbnormalTime)</td>
+    <td>@Html.DisplayTextFor(model => model.AbnormalTime)</td>
+
+</tr>
+
+
+
+<tr>
+    <td>@Html.DisplayNameFor(model => model.AbnormalDetails)</td>
+    <td colspan="2">@Html.DisplayTextFor(model => model.AbnormalDetails)</td>
+
+    <td></td>
+
+
+</tr>

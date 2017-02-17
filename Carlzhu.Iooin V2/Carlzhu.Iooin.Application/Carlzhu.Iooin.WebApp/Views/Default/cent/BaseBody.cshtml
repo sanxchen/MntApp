@@ -1,0 +1,9 @@
+﻿
+
+@using Carlzhu.Iooin.InteractiveAdapter
+@model Carlzhu.Iooin.Entity.FORM.f.draw.DrawingsBase
+
+
+<td style="width:60px;text-align:center">@Html.DisplayTextFor(model => model.DrawVer)</td>
+<td style="width:50px;text-align:center">@Html.DisplayTextFor(model => model.PageSize)</td>
+<td><label title="@(Model.Reason+","+Model.Mark)">@Model.Reason.ToCut(8)</label></td>

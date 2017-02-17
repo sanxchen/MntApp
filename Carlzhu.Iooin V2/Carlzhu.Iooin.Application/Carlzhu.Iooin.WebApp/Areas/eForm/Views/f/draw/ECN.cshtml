@@ -1,0 +1,238 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.draw.FormDrawingsEcn
+<style type="text/css">
+    input[type=checkbox] {
+        margin-top: 2px;
+        margin-right: 3px;
+    }
+
+    .desc {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    input[type=text] {
+        width: 100%;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        min-width: 20px;
+        border-bottom: 1px solid silver;
+    }
+
+        input[type=text]:active, input[type=text]:focus {
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            margin: 0;
+            padding: 0;
+            border-bottom: 1px solid silver;
+        }
+</style>
+<table class="table table-bordered table-condensed">
+    <tr>
+        <td style="width: 30px;"></td>
+        <td style="width: 30px;"></td>
+        <td style="width: 30px;"></td>
+        <td style="width: 30px;"></td>
+        <td style="width: 30px;"></td>
+        <td style="width: 30px;"></td>
+        <td style="width: 30px;"></td>
+        <td style="width: 30px;"></td>
+        <td style="width: 30px;"></td>
+        <td style="width: 30px;"></td>
+        <td style="width: 30px;"></td>
+        <td style="width: 30px;"></td>
+        <td style="width: 30px;"></td>
+        <td style="width: 30px;"></td>
+        <td style="width: 30px;"></td>
+        <td style="width: 30px;"></td>
+        <td style="width: 30px;"></td>
+        <td style="width: 30px;"></td>
+        <td style="width: 30px;"></td>
+        <td style="width: 30px;"></td>
+        <td style="width: 30px;"></td>
+        <td style="width: 40px;"></td>
+    </tr>
+    <tr>
+        <td rowspan="5" class="desc">
+            申<br />请<br />单<br />位<br />说<br />明<br />栏
+        </td>
+        <td colspan="2">客户名称</td>
+        <td colspan="4"><input type="text" class="form-control"></td>
+        <td colspan="2">产品编号</td>
+        <td colspan="5"><input type="text" class="form-control"></td>
+        <td colspan="2">产品名称</td>
+        <td colspan="3"><input type="text" class="form-control"></td>
+        <td colspan="2">版本号</td>
+        <td colspan="2"><input type="text" class="form-control"></td>
+    </tr>
+    <tr>
+        <td colspan="2">申请单位</td>
+        <td colspan="4"><input type="text" class="form-control"></td>
+        <td colspan="2">申请人</td>
+        <td colspan="3"><input type="text" class="form-control"></td>
+        <td colspan="2">申请时间</td>
+        <td colspan="3"><input type="text" class="form-control"></td>
+        <td colspan="2">希望完成时间</td>
+        <td colspan="3"><input type="text" class="form-control"></td>
+    </tr>
+    <tr>
+        <td colspan="2">变更方</td>
+        <td colspan="19">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox1" value="option1"> 客户通知
+                    </label>
+                </div>
+                <div class="col-sm-2">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox2" value="option2"> 内部变更
+                    </label>
+                </div>
+                <div class="col-sm-2">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox3" value="option3"> EOL
+                    </label>
+                </div>
+                <div class="col-sm-2">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox4" value="option3"> 其他变更
+                    </label>
+                </div>
+                <div class="col-sm-4"><input type="text"></div>
+            </div>
+
+
+
+
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">变更原因</td>
+        <td colspan="19">
+            <textarea class="form-control" rows="3"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">变更内容</td>
+        <td colspan="19">
+            <textarea class="form-control" rows="3"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td class="desc">工程<br />意见</td>
+        <td colspan="4">
+            <div>
+                <label class="checkbox-inline">
+                    <input type="checkbox" value="option3"> 同意
+                </label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" value="option3"> 否决
+                </label>
+            </div>
+        </td>
+        <td colspan="7">工程师签名：<input type="text" class="form-control"></td>
+        <td colspan="5">
+            <div>
+                <label class="checkbox-inline">
+                    <input type="checkbox" value="option3"> 同意
+                </label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" value="option3"> 否决
+                </label>
+            </div>
+        </td>
+        <td colspan="5">工程经理核准：<input type="text" class="form-control"></td>
+    </tr>
+    <tr>
+        <td rowspan="3" class="desc">会<br />签<br />栏</td>
+        <td colspan="8">
+            <div>
+                <div>业务签名</div>
+                <div>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="option3"> 同意
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="option3"> 否决
+                    </label>
+                </div>
+            </div>
+        </td>
+        <td colspan="8">
+            <div>
+                <div>采购部签名</div>
+                <div>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="option3"> 同意
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="option3"> 否决
+                    </label>
+                </div>
+            </div>
+        </td>
+        <td colspan="5">
+            <div>
+                <div>仓储部签名</div>
+                <div>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="option3"> 同意
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="option3"> 否决
+                    </label>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="8">
+            <div>
+                <div>生产部签名</div>
+                <div>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="option3"> 同意
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="option3"> 否决
+                    </label>
+                </div>
+            </div>
+        </td>
+        <td colspan="8">
+            <div>
+                <div>品质部签名</div>
+                <div>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="option3"> 同意
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="option3"> 否决
+                    </label>
+                </div>
+            </div>
+        </td>
+        <td colspan="5">
+            <div>
+                <div>客户签名（必要时）</div>
+                <div>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="option3"> 同意
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="option3"> 否决
+                    </label>
+                </div>
+            </div>
+        </td>
+    </tr>
+<tr>
+    <td colspan="21">总经理审批：<textarea class="form-control" rows="3"></textarea></td>
+</tr>
+<tr>
+    <td colspan="22">
+        <p class="text-right"><b>表单编号：MJ43011-01 B2</b></p></td>
+</tr>
+</table>

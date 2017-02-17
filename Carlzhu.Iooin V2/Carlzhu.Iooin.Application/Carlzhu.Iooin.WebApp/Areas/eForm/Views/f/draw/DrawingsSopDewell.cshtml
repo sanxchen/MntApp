@@ -1,0 +1,49 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.draw.FormDrawingsSopDewell
+@{
+    Layout = "/Areas/eForm/Views/f/formLayout/_DrawingBaseEdit.cshtml";
+}
+<tr>
+    <td>@Html.LabelFor(model => model.DrawPartNo)</td>
+    <td>@Html.TextBoxFor(model => model.DrawPartNo)</td>
+    <td>@Html.ValidationMessageFor(model => model.DrawPartNo)</td>
+    <td>@Html.LabelFor(model => model.ProductNo)</td>
+    <td>@Html.TextBoxFor(model => model.ProductNo)</td>
+    <td>@Html.ValidationMessageFor(model => model.ProductNo)</td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.Tag)</td>
+
+    <td>
+        @Html.DropDownList("Tag", new List<SelectListItem>()
+   {
+
+
+       new SelectListItem { Text="下料一",Value="下料一" ,Selected = Model.Tag=="下料一"},
+       new SelectListItem { Text="下料二",Value="下料二" ,Selected = Model.Tag=="下料二"},
+       new SelectListItem { Text="折弯一",Value="折弯一" ,Selected = Model.Tag=="折弯一"},
+       new SelectListItem { Text="折弯二",Value="折弯二" ,Selected = Model.Tag=="折弯二"},
+       new SelectListItem { Text="折弯三",Value="折弯三" ,Selected = Model.Tag=="折弯三"},
+       new SelectListItem { Text="钳工一",Value="钳工一" ,Selected = Model.Tag=="钳工一"},
+       new SelectListItem { Text="钳工二",Value="钳工二" ,Selected = Model.Tag=="钳工二"},
+       new SelectListItem { Text="钳工三",Value="钳工三" ,Selected = Model.Tag=="钳工三"},
+       new SelectListItem { Text="焊接一",Value="焊接一" ,Selected = Model.Tag=="焊接一"},
+       new SelectListItem { Text="焊接二",Value="焊接二" ,Selected = Model.Tag=="焊接二"},
+       new SelectListItem { Text="焊接三",Value="焊接三" ,Selected = Model.Tag=="焊接三"},
+       new SelectListItem { Text="组装一",Value="组装一" ,Selected = Model.Tag=="组装一"},
+       new SelectListItem { Text="组装二",Value="组装二" ,Selected = Model.Tag=="组装二"},
+       new SelectListItem { Text="表面处理一",Value="表面处理一" ,Selected = Model.Tag=="表面处理一"},
+       new SelectListItem { Text="表面处理二",Value="表面处理二" ,Selected = Model.Tag=="表面处理二"},
+       new SelectListItem { Text="表面处理三",Value="表面处理三" ,Selected = Model.Tag=="表面处理三"},
+       new SelectListItem { Text="外购",Value="外购" ,Selected = Model.Tag=="外购"},
+
+
+   },"-----------------------")
+    </td>
+    <td>@Html.ValidationMessageFor(model => model.Tag)</td>
+    <td>@Html.LabelFor(model => model.Author)</td>
+    <td>@Html.TextBoxFor(model => model.Author)</td>
+    <td>@Html.ValidationMessageFor(model => model.Author)</td>
+</tr>
+
+
+

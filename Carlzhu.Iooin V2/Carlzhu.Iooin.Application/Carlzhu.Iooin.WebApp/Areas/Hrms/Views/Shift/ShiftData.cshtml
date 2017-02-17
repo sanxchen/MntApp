@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "系统班别";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+}
+
+
+
+<script type="text/javascript">
+
+    //初始化
+    $(function () {
+        GetGrid();
+    });
+
+   
+
+    function btn_add() {
+        var url = "/Hrms/Shift/Form";
+        openDialog(url, "Form", "新增表单", 650, 350, function (iframe) {
+            top.frames[iframe].AcceptClick();
+        });
+
+
+    }
+    //编辑
+    function btn_edit() {
+        var KeyValue = GetJqGridRowValue("#gridTable", "ShiftId");
+        if (IsChecked(KeyValue)) {
+            var url = "/Hrms/Shift/Form?KeyValue=" + KeyValue;
+            openDialog(url, "Form", "编辑", 770, 395, function (iframe) {
+                top.frames[iframe].AcceptClick();
+            });
+        }
+
+    }
+
+   
+
+
+    function GetGrid() {
+        var SelectRowIndx;
+        $("#gridTable").jqGrid({
+            url: "@Url.Content("/hrms/shift/GridPageJson")",
+            datatype: "json",
+            height: $(window).height() - 104,
+            autowidth: true,
+            colModel: [
+            { label: '主键', name: 'ShiftId', index: 'ShiftId', width: 70, align: 'left', hidden: true },
+            { label: '班别', name: 'FullName', index: 'FullName', width: 50, align: 'left' },
+            { label: '代码', name: 'Code', index: 'Code', width: 30, align: 'center' },
+            { label: '上班开始时间', name: 'WorkStart', index: 'WorkStart', width: 80, align: 'center', formatter: function (cellvalue, options, rowObject) { return formatDate(cellvalue, 'hh:mm:ss'); } },
+            { label: '上班结束时间', name: 'WorkStop', index: 'WorkStop', width: 80, align: 'center', formatter: function (cellvalue, options, rowObject) { return formatDate(cellvalue, 'hh:mm:ss'); } },
+            { label: '休息时间1起', name: 'Rist1Start', index: 'Rist1Start', width: 80, align: 'center', formatter: function (cellvalue, options, rowObject) { return formatDate(cellvalue, 'hh:mm:ss'); } },
+            { label: '休息时间1止', name: 'Rist1Stop', index: 'Rist1Stop', width: 80, align: 'center', formatter: function (cellvalue, options, rowObject) { return formatDate(cellvalue, 'hh:mm:ss'); } },
+            { label: '休息时间2起', name: 'Rist2Start', index: 'Rist2Start', width: 80, align: 'center', formatter: function (cellvalue, options, rowObject) { return formatDate(cellvalue, 'hh:mm:ss'); } },
+            { label: '休息时间2止', name: 'Rist2Stop', index: 'Rist2Stop', width: 80, align: 'center', formatter: function (cellvalue, options, rowObject) { return formatDate(cellvalue, 'hh:mm:ss'); } },
+            { label: '休息时间3起', name: 'Rist3Start', index: 'Rist3Start', width: 80, align: 'center', formatter: function (cellvalue, options, rowObject) { return formatDate(cellvalue, 'hh:mm:ss'); } },
+            { label: '休息时间3止', name: 'Rist3Stop', index: 'Rist3Stop', width: 80, align: 'center', formatter: function (cellvalue, options, rowObject) { return formatDate(cellvalue, 'hh:mm:ss'); } },
+            { label: '起计时间1', name: 'SettlementMin', index: 'SettlementMin', width: 70, align: 'center' },
+            { label: '起计时间2', name: 'SettlementMax', index: 'SettlementMax', width: 70, align: 'center' },
+            {
+                label: '有效', name: 'Enabled', index: 'Enabled', width: 40, align: 'center', formatter: function (cellvalue, options, rowObject) {
+                if (cellvalue == '1') return "<img src='/Content/Images/checkokmark.gif'/>";
+                if (cellvalue == '0') return "<img src='/Content/Images/checknomark.gif'/>";
+                return cellvalue;
+            } },
+            { label: '备注', name: 'Remark', index: 'Remark', width: 120, align: 'center' },
+            ],
+            viewrecords: true,
+            rowNum: 30,
+            rowList: [30, 50, 100, 500, 1000],
+            pager: "#gridPager",
+            sortname: 'ShiftId',
+            sortorder: 'desc',
+            rownumbers: true,
+            shrinkToFit: false,
+            gridview: true,
+            multiselect: true,
+            onSelectRow: function () {
+                SelectRowIndx = GetJqGridRowIndx("#" + this.id);
+            },
+            gridComplete: function () {
+                $("#" + this.id).jqGrid('setSelection', SelectRowIndx);
+            }
+        });
+        columnModelData("#gridTable");
+        //自应高度
+        $(window).resize(function () {
+            $("#gridTable").setGridHeight($(window).height() - 178);
+        });
+    }
+
+
+</script>
+
+
+<div class="tools_bar leftline rightline" style="margin: 1px; margin-bottom: 0px;">
+    <div class="PartialButton">
+        @Html.Partial("_PartialButton")
+    </div>
+</div>
+<div class="leftline rightline QueryArea" style="margin: 1px; margin-top: 0px; margin-bottom: 0px;">
+</div>
+<div class="topline rightline" style="margin: 1px; margin-top: -1px;">
+    <table id="gridTable"></table>
+    <div id="gridPager"></div>
+</div>
+

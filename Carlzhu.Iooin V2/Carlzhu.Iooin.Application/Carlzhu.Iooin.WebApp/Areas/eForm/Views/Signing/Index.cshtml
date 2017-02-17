@@ -1,0 +1,40 @@
+﻿@using Carlzhu.Iooin.Business.FormModule
+@{
+    ViewBag.Title = "签核表单";
+    Layout = "../Shared/_Bpm.cshtml";
+}
+
+<div>
+    <ol class="breadcrumb">
+        <li>@Html.RouteLink("Flow", new { Controller = "Applying", Action = "Index", area = "eForm" }, null)</li>
+        <li class="disabled">签核表单</li>
+    </ol>
+</div>
+    <div>
+        <p>
+            @Html.DropDownList("formtype", (ViewBag.FormType as List<SelectListItem>), "", new { CLASS = "form-control input-sm ", title = "选择表单类型进行筛选" })
+        </p>
+        <div id="signdata">
+            @Html.Action("GetSignDataList", "Signing")
+        </div>
+    </div>
+
+
+    @section Scripts{
+        <script type="text/javascript">
+
+            $(function () {
+                var pop = new Pop("",
+              "/Default/Update",
+               "<p>不想签核的表单可以设代理人。</p>" +
+               "<p>表单颜色的深浅与本站停留的天数有关。</p>" +
+               "<p>表单的状态有:新，急，代，平，转，加。</p>");
+            });
+
+            $("#formtype").change(function () {
+                $("#signdata").load("/Signing/GetSignDataList/" + $(this).val());
+            });
+
+
+        </script>
+    }

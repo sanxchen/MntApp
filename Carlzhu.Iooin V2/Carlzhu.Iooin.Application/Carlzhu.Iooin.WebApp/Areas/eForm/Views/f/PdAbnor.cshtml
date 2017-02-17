@@ -1,0 +1,76 @@
+﻿@using System.Threading.Tasks
+
+@using Carlzhu.Iooin.Entity.FORM.f
+@model Carlzhu.Iooin.Entity.FORM.f.FormPdAbnor
+
+@{
+    List<SelectListItem> workshop = Carlzhu.Iooin.Business.BaseServices<>.AbstractCodeName.ToSelectListItems((new List<AbstractCodeName>(Task.Run(() => BaseServices<Carlzhu.Iooin.Entity.HRMS.Workshop>().LoadEntities(c => true)).Result)));
+    List<SelectListItem> abnorType = BaseExper.EnumToList(typeof (FormPdAbnor.EnumAbnormalType));
+    List<SelectListItem> responsibilityDept = (Task.Run(() => Carlzhu.Iooin.Business.BaseServices<Carlzhu.Iooin.Entity.CommonModule.BaseDepartment>().LoadEntities(c => c..Contains("000") &&c.DepartmentCompany=="MINICUT")).Result).Select(t => new SelectListItem() { Text = t.DepartmentName, Value = t.DepartmentCode }).ToList();
+
+
+}
+
+
+<tr>
+    <td>@Html.DisplayNameFor(model => model.AbnormalType)</td>
+    <td>@Html.DropDownList("AbnormalType", abnorType)</td>
+    <td>@Html.ValidationMessageFor(model => model.AbnormalType)</td>
+
+
+    <td></td><td></td><td></td>
+</tr>
+
+<tr>
+    <td>@Html.DisplayNameFor(model => model.WorkshopCode)</td>
+    <td>@Html.DropDownList("WorkshopCode", workshop)</td>
+    <td>@Html.ValidationMessageFor(model => model.WorkshopCode)</td>
+
+    <td>@Html.DisplayNameFor(model => model.PartNo)</td>
+    <td>@Html.TextBoxFor(model => model.PartNo)</td>
+    <td>@Html.ValidationMessageFor(model => model.PartNo)</td>
+
+</tr>
+
+<tr>
+
+
+    <td>@Html.DisplayNameFor(model => model.WorkTag)</td>
+    <td>@Html.TextBoxFor(model => model.WorkTag)</td>
+    <td>@Html.ValidationMessageFor(model => model.WorkTag)</td>
+    <td>@Html.DisplayNameFor(model => model.WorkProcess)</td>
+    <td>@Html.TextBoxFor(model=>model.WorkProcess)</td>
+    <td>@Html.ValidationMessageFor(model => model.WorkProcess)</td>
+
+</tr>
+
+
+
+
+<tr>
+    <td>@Html.DisplayNameFor(model => model.ResponsibilityDept)</td>
+    <td>@Html.DropDownList("ResponsibilityDept", responsibilityDept)</td>
+    <td>@Html.ValidationMessageFor(model => model.ResponsibilityDept)</td>
+    <td>@Html.DisplayNameFor(model => model.AbnormalTime)</td>
+    <td>@Html.TextBoxFor(model => model.AbnormalTime, new { @class = "datepicker" })</td>
+    <td>@Html.ValidationMessageFor(model => model.AbnormalTime)</td>
+
+
+</tr>
+
+@*<tr>
+        <td>@Html.DisplayNameFor(model => model.DealingMethod)</td>
+        <td>@Html.TextBoxFor(model => model.DealingMethod)</td>
+        <td></td>
+        <td>@Html.DisplayNameFor(model => model.PlanFinishTime)</td>
+        <td>@Html.TextBoxFor(model => model.PlanFinishTime, new { @class = "datepicker" })</td>
+        <td></td>
+    </tr>*@
+
+<tr>
+    <td>@Html.DisplayNameFor(model => model.AbnormalDetails)</td>
+    <td colspan="4">@Html.TextBoxFor(model => model.AbnormalDetails, new { @style = "width:100%" })</td>
+    <td></td>
+
+
+</tr>

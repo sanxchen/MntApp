@@ -1,0 +1,142 @@
+﻿@using System.Globalization
+@using Carlzhu.Iooin.Business.BaseUtility
+@using Carlzhu.Iooin.Business.FormModule
+@using Carlzhu.Iooin.Business.HrmsModule
+
+@using Carlzhu.Iooin.Entity.FORM.f
+@model FormNcrPart
+
+@{
+    Layout = "~/Views/Shared/_LayoutStyle.cshtml";
+    var part = new Carlzhu.Iooin.Business.BaseServices<FormNcrPart>().LoadEntities(c => c.ParentFormNo == Model.ParentFormNo).ToList();
+    var partOne = part.LastOrDefault(c => c.ReplyType == 31);
+    var partTwo = part.LastOrDefault(c => c.ReplyType == 35);
+    var partThree = part.LastOrDefault(c => c.ReplyType == 36);
+    var partFour = part.LastOrDefault(c => c.ReplyType == 37);
+}
+
+
+@Html.Partial("~/Areas/eForm/Views/f/NcrDetails.cshtml", (FormNcr)new Applying().GetFormEntityByFormNo(Model.ParentFormNo))
+
+
+
+@{
+    if (partOne == null)
+    {
+
+        <div class="row">
+            <div class="col-md-4">部门主管审核:&nbsp;</div>
+            <div class="col-md-4">责任人:&nbsp;</div>
+            <div class="col-md-4">日期:&nbsp;</div>
+        </div>
+    }
+    else
+    {
+        <tr>
+            <td colspan="8">
+                <div class="details">
+                    @partOne.Mark
+                    <div class="row">
+                        <div class="col-md-4">部门主管审核:&nbsp;@(partOne.AuditEmp == null ? null : new EmployeeBll().Single(partOne.AuditEmp).RealName)</div>
+                        <div class="col-md-4">责任人:&nbsp;@(partOne.BaseEmployee.RealName)</div>
+                        <div class="col-md-4">日期:&nbsp;@(partOne.ReviewTime)</div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+
+
+
+                <!--Part B-->
+
+    <tr><th colspan="8">不良品原因分析：</th></tr>
+
+    if (partTwo == null && partOne != null && partOne.AuditEmp != null)
+    {
+        <div class="row">
+            <div class="col-md-4">部门主管审核:&nbsp;</div>
+            <div class="col-md-4">责任人:&nbsp;</div>
+            <div class="col-md-4">日期:&nbsp;</div>
+        </div>
+    }
+    else
+    {
+        <tr>
+            <td colspan="8">
+                <div class="details">
+                    @(partTwo == null ? null : partTwo.Mark)
+                    <div class="row">
+                        <div class="col-md-4">部门主管审核:&nbsp;@(partTwo == null || string.IsNullOrEmpty(partTwo.AuditEmp) ? null : new EmployeeBll().Single(partTwo.AuditEmp).RealName)</div>
+                        <div class="col-md-4">责任人:&nbsp;@(partTwo == null ? null : partTwo.BaseEmployee.RealName)</div>
+                        <div class="col-md-4">日期:&nbsp;@(partTwo == null ? null : partTwo.ReviewTime.ToString(CultureInfo.InvariantCulture))</div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+
+                <!--Part C-->
+
+    <tr><th colspan="8">改善对策及预防措施：</th></tr>
+
+    if (partThree == null && partTwo != null && partTwo.AuditEmp != null)
+    {
+        <div class="row">
+            <div class="col-md-4">部门主管审核:&nbsp;</div>
+            <div class="col-md-4">责任人:&nbsp;</div>
+            <div class="col-md-4">日期:&nbsp;</div>
+        </div>
+    }
+    else
+    {
+        <tr>
+            <td colspan="8">
+                <div class="details">
+                    @(partThree == null ? null : partThree.Mark)
+                    <div class="row">
+                        <div class="col-md-4">部门主管审核:&nbsp;@(partThree == null || string.IsNullOrEmpty(partThree.AuditEmp) ? null : new EmployeeBll().Single(partThree.AuditEmp).RealName)</div>
+                        <div class="col-md-4">责任人:&nbsp;@(partThree == null ? null : partThree.BaseEmployee.RealName)</div>
+                        <div class="col-md-4">日期:&nbsp;@(partThree == null ? null : partThree.ReviewTime.ToString(CultureInfo.InvariantCulture))</div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+
+
+                 <!--Part D-->
+
+    <tr><th colspan="8">改善结果确认：</th></tr>
+
+    if (partFour == null && partThree != null && partThree.AuditEmp != null)
+    {
+        <div class="row">
+            <div class="col-md-4">部门主管审核:&nbsp;</div>
+            <div class="col-md-4">责任人:&nbsp;</div>
+            <div class="col-md-4">日期:&nbsp;</div>
+        </div>
+    }
+    else
+    {
+        <tr>
+            <td colspan="8">
+                <div class="details">
+                    @(partFour == null ? null : partFour.Mark)
+                    <div class="row">
+                        <div class="col-md-4">部门主管审核:&nbsp;@(partFour == null || string.IsNullOrEmpty(partFour.AuditEmp) ? null : new EmployeeBll().Single(partFour.AuditEmp).RealName)</div>
+                        <div class="col-md-4">责任人:&nbsp;@(partFour == null ? null : partFour.BaseEmployee.RealName)</div>
+                        <div class="col-md-4">日期:&nbsp;@(partFour == null ? null : partFour.ReviewTime.ToString(CultureInfo.InvariantCulture))</div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+
+}
+
+<style type="text/css">
+    .details {
+        text-align: left;
+    }
+</style>

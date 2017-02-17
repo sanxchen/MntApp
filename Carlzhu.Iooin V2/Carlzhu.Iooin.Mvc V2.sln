@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 Application 业务逻辑层", "01 Application 业务逻辑层", "{656B47C1-3922-4F0B-820E-00BA9BDB33B1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 Application 界面应用层", "02 Application 界面应用层", "{29DFF52B-8455-4EA1-8798-3AEE210D9372}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 Models 实体层", "01 Models 实体层", "{1B8156EC-FC04-48C0-9904-8782705A2175}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 Application 桌面应用", "03 Application 桌面应用", "{CCD863AB-BDFA-4436-B3AA-B4433B276DAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carlzhu.Iooin.Entity", "Carlzhu.Iooin.Application\Carlzhu.Iooin.Entity\Carlzhu.Iooin.Entity.csproj", "{AB4C35FF-8B46-4F22-8219-1F0D77BAE6AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carlzhu.Iooin.Business", "Carlzhu.Iooin.Application\Carlzhu.Iooin.Business\Carlzhu.Iooin.Business.csproj", "{D4803254-FBED-4B34-880A-0264A7D91C62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carlzhu.Iooin.WebApp", "Carlzhu.Iooin.Application\Carlzhu.Iooin.WebApp\Carlzhu.Iooin.WebApp.csproj", "{525AF958-E9C1-4A8A-9A4D-53E0414B8048}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carlzhu.Iooin.Desk.RkwPackage", "Carlzhu.Iooin.Application\Carlzhu.Iooin.Desk.RkwPackage\Carlzhu.Iooin.Desk.RkwPackage.csproj", "{FF3AF0E9-0904-4369-B33A-3653B6D04618}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 业务逻辑", "02 业务逻辑", "{CE6699A3-9A26-4518-B6A1-689BE33B0175}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AB4C35FF-8B46-4F22-8219-1F0D77BAE6AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB4C35FF-8B46-4F22-8219-1F0D77BAE6AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB4C35FF-8B46-4F22-8219-1F0D77BAE6AA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AB4C35FF-8B46-4F22-8219-1F0D77BAE6AA}.Debug|x86.Build.0 = Debug|Any CPU
+		{AB4C35FF-8B46-4F22-8219-1F0D77BAE6AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB4C35FF-8B46-4F22-8219-1F0D77BAE6AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB4C35FF-8B46-4F22-8219-1F0D77BAE6AA}.Release|x86.ActiveCfg = Release|Any CPU
+		{AB4C35FF-8B46-4F22-8219-1F0D77BAE6AA}.Release|x86.Build.0 = Release|Any CPU
+		{D4803254-FBED-4B34-880A-0264A7D91C62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4803254-FBED-4B34-880A-0264A7D91C62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4803254-FBED-4B34-880A-0264A7D91C62}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D4803254-FBED-4B34-880A-0264A7D91C62}.Debug|x86.Build.0 = Debug|Any CPU
+		{D4803254-FBED-4B34-880A-0264A7D91C62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4803254-FBED-4B34-880A-0264A7D91C62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4803254-FBED-4B34-880A-0264A7D91C62}.Release|x86.ActiveCfg = Release|Any CPU
+		{D4803254-FBED-4B34-880A-0264A7D91C62}.Release|x86.Build.0 = Release|Any CPU
+		{525AF958-E9C1-4A8A-9A4D-53E0414B8048}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{525AF958-E9C1-4A8A-9A4D-53E0414B8048}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{525AF958-E9C1-4A8A-9A4D-53E0414B8048}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{525AF958-E9C1-4A8A-9A4D-53E0414B8048}.Debug|x86.Build.0 = Debug|Any CPU
+		{525AF958-E9C1-4A8A-9A4D-53E0414B8048}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{525AF958-E9C1-4A8A-9A4D-53E0414B8048}.Release|Any CPU.Build.0 = Release|Any CPU
+		{525AF958-E9C1-4A8A-9A4D-53E0414B8048}.Release|x86.ActiveCfg = Release|Any CPU
+		{525AF958-E9C1-4A8A-9A4D-53E0414B8048}.Release|x86.Build.0 = Release|Any CPU
+		{FF3AF0E9-0904-4369-B33A-3653B6D04618}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF3AF0E9-0904-4369-B33A-3653B6D04618}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF3AF0E9-0904-4369-B33A-3653B6D04618}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FF3AF0E9-0904-4369-B33A-3653B6D04618}.Debug|x86.Build.0 = Debug|Any CPU
+		{FF3AF0E9-0904-4369-B33A-3653B6D04618}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF3AF0E9-0904-4369-B33A-3653B6D04618}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF3AF0E9-0904-4369-B33A-3653B6D04618}.Release|x86.ActiveCfg = Release|Any CPU
+		{FF3AF0E9-0904-4369-B33A-3653B6D04618}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1B8156EC-FC04-48C0-9904-8782705A2175} = {656B47C1-3922-4F0B-820E-00BA9BDB33B1}
+		{AB4C35FF-8B46-4F22-8219-1F0D77BAE6AA} = {1B8156EC-FC04-48C0-9904-8782705A2175}
+		{D4803254-FBED-4B34-880A-0264A7D91C62} = {CE6699A3-9A26-4518-B6A1-689BE33B0175}
+		{525AF958-E9C1-4A8A-9A4D-53E0414B8048} = {29DFF52B-8455-4EA1-8798-3AEE210D9372}
+		{FF3AF0E9-0904-4369-B33A-3653B6D04618} = {CCD863AB-BDFA-4436-B3AA-B4433B276DAD}
+		{CE6699A3-9A26-4518-B6A1-689BE33B0175} = {656B47C1-3922-4F0B-820E-00BA9BDB33B1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Carlzhu.Iooin.Entity.FORM.f.FormBll>
+
+
+
+<thead>
+    <tr>
+        <th>@Html.DisplayName("项次")</th>
+        <th>@Html.DisplayNameFor(model => model.SupplierCode)</th>
+        <th>@Html.DisplayNameFor(model => model.InvoiceNo)</th>
+        <th>@Html.DisplayNameFor(model => model.AmountOfMoney)</th>
+        <th>@Html.DisplayNameFor(model => model.Mark)</th>
+    </tr>
+</thead>
+<tbody>
+    @{
+        int i = 0;
+        decimal sumMoney = 0;
+        foreach (var a in Model)
+        {
+            sumMoney += a.AmountOfMoney;
+            <tr>
+                <td>@(++i)</td>
+                <td>@a.Supplier.Name</td>
+                <td>@a.InvoiceNo</td>
+                <td>@a.AmountOfMoney</td>
+                <td>@a.Mark</td>
+            </tr>
+        }
+        for (int j = i; j < 10; j++)
+        {
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+        }
+        <tr>
+            <td colspan="3" class="text-left"><b>人民币（大写）：&nbsp;&nbsp;&nbsp;&nbsp;<em id="rmbUpper" data-rmb="@sumMoney"></em></b></td>
+            <td colspan="2" class="text-primary" style="text-align: right;"> 总计：@sumMoney</td>
+        </tr>
+    }
+    <tr>
+        <td colspan="5" style="text-align: right;">文件编号：MJ4028-2</td>
+    </tr>
+</tbody>

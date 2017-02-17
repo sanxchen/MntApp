@@ -1,0 +1,166 @@
+﻿@using Carlzhu.Iooin.Business.FormModule
+@using Carlzhu.Iooin.Business.TpaModule
+@using Carlzhu.Iooin.Entity.FORM
+@using Carlzhu.Iooin.Entity.FORM.f.draw
+@using Carlzhu.Iooin.Framework.Data.Repository
+@using Carlzhu.Iooin.InteractiveAdapter
+@model IEnumerable<Carlzhu.Iooin.Entity.QUALITY.Published>
+@{
+    ViewBag.Title = "查询结果";
+    var formtype = (FormType)ViewBag.FormType;
+}
+
+<style type="text/css">
+    .where {
+        background: #fff;
+        position: fixed;
+        width: 100%;
+    }
+
+    .data {
+        padding-top: 45px;
+    }
+
+    table thead tr {
+        height: 30px;
+        line-height: 30px;
+        font-weight: bolder;
+        border: 2px solid #ccc;
+    }
+
+    table tbody tr {
+        background-color: #eee;
+    }
+
+        table tbody tr td, table tbody tr td label {
+            font-weight: normal;
+            color: #666;
+        }
+
+        table tbody tr.delete {
+            background: silver;
+        }
+
+            table tbody tr.delete td, table tbody tr.delete td label {
+                font-weight: normal;
+                color: #eee;
+            }
+
+    p span {
+        color: red;
+    }
+
+    hr {
+        padding: 2px 0;
+    }
+
+    .key {
+        color: red;
+    }
+</style>
+
+<div class="where">
+    <p>
+        查询条件：<span style="float:right;">
+            @Html.RouteLink("首页", "Default", new { Controller = "Default", Action = "Index" })
+        </span>
+    </p>
+    <hr />
+    <p>
+        发行时间起：<span>@Request["DateStart"]</span>
+        发行时间止：<span>@Request["DateEnd"]</span>
+        检索类型：<span>@(formtype != null ? formtype.FormName : "综合查询")</span>
+        关键字：<span>@Request["Keywords"]</span>
+        <span style="float:right"><a href="javascript:alert('立将开放')">导出结果</a></span>
+    </p>
+    <hr />
+</div>
+<div class="data">
+    <table class="table table-bordered table-condensed table-hover astatus">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>@Html.DisplayNameFor(model => model.CustomerNo)</th>
+                @{
+                    if (formtype == null)
+                    {
+
+                        <th>@Html.DisplayNameFor(model => model.ProductNo)</th>
+                        <th>@Html.DisplayNameFor(model => model.FormType.FormName)</th>
+                        <th>@Html.DisplayNameFor(model => model.FormNo)</th>
+                    }
+                    else
+                    {
+                        F<FormDrawingsBom> f = new F<FormDrawingsBom>();
+                        var type = f.ReflectionByFormType(formtype);
+                        @Html.Partial(string.Format("cent/{0}Head", formtype.Method), Activator.CreateInstance(type));
+
+                    }
+                }
+
+                <th style="text-align:center">@Html.DisplayNameFor(model => model.PublishTime)</th>
+                <th style="text-align:center;">@Html.DisplayNameFor(model => model.PublishVer)</th>
+                <th style="text-align:center">查看</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var row = 0;
+                foreach (var item in Model)
+                {
+
+
+
+                    string customerName = new TpaCustomerBll().GetCustomerNameByNo(item.CustomerNo);
+
+                    <tr class=@(item.IsDel ? "delete" : "null")>
+
+                        <td>@(++row)</td>
+                        <td style="width:170px;"><label title="@customerName">@customerName.ToCut(8)</label></td>
+
+                        @if (formtype == null)
+                        {
+                            <td>@item.ProductNo</td>
+                            <td>@item.FormType.FormName</td>
+                            <td>@item.FormNo</td>
+                        }
+                        else
+                        {
+                            @Html.Action("GetSearchBody", new { formNo = item.FormNo })
+                        }
+
+                        <td style="width:80px;">@item.PublishTime.ToString("yyyy/MM/dd")</td>
+                        <td style="width:60px;text-align:center;">@(item.PublishVer)@(item.IsPass ? "(密)" : null)</td>
+                        <td class="text-center">
+                            @if (!item.IsDel)
+                            {
+                                var i = 0;
+                                foreach (var file in new Carlzhu.Iooin.Business.BaseModule.FilesFileGroupBll().GetFileListByGroupGuid(item.FileGroup))
+                                {
+                                    var ff = DataFactory.Database().FindEntity<Files>(file.Md5);
+                                    @Html.RouteLink(string.Format("[{0}]", ++i), "Default", new { Controller = "Pdm", Action = "PdfViews", publishKey = item.PubishedGuid, md5 = ff.Md5 }, new { TITLE = ff.FileName, TARGET = "_blank" })
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+</div>
+<script type="text/javascript">
+
+    $(function () {
+        //清除A状态
+        //关键字加色
+        $.each('@Request["Keywords"]'.split(' '), function (key, value) {
+            if (value != "") {
+                $("body td:contains('" + value + "')").css("color", "red");
+                $("body td:contains('" + value.toUpperCase() + "')").css("color", "red");
+                $("body td label:contains('" + value + "')").css("color", "red");
+            }
+        });
+    });
+
+</script>

@@ -1,0 +1,21 @@
+﻿SELECT cdrhmas.cusno as 客户代号, 
+cdrcus.cusna as 客户名称,   
+         cdrdmas.cdrno as 订单编号,
+         cdrdmas.itnbr as 品号,
+		 invmas.itdsc as 品名,   
+         invmas.spdsc as 规格,   
+         cdrhmas.mancode as 业务员代号,   
+         cdrdmas.cdrdate as 预计交期,  
+         cdrdmas.cdrqy1 as 订单数量1,   
+         cdrdmas.shpqy1 as 累计出货1, 
+         cdrdmas.cdrqy1- cdrdmas.shpqy1 as 未交数量1, 
+         cdrdmas.cdrqy2, 
+         cdrdmas.shpqy2,     
+         cdrhmas.cuspono as 客户采购单号,     
+         cdrhmas.recdate as 接单日期      
+         
+    FROM cdrdmas
+    left outer join cdrhmas on cdrhmas.facno=cdrdmas.facno and cdrhmas.cdrno=cdrdmas.cdrno 
+	left outer join invmas on invmas.itnbr= cdrdmas.itnbr
+	left outer join cdrcus on cdrcus.cusno=cdrhmas.cusno
+   WHERE cdrhmas.hrecsta='Y' and cdrdmas.drecsta>'10' and cdrdmas.drecsta<'95'

@@ -1,0 +1,211 @@
+﻿@model IEnumerable<Carlzhu.Iooin.Entity.FORM.f.FormPdAbnor>
+@{
+    ViewBag.Title = "看板";
+    Layout = "~/Views/Shared/_LayoutStyle.cshtml";
+}
+
+<script language="javascript">
+    window.setInterval('showTime()', 1000);
+
+
+    //连接和关闭现在连接
+    var ws = connectSocketServer(
+           function () {
+               //请求链接
+               rightCornerMsg("* Connecting to server..", "info");
+           },
+        function () {
+            $("#statusMsg").addClass("text-success").text("后台推送正常....");
+            rightCornerMsg("* Connecting to server open", "success");
+        },
+        function (event) {
+            $("#msg").text(event.data);
+            switch (event.data) {
+                case "#1101#"://新异常
+                    Voice();
+                    setTimeout(function () { location.reload(); }, 3000);
+                    break;
+                case "#1103#"://临时解除
+                    location.reload();
+                    break;
+                case "#1105#": //结案
+                    location.reload();
+                    break;
+                case "2": //结案
+                    $("#fullscreenbtn").bind("click", function () {
+
+                    });
+                    $("#fullscreenbtn").click();
+                    break;
+            }
+
+        },
+        function () {
+            $("#statusMsg").addClass("text-warning").text("服务器已关闭！！！");
+            rightCornerMsg("* Connecting to server close", "error");
+        },
+        function () {
+            $("#statusMsg").addClass("text-danger").text("服务器异常");
+            rightCornerMsg("服务器异常", "error");
+        }
+
+    );
+
+
+
+
+
+    //type声音类型
+    function Voice(type) {
+        var music = $("#bgMusic");
+        var play = $("#audioBtn");
+        play.bind("click", function () {
+
+            play.removeClass("pause").addClass("play");
+            music[0].play();
+
+            music.bind("ended", function () {
+                play.removeClass("play").addClass("pause");
+            });
+        }).click();
+    }
+
+    function scrollToBottom(target) {
+        target.animate({ scrollTop: target[0].scrollHeight });
+    }
+
+    $(function () {
+
+
+        startmarquee(20, 20, 1500);
+
+        setInterval(function () {
+            location.reload();
+        }, 1000 * 60 * 20);
+
+
+    });
+
+
+</script>
+
+
+<div id="fullscreenbox" style="position: absolute; left: 0; right: 0; top: 0; bottom: 0">
+
+    <div style="width: 200px; height: 30px; line-height: 30px;  position: fixed; top: 0; left: 0; z-index: 99999">
+        [<span id="msg">22</span>]<b id="statusMsg">检测服务中..</b>
+    </div>
+    <div style="width: 56px; height: 50px; position: fixed; top: 0; right: 0; z-index: 99999">
+        <span class="music pause" id="audioBtn" style="cursor: pointer;"></span>
+        <audio id="bgMusic" src="/Voice/1515.mp3"></audio>
+    </div>
+
+    <div style="border-bottom: 2px solid silver; height: 40px;">
+        <div class="text-center">
+            <a id="fullscreenbtn">苏州明捷精密机械有限公司</a>
+            <div id="time"></div>
+        </div>
+
+    </div>
+
+
+    <div id="show" style="height: 500px; overflow-y:hidden; overflow-x: hidden;">
+
+        <table class="table table-condensed table-bordered" id="abnor">
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+                        <th rowspan="2" style="width: 50px;">#</th>
+                        <th rowspan="2" style="width: 60px;">@Html.DisplayNameFor(model => model.AbnormalType)</th>
+                        <th rowspan="2" style="width: 60px;">@Html.DisplayNameFor(model => model.WorkshopCode)</th>
+                        <th style="width: 80px;">@Html.DisplayNameFor(model => model.WorkTag)</th>
+                        <th rowspan="2" style="width: 120px">@Html.DisplayNameFor(model => model.PartNo)</th>
+
+                        <th style="width: 70px">发生日期</th>
+                        <th rowspan="2">@Html.DisplayNameFor(model => model.AbnormalDetails)</th>
+                        <th rowspan="2" style="width: 50px">提报人</th>
+                        <th style="width: 70px">@Html.DisplayNameFor(model => model.ResponsibilityDept)</th>
+                        <th rowspan="2">处理方式</th>
+                        <th style="width: 85px">预计完成日期</th>
+                        
+                       
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.WorkProcess)</th>
+                        <th>时间</th>
+                        <th>处理人</th>
+                        <th>时间</th>
+                        
+                    </tr>
+                    var pl = !string.IsNullOrEmpty(item.DealingMethod ?? "");
+                    var fi = item.FinishTime.Year.ToString() == "3000";
+                    <tr>
+                        <td rowspan="2">@item.RowId</td>
+                        <td rowspan="2">@Enum.GetName(typeof(Carlzhu.Iooin.Entity.FORM.f.FormPdAbnor.EnumAbnormalType), item.AbnormalType)</td>
+                        <td>@item.WorkTag</td>
+                        <td rowspan="2">@item.PartNo</td>
+                        <td>@item.AbnormalTime.ToString("yyyy/MM/dd")</td>
+                        <td rowspan="2">@item.AbnormalDetails</td>
+                        <td rowspan="2">@item.Form.BaseEmployee.RealName</td>
+                        <td>@item.Department.DepartmentName</td>
+                        <td rowspan="2">@(pl ? item.DealingMethod : "")</td>
+                        <td>@(pl ? item.PlanFinishTime.ToString("yyyy/MM/dd") : "" )</td>
+                      
+                      
+                    </tr>
+                    <tr>
+                        <td>@item.WorkProcess</td>
+                        <td>@item.AbnormalTime.ToString("HH:mm:ss")</td>
+                        <td>@(pl ? item.BaseEmployee.RealName : "")</td>
+                        <td>@(pl ? item.PlanFinishTime.ToString("HH:mm:ss") : "" )</td>
+                        
+                    </tr>
+
+                    <tr>
+                        <td colspan="15"><hr /></td>
+                    </tr>
+                 
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+
+
+
+
+<style type="text/css">
+    table#abnor tr th {
+        vertical-align: middle;
+        text-align: center;
+        line-height: 0.7;
+    }
+
+    table#abnor tr td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+
+
+    .music {
+        width: 56px;
+        height: 50px;
+        background: #fff url(/images/musicBtn.gif) no-repeat;
+        display: block;
+        border: 1px solid #e6e6fa;
+    }
+
+    .pause {
+        background-position: 0 bottom;
+    }
+
+    .play {
+    }
+</style>
+

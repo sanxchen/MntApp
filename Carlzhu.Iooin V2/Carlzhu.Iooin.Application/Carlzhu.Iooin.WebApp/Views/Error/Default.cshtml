@@ -1,0 +1,39 @@
+﻿@using Carlzhu.Iooin.InteractiveAdapter
+
+
+
+@{
+    ViewBag.Title = "系统错误";
+    Layout = "~/Views/Shared/_LayoutStyle.cshtml";
+}
+
+@*@Html.Partial("/Views/Default/_Development.cshtml")*@
+
+<script type="text/javascript">
+    //document.oncontextmenu = function () { return false; } //屏蔽右键菜单
+    //document.onpaste = function () { return false; } //屏蔽粘贴
+    //document.oncopy = function () { return false; } //屏蔽复制
+    //document.oncut = function () { return false; } //屏蔽剪切
+    //document.onselectstart = function () { return false; } //屏蔽选择
+
+</script>
+<div class="page-header" style="margin:0px;">
+    <h4>Minicut <small>.</small></h4>
+</div>
+<div class="container">
+    <div class="jumbotron">
+        <dl class="dl-horizontal">
+            <dt>异常消息</dt>
+            <dd>@ViewData["Err"]</dd>
+            <dt>异常地址</dt>
+            <dd>@ViewData["Source"]</dd>
+            <dt>原访问地址</dt>
+            <dd><a href="@ViewData["Url"]">@(ViewData["Url"].ToString().ToCut(50))</a></dd>
+        </dl>
+
+        <p >
+            <a class="btn  btn-danger pull-right" href="/" role="button">主页 &raquo;</a>
+        </p>
+    </div>
+
+</div>

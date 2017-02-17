@@ -1,0 +1,164 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.draw.FormDrawingsEcn
+@{
+    var deal = new List<SelectListItem>()
+               {
+                   new SelectListItem(){Text="继续使用",Value = "A"},
+                   new SelectListItem(){Text="报废",Value = "B"},
+                   new SelectListItem(){Text="返工",Value = "C"},
+               };
+
+    var updateType = new List<SelectListItem>()
+    {
+        new SelectListItem(){Text = "客户通知",Value = "A"},
+        new SelectListItem(){Text = "生产变更",Value = "B"},
+        new SelectListItem(){Text = "内部变更",Value = "C"},
+        new SelectListItem(){Text = "工艺变更",Value = "D"},
+        new SelectListItem(){Text = "包装变更",Value = "E"},
+        new SelectListItem(){Text = "其它变更",Value = "F"},
+        
+    };
+
+    var updateDoc = new List<SelectListItem>()
+    {
+        new SelectListItem(){Text = "工艺文件",Value = ""},
+        new SelectListItem(){Text = "内部图纸",Value = ""},
+        new SelectListItem(){Text = "客户图纸",Value = ""},
+        new SelectListItem(){Text = "BOM",Value = ""},
+        new SelectListItem(){Text = "作业指导书",Value = ""},
+        new SelectListItem(){Text = "包装工艺卡",Value = ""},
+        new SelectListItem(){Text = "FMEA",Value = ""},
+        new SelectListItem(){Text = "控制计划",Value = ""},
+        new SelectListItem(){Text = "过程流程图",Value = ""},
+        new SelectListItem(){Text = "检查基准书",Value = ""},
+    };
+}
+
+<style type="text/css">
+    * {
+        /*border: none;*/
+        
+    }
+    table tr td{vertical-align:middle;}
+
+
+</style>
+<table class="table table-bordered table-condensed">
+    <tr>
+        <th colspan="2">文件发行码：</th><td colspan="19"><input type="text" placeholder="请输入已发行文件编号"/></td>
+    </tr>
+    <tr>
+        <th colspan="2">客户名称</th>
+        <td colspan="4"><input type="text" style="width:80px"  readonly="readonly"/></td>
+        <th colspan="2">产品编号</th>
+        <td colspan="4"><input type="text" readonly="readonly" /></td>
+        <th colspan="2">产品名称</th>
+        <td colspan="3"><input type="text" style="width:123px" readonly="readonly" /></td>
+        <th colspan="2">版本号</th>
+        <td colspan="2"><input type="text" style="width:50px" readonly="readonly" /></td>
+    </tr>
+    <tr>
+        <th colspan="2">变更原因</th>
+        <td colspan="19">
+            
+            @*<input type="radio" name="changereason" checked="checked" />客户通知&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="changereason" />生产变更&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="changereason" />内部变更&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="changereason" />工艺变更&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="changereason" />包装变更&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="changereason" />其它变更&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" readonly="readonly" />*@
+            @Html.DropDownList("UpdateType",updateType)
+        </td>
+    </tr>
+    <tr>
+        <th colspan="2">变更内容</th>
+        <td colspan="19"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td colspan="20">
+            <textarea style="width: 100%"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <th colspan="10" style="text-align:center">相关操作</th>
+        <th colspan="11" style="text-align:center">相关文件</th>
+    </tr>
+    @* customer *@
+    <tr>
+        <td>操作部门</td>
+        <td>仓储位置</td>
+        <td>查仓数</td>
+        <td colspan="4">处理办法</td>
+        <td colspan="2">完成时间</td>
+        <td>完成状况</td>
+        <td>是否更新</td>
+        <td colspan="4">相关文件</td>
+        <td colspan="2">更新后文件编号</td>
+        <td colspan="2">版本号</td>
+        <td colspan="2">完成状况</td>
+    </tr>
+    <tr>
+        <td>生产部</td>
+        <td>生产现场</td>
+        <td><input type="text" class="cnum" style="width: 40px" /></td>
+        <td colspan="4">@Html.DropDownList("deal", deal)</td>
+        <td colspan="2"><input type="text" class="datepicker" style="width:90px;" /></td>
+        <td colspan="1"  style="text-align:center;"><input type="checkbox"/></td>
+
+        <td rowspan="5" style="vertical-align:middle;text-align:center;"><input type="checkbox" disabled="disabled" checked="checked" /></td>
+        
+        
+
+        <td colspan="4" rowspan="5" style="vertical-align:middle;text-align:center">@Html.DropDownList("UpdateDoc",updateDoc)</td>
+        <td colspan="2" rowspan="5" style="vertical-align: middle; text-align: center"><input type="text"  /></td>
+        <td colspan="2" rowspan="5" style="vertical-align: middle; text-align: center"><input type="text" /></td>
+        <td colspan="2" rowspan="5" style="vertical-align: middle; text-align: center"><input type="checkbox" /></td>
+    </tr>
+    <tr>
+        <td rowspan="3" style="vertical-align:middle">资材部</td>
+        <td>供应商处</td>
+        <td><input type="text" class="cnum" style="width: 40px" /></td>
+        <td colspan="4">@Html.DropDownList("deal", deal)</td>
+        <td colspan="2"><input type="text" class="datepicker" style="width:90px;" /></td>
+        <td colspan="1" style="text-align:center;"><input type="checkbox" /></td>
+  
+    </tr>
+    <tr>
+        
+        <td>原材料仓</td>
+        <td><input type="text" class="cnum" style="width: 40px" /></td>
+        <td colspan="4">@Html.DropDownList("deal", deal)</td>
+        <td colspan="2"><input type="text" class="datepicker" style="width:90px;" /></td>
+        <td colspan="1" style="text-align:center;"><input type="checkbox" /></td>
+
+     
+    </tr>
+    <tr>
+        
+        <td>客户仓库</td>
+        <td><input type="text" class="cnum" style="width: 40px" /></td>
+        <td colspan="4">@Html.DropDownList("deal", deal)</td>
+        <td colspan="2"><input type="text" class="datepicker" style="width:90px;" /></td>
+        <td colspan="1" style="text-align:center;"><input type="checkbox" /></td>
+
+    
+    </tr>
+    <tr>
+        <td>业务部</td>
+        <td>客户仓库</td>
+        <td><input type="text" class="cnum" style="width: 40px" /></td>
+        <td colspan="4">@Html.DropDownList("deal", deal)</td>
+        <td colspan="2"><input type="text" class="datepicker" style="width:90px;" /></td>
+        <td colspan="1" style="text-align:center;"><input type="checkbox" /></td>
+
+
+    </tr>
+    <tr>
+        <td colspan="2">生效时间</td>
+    </tr>
+    <tr>
+      <td colspan="2">附件</td>  <td colspan="19">@Html.TextBoxFor(model => model.FileGroup, new { READONLY = "READONLY", placeholder = "点击上传文件", title = "点击上传文件" })</td>
+    </tr>
+    <tr><td colspan="21" style="text-align:right">表单编号：MJ42010-48-C1</td></tr>
+    
+</table>

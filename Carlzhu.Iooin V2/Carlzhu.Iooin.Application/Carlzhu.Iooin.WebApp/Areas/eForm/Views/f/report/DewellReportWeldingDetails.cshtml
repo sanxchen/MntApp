@@ -1,0 +1,61 @@
+﻿@using Carlzhu.Iooin.Entity.FORM.f
+@model IEnumerable<Carlzhu.Iooin.Entity.FORM.f.report.FormDewellReportWelding>
+
+
+<thead>
+    @Html.Partial("/Areas/eForm/Views/f/formLayout/report/_editHeader.cshtml", new ViewDataDictionary() { { "Model", Model.First() } })
+    <tr>
+        @Html.Partial("/Areas/eForm/Views/f/formLayout/report/_editCommTh.cshtml", new Carlzhu.Iooin.Entity.FORM.f.report.FormDewellReport())
+
+
+        <th>@Html.DisplayNameFor(model => model.ManConsumption)</th>
+        <th>@Html.DisplayNameFor(model => model.ManFactConsumption)</th>
+        <th>@Html.DisplayNameFor(model => model.DifferenceDescription)</th>
+    </tr>
+</thead>
+<tbody>
+    @{
+        int i = 0;
+
+        foreach (var a in Model)
+        {
+
+            <tr>
+                <td>@(++i)</td>
+                @Html.Partial("/Areas/eForm/Views/f/formLayout/report/_detailsCommTd.cshtml", a)
+
+                <td>@a.ManConsumption</td>
+                <td>@a.ManFactConsumption</td>
+                <td>@a.DifferenceDescription</td>
+            </tr>
+        }
+        for (int j = i; j < 10; j++)
+        {
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+        }
+
+    }
+    <tr>
+        <td colspan="30" style="text-align: right;">文件编号：MJ4028-2</td>
+    </tr>
+</tbody>
+
+
+
+
+

@@ -1,0 +1,220 @@
+﻿@{
+    ViewBag.Title = "表单维护";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+}
+
+
+
+
+
+<script type="text/javascript">
+
+    //初始化
+    $(function () {
+        $("#layoutA").splitter({
+            type: "v",
+            outline: true,
+            minLeft: 180, sizeLeft: 180, maxLeft: 180,
+            anchorToWindow: true,
+            accessKey: "L"
+        });
+        GetTree();
+        GetGrid();
+    });
+
+    var FormClassId = "0", ShortName = "";
+    //加载左边树
+    function GetTree() {
+        var itemtree = {
+            onnodeclick: function (item) {
+                FormClassId = item.id;            //ID
+                ShortName = item.text;        //名称
+                var Parameter = [{
+                    paramName: "Class",
+                    paramValue: FormClassId,
+                    Operation: "Equal",
+                }]
+                $("#gridTable").jqGrid('setGridParam', {
+                    url: "@Url.Content("~/eForm/FormType/GridPageJson")?ParameterJson=" + escape(JSON.stringify(Parameter))
+                }).trigger('reloadGrid');
+            },
+            url: "@Url.Content("~/eForm/FormType/TreeJsonFormClass")"
+        };
+        $("#ItemsTree").treeview(itemtree);
+    }
+
+    function btn_add() {
+        if (!!FormClassId) {
+            var url = "/eForm/FormType/Form?class=" + FormClassId;
+            openDialog(url, "Form", "新增表单", 650, 350, function (iframe) {
+                top.frames[iframe].AcceptClick();
+            });
+        } else {
+            alertDialog("请选择左边项目", 0);
+        }
+
+
+    }
+    //编辑
+    function btn_edit() {
+        var KeyValue = GetJqGridRowValue("#gridTable", "FormId");
+        if (IsChecked(KeyValue)) {
+            var url = "/eForm/FormType/Form?KeyValue=" + KeyValue;
+            openDialog(url, "Form", "编辑FormType", 770, 395, function (iframe) {
+                top.frames[iframe].AcceptClick();
+            });
+        }
+    }
+    //删除
+    function btn_delete() {
+        var KeyValue = GetJqGridRowValue("#gridTable", "Class");
+        if (IsDelData(KeyValue)) {
+            var delparm = 'KeyValue=' + KeyValue;
+            delConfig('/eForm/FormType/Delete', delparm, KeyValue.split(",").length);
+        }
+    }
+    //明细
+    function btn_detail() {
+        var KeyValue = GetJqGridRowValue("#gridTable", "Class");
+        if (IsChecked(KeyValue)) {
+            var url = "/eForm/FormType/Detail?KeyValue=" + KeyValue;
+            Dialog(url, "Detail", "FormType明细", 820, 500, function (iframe) {
+                top.frames[iframe].AcceptClick();
+            });
+        }
+    }
+    //刷新
+    function windowload() {
+        $("#gridTable").trigger("reloadGrid"); //重新载入
+
+    }
+
+    /*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    */
+    function repBool(cellvalue) {
+        if (cellvalue == '1') return "<img src='/Content/Images/checkokmark.gif'/>";
+        if (cellvalue == '0') return "<img src='/Content/Images/checknomark.gif'/>";
+        return cellvalue;
+    }
+
+
+
+    function GetGrid() {
+        var SelectRowIndx;
+        $("#gridTable").jqGrid({
+            url: "@Url.Content("~/eForm/FormType/GridPageJson")",
+            datatype: "json",
+            height: $(window).height() - 126,
+            autowidth: true,
+            colModel: [
+            { label: '主键', name: 'FormId', index: 'FormId', width: 70, align: 'left', hidden: true },
+            { label: 'ID', name: 'FormId', index: 'FormId', width: 30, align: 'left' },
+            { label: '名称', name: 'FormName', index: 'FormName', width: 130, align: 'left' },
+            { label: '方法', name: 'Method', index: 'Method', width: 120, align: 'left' },
+            { label: '类别', name: 'Class', index: 'Class', width: 50, align: 'left' },
+            { label: '文件', name: 'FileLimit', index: 'FileLimit', width: 30, align: 'center' },
+            { label: '必要文件', name: 'ReqFileExp', index: 'ReqFileExp', width: 70, align: 'left' },
+            { label: '隶属', name: 'Os', index: 'Os', width: 40, align: 'left' },
+            { label: '路径一', name: 'RouteOne', index: 'RouteOne', width: 120, align: 'left' },
+            { label: '加签', name: 'IsAdd', index: 'IsAdd', width: 40, align: 'center', formatter: function (cellvalue, options, rowObject) { return repBool(cellvalue); } },
+            { label: '转签', name: 'IsRedirect', index: 'IsRedirect', width: 40, align: 'center', formatter: function (cellvalue, options, rowObject) { return repBool(cellvalue); } },
+            { label: '代签', name: 'IsReplace', index: 'IsReplace', width: 40, align: 'center', formatter: function (cellvalue, options, rowObject) { return repBool(cellvalue); } },
+            { label: '多路径', name: 'IsStart', index: 'IsStart', width: 40, align: 'center', formatter: function (cellvalue, options, rowObject) { return repBool(cellvalue); } },
+            { label: '结案', name: 'IsColsed', index: 'IsColsed', width: 40, align: 'center', formatter: function (cellvalue, options, rowObject) { return repBool(cellvalue); } },
+            { label: '热门', name: 'IsHot', index: 'IsHot', width: 40, align: 'center', formatter: function (cellvalue, options, rowObject) { return repBool(cellvalue); } },
+            { label: '自签', name: 'IsMyself', index: 'IsMyself', width: 40, align: 'center', formatter: function (cellvalue, options, rowObject) { return repBool(cellvalue); } },
+            { label: '显示', name: 'IsDisplay', index: 'IsDisplay', width: 40, align: 'center', formatter: function (cellvalue, options, rowObject) { return repBool(cellvalue); } },
+            {label: '创建时间',name: 'CreateTime',index: 'CreateTime',width: 80,align: 'left',formatter: function (cellvalue, options, rowObject) {return formatDate(cellvalue, 'yyyy-MM-dd');}}
+
+
+
+            ],
+            viewrecords: true,
+            rowNum: 30,
+            rowList: [30, 50, 100, 500, 1000],
+            pager: "#gridPager",
+            sortname: 'formid',
+            sortorder: 'desc',
+            rownumbers: true,
+            shrinkToFit: false,
+            gridview: true,
+            multiselect: true,
+            onSelectRow: function () {
+                SelectRowIndx = GetJqGridRowIndx("#" + this.id);
+            },
+            gridComplete: function () {
+                $("#" + this.id).jqGrid('setSelection', SelectRowIndx);
+            }
+        });
+        columnModelData("#gridTable");
+        //自应高度
+        $(window).resize(function () {
+            $("#gridTable").setGridHeight($(window).height() - 178);
+        });
+    }
+
+
+</script>
+<div id="layout" class="layout">
+
+    <!--左边-->
+    <div class="layoutPanel layout-west">
+        <div class="ScrollBar" id="ItemsTree">
+            <div id="ConditionInstall">
+            </div>
+        </div>
+
+    </div>
+    <!--中间-->
+
+
+    <div class="layoutPanel layout-center">
+        <div class="btnbartitle">
+            <div>
+                表单维护 <span id="CenterTitle"></span>
+            </div>
+        </div>
+        <!--工具栏-->
+        <div class="tools_bar" style="border-top: none; margin-bottom: 0px;">
+            <div class="PartialButton">
+                @Html.Partial("_PartialButton")
+            </div>
+        </div>
+        <!--列表-->
+        <div id="grid_List">
+            <table id="gridTable"></table>
+            <div id="gridPager"></div>
+        </div>
+        <!--视图-->
+        <div id="grid_View" class="ScrollBar">
+        </div>
+    </div>
+
+
+
+
+</div>
+

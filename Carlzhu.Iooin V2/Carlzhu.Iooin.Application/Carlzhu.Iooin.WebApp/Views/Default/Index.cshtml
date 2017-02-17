@@ -1,0 +1,337 @@
+﻿@using Carlzhu.Iooin.Util
+@{
+    ViewBag.Title = "系统首页";
+
+    var current = ManageProvider.Provider.Current();
+}
+<style type="text/css">
+    div.logo {
+        /*height: 100px;
+        width: 100%;*/
+        background: url('/content/images/searchLogo.png') no-repeat center center;
+    }
+
+
+
+    #query {
+        height: 100px;
+        border: 1px solid silver;
+    }
+
+        #query .btn-danger {
+            background-color: #8b0000;
+            border-color: #8b0000;
+        }
+
+        #query .search {
+            height: 100px;
+            line-height: 100px;
+        }
+
+    #sysinfo {
+        height: 40px;
+        line-height: 40px;
+        background-color: #e8e8e8;
+    }
+
+        #sysinfo .sysinfoitem {
+            margin-top: 10px;
+            height: 20px;
+            vertical-align: middle;
+        }
+
+        #sysinfo ul.sysinfoitem {
+            height: 20px;
+            line-height: 20px;
+        }
+
+            #sysinfo ul.sysinfoitem li {
+                height: 20px;
+                float: left;
+                margin: auto 5px;
+                padding-right: 20px;
+                border-right: 1px solid #c3c3c3;
+            }
+
+    #links {
+        height: 40px;
+        line-height: 40px;
+        background-color: #f3f3f3;
+    }
+
+        #links .linkitem {
+            margin-top: 10px;
+            height: 20px;
+            vertical-align: middle;
+        }
+
+        #links ul.linkitem {
+            height: 20px;
+            line-height: 20px;
+        }
+
+            #links ul.linkitem li {
+                height: 20px;
+                float: left;
+                margin: auto 5px;
+                padding-right: 20px;
+                border-right: 1px solid #c3c3c3;
+            }
+
+                #links ul.linkitem li:first-child {
+                    border: none;
+                }
+
+    #main {
+        margin: 10px auto;
+    }
+
+        #main .notice {
+        }
+
+            #main .notice .panel-head, #main .shortcut .panel-head, #main .ebook .panel-head, #main .draw .panel-head {
+                height: 32px;
+                background-color: #e8e8e8;
+                line-height: 32px;
+            }
+
+
+    /*模块入口*/
+    .menu {
+        z-index: 1000;
+        margin: 15px auto;
+    }
+
+        .menu a:hover, .menu a.hover {
+            color: #444 !important;
+        }
+
+        .menu li {
+            position: relative;
+        }
+
+        .menu > li {
+            float: left;
+            width: 16.666666666666664%;
+            /*border-top: 1px solid #d1cccc;*/
+        }
+
+            .menu > li:hover, .menu > li.hover {
+                /*border-top-color: #d1cccc;*/
+                z-index: 1;
+            }
+
+            .menu > li > a {
+                display: block;
+                font-size: 10px;
+                color: #444;
+                text-align: center;
+                text-transform: uppercase;
+                line-height: 18px;
+                padding: 0px 5px;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+
+
+
+            .menu > li:hover > a,
+            .menu > li.hover > a {
+                color: #444;
+                text-decoration: none;
+            }
+
+    .menu-icon {
+        display: block;
+        width: 53px;
+        height: 53px;
+        margin: 0 auto 5px;
+        background: url(/Content/images/1227/icon/system_mod_logo_50.png) 0 0 no-repeat;
+    }
+
+
+    .menu-icon-0 {
+        background-position: 1px 1px;
+    }
+
+    .menu-icon-1 {
+        background-position: -57px 1px;
+    }
+
+    .menu-icon-2 {
+        background-position: -115px 1px;
+    }
+
+    .menu-icon-3 {
+        background-position: -170px 1px;
+    }
+
+    .menu-icon-4 {
+        background-position: -228px 1px;
+    }
+
+
+    .menu > li:hover > a .menu-icon-0, .menu > li.hover > a .menu-icon-0 {
+        background-position: 1px -54px;
+    }
+
+    .menu > li:hover > a .menu-icon-1, .menu > li.hover > a .menu-icon-1 {
+        background-position: -58px -54px;
+    }
+
+    .menu > li:hover > a .menu-icon-2, .menu > li.hover > a .menu-icon-2 {
+        background-position: -115px -54px;
+    }
+
+    .menu > li:hover > a .menu-icon-3, .menu > li.hover > a .menu-icon-3 {
+        background-position: -170px -54px;
+    }
+
+    .menu > li:hover > a .menu-icon-4, .menu > li.hover > a .menu-icon-4 {
+        background-position: -228px -54px;
+    }
+</style>
+
+
+
+
+
+<section id="query">
+    <div>
+        <div class="row">
+            <div class="col-md-4">
+                <div style="margin-left: 15px;">
+                    <img src="/Content/Images/1227/portal_logo_2017.png" />
+                </div>
+                
+            </div>
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-4 search">
+
+                @using (Html.BeginForm("114", "Default", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="input-group">
+
+                        <input type="text" class="form-control" placeholder="请输入员工姓名或工号查询" name="KeyValue" />
+                        <span class="input-group-btn">
+                            <input type="submit" class="btn btn-danger" value="&nbsp;&nbsp;查询&nbsp;&nbsp;" />
+                        </span>
+
+                    </div>
+
+
+                }
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+
+</section>
+
+<section id="sysinfo">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-md-12 col-sm-12">
+                <div class="pull-right">
+
+                    <ul class="sysinfoitem">
+                        <li>@(current == null ? "" : current.Account + " (" + current.UserName + ")") </li>
+                        <li>
+                            @Html.RouteLink("我的待处理", new { Controller = "Signing", Action = "Index", area = "eForm" })
+                            <span class="badge">@(new Carlzhu.Iooin.Business.FormModule.Signing().GetSignDataList(ManageProvider.Provider.Current().UserId).Count)</span>
+                        </li>
+                        <li>
+                            @Html.RouteLink("个人中心", new { Controller = "Personal", Action = "Index", area = "eForm" })
+                        </li>
+                        <li>
+                            @(current == null ?
+                                Html.ActionLink("用户登陆", "Index", "Login", new { }, null) :
+                                Html.ActionLink("退出登陆", "OutLogin", "Login", new { }, null))
+
+                        </li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="links">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-md-12 col-sm-12">
+                <div class="pull-right">
+
+                    <ul class="linkitem">
+                        <li>常用功能：</li>
+                        <li>@Html.RouteLink("申请表单", new { Controller = "Applying", Action = "Index", area = "eForm" })</li>
+                        <li>@Html.RouteLink("签核表单", new { Controller = "Signing", Action = "Index", area = "eForm" })</li>
+                        <li>@Html.RouteLink("追寻表单", new { Controller = "Tracking", Action = "Applyed", area = "eForm" })</li>
+                        @*<li>@Html.RouteLink("人事资料管理", new { Controller = "Home", Action = "AccordionIndex" }, new { TITLE = "人事资料管理" })</li>
+                            <li>@Html.RouteLink("出入登记", new { Controller = "Door", Action = "Index", area = "hrms" })</li>
+                            <li>@Html.RouteLink("表单申请与签核", new {Controller = "Applying", Action = "Index", area = "eForm"}, new {TITLE = "查看表单"})</li>*@
+                        <li>@Html.RouteLink("品质异常管理", new { Controller = "Abnormal", Action = "Index", area = "eSystem" })</li>
+                        <li>@Html.RouteLink("发行图纸", new { Controller = "Pdm", Action = "Index", area = "eSystem" })</li>
+                        <li>@Html.RouteLink("图纸查询", new { Controller = "Default", Action = "QueryDraws", })</li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="main">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="row-fluid">
+                    <div class="col-md-8 ">
+
+                        <div class="ebook">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    @Html.Action("Index", "Scheduler")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="shortcut">
+                            <div class="panel panel-default">
+                                <div class="panel-head text-center text-bold">模块入口</div>
+                                <div class="panel-body">
+                                    <div class="memu">
+                                        <ul class="menu ">
+                                            <li><a href="/Default/QueryDraws"><i class="menu-icon menu-icon-0"></i>图纸</a></li>
+                                            <li><a href="/Home/AccordionIndex"><i class="menu-icon menu-icon-1"></i>人事</a></li>
+                                            <li><a href="/eForm/Applying/Index"><i class="menu-icon menu-icon-2"></i>表单</a></li>
+                                            <li><a href="/Default/QueryDraws"><i class="menu-icon menu-icon-3"></i>品质</a></li>
+                                            <li><a href="/hrms/door/Index"><i class="menu-icon menu-icon-4"></i>出入</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="notice">
+                            <div class="panel panel-default">
+                                <div class="panel-head text-center text-bold">公告通知</div>
+                                <div class="panel-body">暂停加载...</div>
+                            </div>
+                        </div>
+                        <div class="notice">
+                            <div class="panel panel-default">
+                                <div class="panel-head text-center text-bold">事务提醒</div>
+                                <div class="panel-body">当前没有待处理事务...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

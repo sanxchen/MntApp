@@ -1,0 +1,170 @@
+@{
+    ViewBag.Title = "Apparatus";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+}
+<script type="text/javascript">
+    $(function () {
+        GetGrid();
+    })
+
+    //加载表格
+    function GetGrid() {
+        $("#gridTable").jqGrid({
+            url: "@Url.Content("~/eSystem/Apparatus/GridPageJson")",
+            datatype: "json",
+            height: $(window).height() - 100,
+            autowidth: true,
+            colModel: [
+                { label: '编号', name: 'MntNo', index: 'MntNo', width: 160, align: 'left', sortable: true },
+                { label: '仪器名称', name: 'Name', index: 'Name', width: 200, align: 'left', sortable: true },
+                { label: '型号', name: 'Model', index: 'Model', width: 200, align: 'left', sortable: true },
+                {
+                    label: '检定日期',
+                    name: 'CalDate',
+                    index: 'CalDate',
+                    width: 80,
+                    align: 'center',
+                    sortable: true,
+                    formatter: function (cellvalue, options, rowObject) {
+                        return formatDate(cellvalue, 'yyyy-MM-dd');
+                    }
+                },
+                {
+                    label: '检定结果',
+                    name: 'CalResult',
+                    index: 'CalResult',
+                    width: 50,
+                    align: 'center',
+                    sortable: true,
+                    formatter: function (cellvalue, options, rowObject) {
+                        if (cellvalue === 0) cellvalue = "免校";
+                        if (cellvalue === 1) cellvalue = "合格";
+                        if (cellvalue === 2) cellvalue = "不合格";
+                        return cellvalue;
+                    }
+                },
+                { label: '判定', name: 'CertificateResults', index: 'CertificateResults', width: 80, align: 'left', sortable: true },
+                {
+                    label: '周期',
+                    name: 'CalCircle',
+                    index: 'CalCircle',
+                    width: 50,
+                    align: 'center',
+                    sortable: true,
+                    formatter: function (cellvalue, options, rowObject) {
+                        if (cellvalue === 0) cellvalue = "免校";
+                        if (cellvalue === 6) cellvalue = "半年";
+                        if (cellvalue === 12) cellvalue = "一年";
+                        return cellvalue;
+                    }
+                },
+                {
+                    label: '下次检定日期',
+                    name: 'NextCalDate',
+                    index: 'NextCalDate',
+                    width: 80,
+                    align: 'center',
+                    sortable: true,
+                    formatter: function (cellvalue, options, rowObject) {
+                        return formatDate(cellvalue, 'yyyy-MM-dd');
+                    }
+                },
+                {
+                    label: '校验类型',
+                    name: 'CalType',
+                    index: 'CalType',
+                    width: 50,
+                    align: 'center',
+                    sortable: true,
+                    formatter: function (cellvalue, options, rowObject) {
+                        if (cellvalue === 0) cellvalue = "免校";
+                        if (cellvalue === 1) cellvalue = "内校";
+                        if (cellvalue === 2) cellvalue = "外校";
+                        if (cellvalue === 3) cellvalue = "其他";
+                        return cellvalue;
+                    }
+
+                },
+                { label: '保管人', name: 'UseEmp', index: 'UseEmp', width: 80, align: 'left', sortable: true },
+                { label: '位置', name: 'UseAdd', index: 'UseAdd', width: 160, align: 'left', sortable: true },
+                { label: '备注', name: 'Mark', index: 'Mark', width: 160, align: 'left', sortable: true }
+            ],
+            pager: "#gridPager",
+            sortname: '',
+            sortorder: 'desc',
+            rownumbers: true,
+            shrinkToFit: false,
+            gridview: true,
+        });
+    }
+
+    //刷新
+    function windowload() {
+        $("#gridTable").trigger("reloadGrid"); //重新载入
+    }
+
+    //搜索
+    function btn_Search() {
+        var keywords = $("#keywords").val();
+        var condition = '[{"LeftBrace":"","ParamName":"MntNo","Operation":"Equal","ParamValue":"' + keywords + '","RightBrace":""}]';
+        $("#gridTable").jqGrid('setGridParam', {
+            url: "@Url.Content("/eSystem/Apparatus/GridPageJson?parameterJson=")" + condition, page: 1
+        }).trigger('reloadGrid');
+    }
+
+    //新增
+    function btn_add() {
+      var url = "/eSystem/Apparatus/Form";
+        openDialog(url, "Form", "新增用户", 650, 350, function (iframe) {
+            top.frames[iframe].AcceptClick();
+        });
+    }
+    //编辑
+    function btn_edit() {
+        var KeyValue = GetJqGridRowValue("#gridTable", "MntNo");
+        if (IsChecked(KeyValue)) {
+            var url = "/eSystem/Apparatus/Form?KeyValue=" + KeyValue;
+            openDialog(url, "Form", "编辑用户", 650, 350, function (iframe) {
+                top.frames[iframe].AcceptClick();
+            });
+        }
+    }
+   
+    //删除
+    function btn_delete() {
+        var KeyValue = GetJqGridRowValue("#gridTable", "MntNo");
+        if (IsDelData(KeyValue)) {
+            var delparm = 'KeyValue=' + KeyValue;
+            delConfig('/eSystem/Apparatus/Delete', delparm, KeyValue.split(",").length);
+        }
+    }
+
+</script>
+<div class="btnbartitle">
+    <div>
+        仪器管理 <span id="CenterTitle"></span>
+    </div>
+</div>
+<div class="tools_bar" style="border-top: none; margin-bottom: 0px;">
+    <div class="PartialButton">
+        @Html.Partial("_PartialButton")
+    </div>
+</div>
+<div class="leftline rightline QueryArea" style="margin: 1px; margin-top: 0px; margin-bottom: 0px;">
+    <table border="0" class="form-find" style="height: 45px;">
+        <tr>
+            <th>关键字：</th>
+            <td>
+                <input id="keywords" type="text" class="txt" style="width: 200px" />
+            </td>
+            <td>
+                <input id="btnSearch" type="button" class="btnSearch" value="搜 索" onclick="btn_Search()" />
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="topline rightline" style="margin: 1px; margin-top: -1px;">
+    <table id="gridTable"></table>
+    <div id="gridPager"></div>
+</div>

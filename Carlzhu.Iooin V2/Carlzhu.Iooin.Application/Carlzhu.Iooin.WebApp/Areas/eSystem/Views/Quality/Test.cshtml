@@ -1,0 +1,69 @@
+﻿@using Carlzhu.Iooin.Entity.FORM.f
+@model Carlzhu.Iooin.Entity.FORM.f.FormWorkshopInspection
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Areas/eSystem/Views/Shared/_eSystem.cshtml";
+}
+
+
+<ol class="breadcrumb">
+    <li>@Html.RouteLink("Quality", new { Controller = "Pdm", Action = "Index", area = "eSystem" }, null)</li>
+    <li>@Html.RouteLink("待检产品", new { Controller = "Quality", Action = "WattingTest", area = "eSystem" }, null)</li>
+    <li class="active">检验：@Model.ProductNo</li>
+</ol>
+
+<div class="panel panel-default" style="width: 500px;">
+    <div class="panel-heading" style="padding: 5px 0">检测中...</div>
+    @using (Html.BeginForm("SaveTesting", "Quality", new { area = "eSystem" }, FormMethod.Post, new { id = "cctv", enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(model => model.RowId)
+        <div class="panel-body" style="padding: 0px;">
+            <table class="table table-condensed table-striped table-bordered">
+                <tr> <th>@Html.DisplayNameFor(model => model.ProductNo)</th> <td>@Model.ProductNo</td> </tr>
+                <tr> <th>@Html.DisplayNameFor(model => model.Engineering)</th> <td>@Model.Engineering</td> </tr>
+                <tr> <th>@Html.DisplayNameFor(model => model.Machine)</th> <td>@Model.Machine</td> </tr>
+                <tr> <th>@Html.DisplayNameFor(model => model.TransferMachine)</th> <td>@Model.TransferMachine</td> </tr>
+                <tr> <th>@Html.DisplayNameFor(model => model.StartDateTime)</th> <td>@Model.StartDateTime</td> </tr>
+                <tr> <th>@Html.DisplayNameFor(model => model.EndDateTime)</th> <td>@Model.EndDateTime</td> </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.DetectionResult)</th>
+                    <td>
+                        @Html.DropDownList("DetectionResult", Carlzhu.Iooin.Util.MvcHtml.SelectListExtendExpress.EnumToList(typeof(FormWorkshopInspection.Detection)));
+                    </td>
+                </tr>
+                <tr> <th>@Html.DisplayNameFor(model => model.Checker)</th> <td>@Model.Checker</td> </tr>
+
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Picture)</th>
+                    <td>
+                        @Html.TextBoxFor(model => model.Picture, new { READONLY = "READONLY", placeholder = "点击上传文件", title = "点击上传文件", value = "00000000-0000-0000-0000-000000000000" })
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        @Html.TextAreaFor(model => model.Explan, new { @class = "form-control", rows = "3", placeholder = "请输入检测意见" })
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="panel-footer">
+            @if (!Model.CanTakeit)
+            {
+                <input type="submit" class="btn btn-block btn-success" value="保存检验结果" />
+            }
+
+        </div>
+    }
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            //文件上传
+            $("#Picture").bind("click", function () {
+                UpFile("#Picture", "3", "jpg,xls",null);
+            });
+        })
+    </script>
+}

@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@Page.Title</title>
+    @RenderSection("head", required: false)
+    <title></title>
+
+    <link href="/Content/web/kendo.common.min.css" rel="stylesheet" />
+    <link href="/Content/web/kendo.rtl.min.css" rel="stylesheet" />
+    <link href="/Content/web/kendo.default.min.css" rel="stylesheet" />
+    <link href="/Content/web/kendo.default.mobile.min.css" rel="stylesheet" />
+    <link href="/Content/dataviz/kendo.dataviz.min.css" rel="stylesheet" />
+    <link href="/Content/dataviz/kendo.dataviz.default.min.css" rel="stylesheet" />
+    <link href="/Content/mobile/kendo.mobile.all.min.css" rel="stylesheet" />
+
+    <link href="/Content/shared/examples-offline.css" rel="stylesheet" />
+
+
+    <script src="/Scripts/jquery.min.js"></script>
+
+    <script src="/Scripts/kendo.all.min.js"></script>
+    <script src="/Scripts/kendo.aspnetmvc.min.js"></script>
+    <script src="/Scripts/kendo.timezones.min.js"></script>
+
+    <script src="/Scripts/console.js"></script>
+    <script src="/Scripts/prettify.js"></script>
+
+
+
+
+    <script src="/Scripts/cultures/kendo.culture.zh-CN.min.js"></script>
+
+
+    <script>
+        kendo.culture("zh-CN");
+    </script>
+
+
+</head>
+
+
+    </head>
+    <body>
+        @RenderBody()
+    </body>
+</html>

@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "车辆进出查询";
+    Layout = "~/Areas/eSystem/Views/Shared/_eSystem.cshtml";
+}
+
+@using Carlzhu.Iooin.InteractiveAdapter
+@model IEnumerable<Carlzhu.Iooin.Entity.HRMS.HrmsCarInOut>
+
+<ol class="breadcrumb">
+    <li class="disabled"><a href="/">首页</a></li>
+    <li>@Html.ActionLink("异常进出登记", "Index")</li>
+    <li class="disabled">车辆进出查看</li>
+</ol>
+
+
+
+<div>
+    <form>
+        <div class="input-group" style="width: 750px;">
+
+            <span class="input-group-addon">外出日期起</span>
+            <input type="text" class="form-control datepicker" name="timestart" readonly="readonly" value="@(Request["timestart"] ?? DateTime.Now.ToString("yyyy/MM/dd"))" />
+
+            <span class="input-group-addon">外出日期止</span>
+            <input type="text" class="form-control datepicker" name="timeend" readonly="readonly" value="@(Request["timeend"] ?? DateTime.Now.ToString("yyyy/MM/dd"))" />
+            <span class="input-group-addon">姓名</span>
+            <input type="text" class="form-control" name="extend" placeholder="司机，车牌或表单号" value="@Request["extend"]" style="width: 230px;" />
+            <span class="input-group-btn">
+                <input type="submit" value="查询" class="form-control btn-primary" />
+            </span>
+        </div>
+    </form>
+</div>
+
+<table class="table table-bordered table-condensed ">
+    <thead>
+        <tr>
+            <td>表单号</td>
+            <td>车牌号</td>
+            <td>司机</td>
+            <td>外出时间</td>
+            <td>公里数</td>
+            <td>回来时间</td>
+            <td>公里数</td>
+            <td>加油量</td>
+            <td>行驶公里数</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            bool back = item.InTime.ToString() == "9999/12/31 23:59:59";
+
+            <tr class="@(back ? "warning" : "success")">
+                @*<td>@item.FormNo</td>*@
+                <td><span><i class="glyphicon glyphicon-eye-open"></i></span> @Html.RouteLink(item.FormNo, new { Action = "Details", Controller = "Tracking", area = "eForm", p = (string.Format("{0},{1}", item.FormNo, "signed").Encrypt()) }, new { @target = "_blank" }) &raquo;</td>
+                <td>@item.HrmsCar.Nameplate</td>
+                <td>@item.BaseEmployee.RealName</td>
+                <td>@item.OutTime</td>
+                <td>@item.OutKilometers</td>
+                <td>@(back ? "" : item.InTime.ToString())</td>
+                <td>@(back ? "" : item.InKilometers.ToString())</td>
+                <td>@(back ? "" : item.Oil.ToString())</td>
+                <td style=" color: red">
+                    @(back ? "" : (item.InKilometers - item.OutKilometers).ToString())
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

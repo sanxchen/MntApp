@@ -1,0 +1,36 @@
+﻿.tooltip.error .tooltip-inner {
+    background: silver;
+    color: #b00000;
+}
+
+.tooltip.error.top .tooltip-arrow {
+    border-top-color: silver;
+}
+
+.tooltip.error.top-left .tooltip-arrow {
+    border-top-color: silver;
+}
+
+.tooltip.error.top-right .tooltip-arrow {
+    border-top-color: silver;
+}
+
+.tooltip.error.right .tooltip-arrow {
+    border-right-color: silver;
+}
+
+.tooltip.error.left .tooltip-arrow {
+    border-left-color: silver;
+}
+
+.tooltip.error.bottom .tooltip-arrow {
+    border-bottom-color: silver;
+}
+
+.tooltip.error.bottom-left .tooltip-arrow {
+    border-bottom-color: silver;
+}
+
+.tooltip.error.bottom-right .tooltip-arrow {
+    border-bottom-color: silver;
+}

@@ -1,0 +1,192 @@
+﻿@{
+    ViewBag.Title = "员工排班";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+}
+
+<link href="~/Scripts/framework/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" />
+<link href="~/Scripts/framework/fullcalendar/fullcalendar/fullcalendar.print.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui-1.8.24.min.js"></script>
+<script src="~/Scripts/framework/fullcalendar/fullcalendar/fullcalendar.min.js"></script>
+
+
+<style>
+    #wrap {
+        width: 1100px;
+    }
+
+    #external-events {
+        float: left;
+        width: 130px;
+        padding: 0 10px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        background: #eee;
+        text-align: left;
+    }
+
+        #external-events h4 {
+            font-size: 16px;
+            margin-top: 0;
+            padding-top: 1em;
+        }
+
+    .external-event { /* try to mimick the look of a real event */
+        margin: 10px 0;
+        padding: 2px 4px;
+        color: #ff8c00;
+        font-size: .85em;
+        cursor: pointer;
+    }
+
+        .external-event input[type=radio] {
+            margin-right: 10px;
+            margin-top: 2px;
+        }
+
+    #calendar {
+        float: left;
+        width: 600px;
+    }
+    /*.fc-other-month {
+        visibility: hidden;
+    }*/
+</style>
+
+
+<script type="text/javascript">
+    var ObjectId = GetQuery('ObjectId');                  //对象主键
+    var Category = GetQuery('Category');                  //分类
+    //初始化
+    $(function () {
+        $("#layoutA").splitter({
+            type: "v",
+            outline: true,
+            minLeft: 180, sizeLeft: 180, maxLeft: 180,
+            anchorToWindow: true,
+            accessKey: "L"
+        });
+        GetScopeUserTree();
+
+
+
+        $('#calendar').fullCalendar({
+            header: {
+                left: '',
+                center: '',
+                right: '' //'month,agendaWeek,agendaDay'
+            },
+
+            dayClick: function (date, jsEvent, view) {
+                var e = $(this);
+                var parent = $('input[name=hrmsShift]:radio:checked');
+                if (e.attr("class").indexOf("fc-other-month") < 0) {
+                    var value = parent.attr("value");
+                    e.attr("data-value", value).css("background-color", $(parent).data("color")).find(".fc-day-content").text(value).css({ "color": "red", "font-size": "15px", "font-weight": "bolder", "text-align": "right" });
+                } else {
+                    alert("非当前月份");
+                }
+            }
+
+        });
+
+    });
+
+    //加载用户
+    function GetScopeUserTree() {
+        var itemtree = {
+            showcheck: true,
+            onnodeclick: function (item) {
+                AjaxJson("/Hrms/Shift/GetEmpShift", { "empNo": item.id }, function (res) {
+
+                    if (res == "") {
+                        alert(item.text + " - 没有排班数据，请排班！");
+                    } else {
+
+                        for (var i = 0; i < res.length; i++) {
+                            $("input[type=radio][value=" + res[i].ShiftId + "]").attr("checked", true);
+                            $("td[data-date]").each(function (k, v) {
+                                if ($(v).data("date") === res[i].EvenTime.substring(0, 10)) {
+                                    $(this).click();
+                                }
+                            });
+                        }
+                    }
+
+                });
+            },
+            url: "@Url.Content("~/CommonModule/Permission/ScopeUserList")?ObjectId=" + ObjectId + '&Category=' + Category
+
+        };
+        $("#ConditionInstall").treeview(itemtree);
+    }
+
+
+    function btn_update() {
+        //取得用户
+        var resourceId = GridTreeSelect();
+        //查看是否排满
+        //给定当天日期(年月日),得到本月总天数
+
+        var dStr = new Date();
+        var d = new Date(dStr.getFullYear(), dStr.getMonth() + 1, 0);
+        var events = [];
+        $("td[data-value]").each(function (e, v) {
+            events.push({
+                date: $(v).data("date"),
+                value: $(v).data("value")
+            });
+        });
+
+        if (resourceId !== "" && events.length === d.getDate()) {
+
+            AjaxJson("/Hrms/ShiftSnaps/SubmitFormSnaps", { resource: GridTreeSelect(), data: JSON.stringify(events) }, function (data) {
+                if (data === 1) { alert("更新成功") } else { alert("更新失败") }
+            });
+        } else {
+            alert('请输入完整');
+        }
+    }
+
+
+</script>
+<div id="layout" class="layout">
+
+    <!--左边-->
+    <div class="layoutPanel layout-west">
+        <div class="ScrollBar" id="ItemsTree">
+            <div id="ConditionInstall">
+            </div>
+        </div>
+
+    </div>
+    <!--中间-->
+
+
+    <div class="layoutPanel layout-center">
+        <div class="tools_bar leftline rightline" style="margin-bottom: 0px; margin: 1px;">
+            <div class="PartialButton">
+                @Html.Partial("_PartialButton")
+            </div>
+        </div>
+        <div id='wrap'>
+
+            <div id='external-events'>
+                <h4>班别类型</h4>
+                <div class='external-event' style="background: #fff"><label><input type="radio" data-color="#fff" name="hrmsShift" value="A01" checked="checked" />A01[07:40-16:40]</label></div>
+                <div class='external-event' style="background: #898c8d"><label><input type="radio" data-color="#898c8d" name="hrmsShift" value="B01" />B01[19:40-04:40]</label></div>
+                <div class='external-event' style="background: #43a2ca"><label><input type="radio" data-color="#43a2ca" name="hrmsShift" value="A02" />A02[08:00-17:00]</label></div>
+                <div class='external-event' style="background: #333"><label><input type="radio" data-color="#333" name="hrmsShift" value="B02"/>B02[20:00-05:00]</label></div>
+                <div class='external-event' style="background: #800000"><label><input type="radio" data-color="#800000" name="hrmsShift" value="A03" />A03[08:40-16:40]</label></div>
+            </div>
+
+            <div id='calendar'></div>
+
+            <div style='clear:both'></div>
+        </div>
+    </div>
+
+
+
+
+</div>
+

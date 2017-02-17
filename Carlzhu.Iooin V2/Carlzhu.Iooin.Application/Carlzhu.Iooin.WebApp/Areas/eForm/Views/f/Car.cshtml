@@ -1,0 +1,63 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.FormCar
+
+<tr>
+    <td>@Html.DisplayNameFor(model => model.StartTime)</td>
+    <td>
+        @Html.TextBoxFor(model => model.StartTime, new { CLASS = "datetimepicker", VALUE = DateTime.Now.ToString("yyyy/MM/dd hh:mm") })
+    </td>
+    <td>@Html.ValidationMessageFor(model => model.StartTime)</td>
+
+    <td>@Html.DisplayNameFor(model => model.EndTime)</td>
+    <td>
+        @Html.TextBoxFor(model => model.EndTime, new { CLASS = "datetimepicker", VALUE = DateTime.Now.AddHours(4).ToString("yyyy/MM/dd hh:mm") })
+    </td>
+    <td>@Html.ValidationMessageFor(model => model.StartTime)</td>
+</tr>
+<tr>
+    <td>@Html.DisplayNameFor(model => model.Type)</td>
+    <td>
+        <select name="Type">
+            <option>公车</option>
+        </select>
+    </td>
+    <td></td>
+    <td>@Html.DisplayNameFor(model => model.Purpose)</td>
+    <td>
+        <select name="Purpose">
+            <option>送货</option>
+            <option>处理异常</option>
+            <option>其他</option>
+        </select>
+    </td>
+    <td></td>
+</tr>
+<tr>
+    <td>客户名称：</td>
+    <td>
+        @Html.DropDownList("CustomerNo", (ViewBag.DropCustomer as List<SelectListItem>))
+    </td>
+    <td></td>
+
+    <td>目的地址：</td>
+    <td>
+        @Html.TextBoxFor(model=>model.Addr)
+    </td>
+    <td></td>
+</tr>
+
+
+
+
+<script type="text/javascript">
+    $("#CustomerNo").change(function () {
+        var no = $(this).val();
+        if (no !== "C0000"){
+            $.post("/Tpa/Customer/SetForm", { keyValue: no }, function (data) {
+                data = eval("(" + data + ")");
+                $("#Addr").val(data.CustomerAddr);
+            });
+        } else {
+            $("#Addr").val("");
+        }
+    });
+</script>

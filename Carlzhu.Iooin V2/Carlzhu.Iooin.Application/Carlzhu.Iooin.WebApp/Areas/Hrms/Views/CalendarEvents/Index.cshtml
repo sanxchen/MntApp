@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "公司管理";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+}
+<link href="~/Scripts/framework/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" />
+<link href="~/Scripts/framework/fullcalendar/fullcalendar/fullcalendar.print.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui-1.8.24.min.js"></script>
+<script src="~/Scripts/framework/fullcalendar/fullcalendar/fullcalendar.min.js"></script>
+<script type="text/javascript">
+
+    var currentSumDay = 0;
+    var currentDate="2016-01-01";
+    $(document).ready(function () {
+
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month'//,agendaWeek,agendaDay'
+            },
+            editable: true,
+            viewDisplay: function (view) {
+                var viewStart = $.fullCalendar.formatDate(view.start, "yyyyMM");
+                var viewEnd = $.fullCalendar.formatDate(view.start, "yyyy-MM-dd");
+                var dStr = new Date(viewEnd);
+                currentSumDay = (new Date(view.start.getFullYear(), view.start.getMonth() + 1, 0)).getDate();
+                currentDate = viewEnd;
+               
+
+                AjaxJson("/Hrms/CalendarEvents/GetEvents", { "CalendarEventsId": viewStart }, function (res) {
+                    if (res !== 1) {
+                        var i = 0;
+                        $("td[data-date]:not(.fc-other-month)").each(function (e, v) {
+                            var value = res[i++].D0;
+                            $(v).attr("data-value", value).css("background-color", $('input[name=color][data-value=' + value + ']').val());
+                            $(v).attr("data-color", "1");
+                        });
+                    }
+                });
+            },
+            dayClick: function (date, jsEvent, view) {
+
+                var e = $(this);
+                var parent = $('input[name=color]:radio:checked');
+                if (e.attr("class").indexOf("fc-other-month") < 0) {
+                    e.attr("data-color", parent.val());
+                    e.attr("data-value", parent.data("value"));
+                    e.attr("data-dn", date.getDate());
+                    e.css("background-color", parent.val());
+                } else {
+                    alert("非当前月份");
+                }
+
+            }
+        });
+
+
+
+    });
+
+    function btn_update() {
+        var events = [];
+        $("td[data-color]").each(function (e, v) {
+            events.push({
+                //date: $(v).data("date"),
+                value: $(v).data("value")
+                //dn: $(v).data("dn")
+            });
+        });
+
+        if (events.length === currentSumDay) {
+            AjaxJson("/Hrms/CalendarEvents/UpdateEvents", { data: JSON.stringify(events),date:currentDate }, function (data) {
+                if (data === 1) { alert("更新成功") } else { alert("更新失败") }
+            });
+        } else {
+            alert('请输入完整');
+        }
+
+
+    }
+</script>
+<style>
+    #wrap {
+        width: 1100px;
+        margin: 0 auto;
+    }
+
+    #external-events {
+        float: left;
+        width: 100px;
+        padding: 0 10px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        background: #eee;
+        text-align: left;
+    }
+
+        #external-events h4 {
+            font-size: 16px;
+            margin-top: 0;
+            padding-top: 1em;
+        }
+
+    .external-event { /* try to mimick the look of a real event */
+        margin: 10px 0;
+        padding: 2px 4px;
+        color: #fff;
+        font-size: .85em;
+        cursor: pointer;
+    }
+
+        .external-event input[type=radio] {
+            margin-right: 10px;
+            margin-top: 2px;
+        }
+
+    #calendar {
+        float: left;
+        width: 600px;
+    }
+    /*.fc-other-month {
+        visibility: hidden;
+    }*/
+</style>
+<div class="tools_bar leftline rightline" style="margin-bottom: 0px; margin: 1px;">
+    <div class="PartialButton">
+        @Html.Partial("_PartialButton")
+    </div>
+</div>
+<div class="rightline" style="margin: 1px; margin-top: -1px;">
+    <div id='wrap'>
+        <div id='external-events'>
+            <h4>行事历类型</h4>
+            <div class='external-event' style="background: green"><label><input type="radio" name="color" value="green" data-value="0" checked="checked" />正常</label></div>
+            <div class='external-event' style="background: blue"><label><input type="radio" name="color" value="blue" data-value="2" />周末</label></div>
+            <div class='external-event' style="background: red"><label><input type="radio" name="color" value="red" data-value="3" />节日</label></div>
+        </div>
+        <div id='calendar'></div>
+        <div style='clear:both'></div>
+    </div>
+</div>

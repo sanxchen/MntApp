@@ -1,0 +1,22 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.draw.FormDrawingsCustomer
+@{
+    Layout = "/Areas/eForm/Views/f/formLayout/_DrawingBase.cshtml";
+
+    var employees = new Carlzhu.Iooin.Business.HrmsModule.EmployeeBll().Single(Model.ManagerHead);
+}
+<tr>
+    <td>@Html.LabelFor(model => model.DrawPartNo)</td>
+    <td>@Html.DisplayTextFor(model => model.DrawPartNo)</td>
+
+    <td>@Html.LabelFor(model => model.ProductNo)</td>
+    <td>@Html.DisplayTextFor(model => model.ProductNo)</td>
+
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.ProductName)</td>
+    <td>@Html.DisplayTextFor(model => model.ProductName)</td>
+
+    <td>@Html.LabelFor(model => model.ManagerHead)</td>
+    <td>@(employees.DepartmentId + "/" + employees.RealName)</td>
+
+</tr>

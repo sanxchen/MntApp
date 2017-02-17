@@ -1,0 +1,53 @@
+﻿@using Carlzhu.Iooin.Business.FormModule
+@using Carlzhu.Iooin.Business.HrmsModule
+@using Carlzhu.Iooin.Util
+@model Carlzhu.Iooin.Entity.FORM.FormProxy
+
+
+
+
+@using (Ajax.BeginForm("CreateProxy", "Personal", new { area="eForm"}, new AjaxOptions
+               {
+                   HttpMethod = "POST",
+                   OnSuccess = "CreateProxy.Success",
+                   OnFailure = "CreateProxy.Error",
+                   InsertionMode = InsertionMode.Replace,
+               }))
+{
+
+
+    <table class="table table-bordered table-condensed table-striped">
+        <tr>
+            <td>@Html.LabelFor(model => model.SourceEmpNo)</td>
+            <td>@Html.TextBoxFor(model => model.SourceEmpNo, null, new { READONLY = "readonly", CLASS = "form-control" })</td>
+            <td>@Html.ValidationMessageFor(model => model.SourceEmpNo)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.EmpNo)</td>
+            <td>@Html.DropDownList("EmpNo", new EmployeeBll().GetDepartmentEmployeesByEmpNo(ManageProvider.Provider.Current().UserId, false), new { CLASS = "form-control" })</td>
+            <td>@Html.ValidationMessageFor(model => model.EmpNo)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.FormId)</td>
+            <td>@Html.DropDownListFor(model => model.FormId, new Applying().GetFormTypeDropdownList(true, false, false), new { CLASS = "form-control" })</td>
+            <td>@Html.ValidationMessageFor(model => model.FormId)</td>
+        </tr>
+
+        <tr>
+            <td>@Html.LabelFor(model => model.StarTime)</td>
+            <td>@Html.TextBoxFor(model => model.StarTime, null, new { CLASS = "datetimepicker form-control", READONLY = "readonly" })</td>
+            <td>@Html.ValidationMessageFor(model => model.StarTime)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.EndTime)</td>
+            <td>@Html.TextBoxFor(model => model.EndTime, null, new { CLASS = "datetimepicker form-control", READONLY = "readonly" })</td>
+            <td>@Html.ValidationMessageFor(model => model.EndTime)</td>
+        </tr>
+        <tr>
+            <td colspan="3"> <input type="submit" value="新增代理人" class="btn btn-block btn-default" /></td>
+        </tr>
+    </table>
+
+
+}
+

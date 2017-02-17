@@ -1,0 +1,31 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.draw.FormDrawingsSupplierSampleAck
+@{
+    Layout = "/Areas/eForm/Views/f/formLayout/_DrawingBaseEdit.cshtml";
+}
+
+<tr>
+    <td>@Html.LabelFor(model => model.ProductName)</td>
+    <td>@Html.TextBoxFor(model => model.ProductName)</td>
+    <td>@Html.ValidationMessageFor(model => model.ProductName)</td>
+    <td>@Html.LabelFor(model => model.ProductNo)</td>
+    <td>@Html.TextBoxFor(model => model.ProductNo)</td>
+    <td>@Html.ValidationMessageFor(model => model.ProductNo)</td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.Format)</td>
+    <td>@Html.TextBoxFor(model => model.Format)</td>
+    <td>@Html.ValidationMessageFor(model => model.Format)</td>
+    <td>@Html.LabelFor(model => model.Material)</td>
+    <td>@Html.TextBoxFor(model => model.Material)</td>
+    <td>@Html.ValidationMessageFor(model => model.Material)</td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.DateTime)</td>
+    <td>@Html.TextBoxFor(model => model.DateTime, DateTime.Now.ToString("yyyy/MM/dd"), new { @class = "datepicker", @readonly = "READONLY" })</td>
+    <td>@Html.ValidationMessageFor(model => model.DateTime)</td>
+    <td>@Html.LabelFor(model => model.SupplierNo)</td>
+    <td>
+        @Html.DropDownList("SupplierNo", new Carlzhu.Iooin.Business.TpaModule.TpaSupplierBll().GetSupplierDropList())
+    </td>
+    <td>@Html.ValidationMessageFor(model => model.SupplierNo)</td>
+</tr>

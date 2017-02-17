@@ -1,0 +1,21 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.draw.FormDrawingsExternal
+@{
+    Layout = "/Areas/eForm/Views/f/formLayout/_DrawingBaseEdit.cshtml";
+}
+<tr>
+    <td>@Html.LabelFor(model => model.FileName)</td>
+    <td>@Html.TextBoxFor(model => model.FileName)</td>
+    <td>@Html.ValidationMessageFor(model => model.FileName)</td>
+    <td>@Html.LabelFor(model => model.FileCode)</td>
+    <td>@Html.TextBoxFor(model => model.FileCode)</td>
+    <td>@Html.ValidationMessageFor(model => model.FileCode)</td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.MinicutCode)</td>
+    <td>@Html.TextBoxFor(model => model.MinicutCode)</td>
+    <td>@Html.ValidationMessageFor(model => model.MinicutCode)</td>
+    <td>@Html.LabelFor(model => model.ReciveEmpNo)</td>
+    <td>@Html.TextBoxFor(model => model.ReciveEmpNo)</td>
+    <td>@Html.ValidationMessageFor(model => model.ReciveEmpNo)</td>
+</tr>
+

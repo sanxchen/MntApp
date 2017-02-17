@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D4803254-FBED-4B34-880A-0264A7D91C62}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Carlzhu.Iooin.Business</RootNamespace>
+    <AssemblyName>Carlzhu.Iooin.Business</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Carlzhu.Iooin.Framework.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\References\Carlzhu.Iooin.Framework.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Carlzhu.Iooin.InteractiveAdapter, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\References\Carlzhu.Iooin.InteractiveAdapter.dll</HintPath>
+    </Reference>
+    <Reference Include="Carlzhu.Iooin.Util, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\References\Carlzhu.Iooin.Util.dll</HintPath>
+    </Reference>
+    <Reference Include="Carlzhu.Iooin.Util.Ioc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Carlzhu.Iooin.WebApp\Bin\Carlzhu.Iooin.Util.Ioc.dll</HintPath>
+    </Reference>
+    <Reference Include="Carlzhu.Iooin.Util.MvcHtml, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Carlzhu.Iooin.WebApp\Bin\Carlzhu.Iooin.Util.MvcHtml.dll</HintPath>
+    </Reference>
+    <Reference Include="Carlzhu.Iooin.Util.Offices">
+      <HintPath>..\..\References\Carlzhu.Iooin.Util.Offices.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\..\..\..\DLL\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseModule\BpmBll.cs" />
+    <Compile Include="BaseModule\DownDetailsBll.cs" />
+    <Compile Include="BaseModule\FileGroupBll.cs" />
+    <Compile Include="BaseModule\FilesBll.cs" />
+    <Compile Include="BaseModule\FilesFileGroupBll.cs" />
+    <Compile Include="BaseModule\QualityAbnormalBll.cs" />
+    <Compile Include="BaseModule\SendMailBll.cs" />
+    <Compile Include="BaseModule\TemplateBll.cs" />
+    <Compile Include="BaseServices.cs" />
+    <Compile Include="BaseUtility\BaseFactory.cs" />
+    <Compile Include="BaseUtility\BaseManager.cs" />
+    <Compile Include="BaseUtility\ContextFactory.cs" />
+    <Compile Include="BaseUtility\IBaseManager.cs" />
+    <Compile Include="BehandModule\Home.cs" />
+    <Compile Include="CommonModule\BaseButtonBll.cs" />
+    <Compile Include="CommonModule\BaseButtonPermissionBll.cs" />
+    <Compile Include="CommonModule\BaseCompanyBll.cs" />
+    <Compile Include="CommonModule\BaseDataBaseBll.cs" />
+    <Compile Include="CommonModule\BaseDataDictionaryBll.cs" />
+    <Compile Include="CommonModule\BaseDataScopePermissionBll.cs" />
+    <Compile Include="CommonModule\BaseDepartmentBll.cs" />
+    <Compile Include="CommonModule\BaseEmployeeBll.cs" />
+    <Compile Include="CommonModule\BaseExcelImportBll.cs" />
+    <Compile Include="CommonModule\BaseFormAttributeBll.cs" />
+    <Compile Include="CommonModule\BaseGroupUserBll.cs" />
+    <Compile Include="CommonModule\BaseInterfaceManageBll.cs" />
+    <Compile Include="CommonModule\BaseModuleBll.cs" />
+    <Compile Include="CommonModule\BaseModulePermissionBll.cs" />
+    <Compile Include="CommonModule\BaseObjectUserRelationBll.cs" />
+    <Compile Include="CommonModule\BasePostBll.cs" />
+    <Compile Include="CommonModule\BaseProvinceCityBll.cs" />
+    <Compile Include="CommonModule\BaseQueryRecordBll.cs" />
+    <Compile Include="CommonModule\BaseRolesBll.cs" />
+    <Compile Include="CommonModule\BaseShortcutsBll.cs" />
+    <Compile Include="CommonModule\BaseSysLogBll.cs" />
+    <Compile Include="CommonModule\BaseUserBll.cs" />
+    <Compile Include="CommonModule\BaseViewBll.cs" />
+    <Compile Include="CommonModule\BaseViewPermissionBll.cs" />
+    <Compile Include="CommonModule\BaseViewWhereBll.cs" />
+    <Compile Include="CommonModule\CodeMaticBll.cs" />
+    <Compile Include="FormModule\Applying.cs" />
+    <Compile Include="FormModule\F.cs" />
+    <Compile Include="FormModule\FormExtend.cs" />
+    <Compile Include="FormModule\Forms.cs" />
+    <Compile Include="FormModule\Signing.cs" />
+    <Compile Include="FormModule\Tracking.cs" />
+    <Compile Include="HrmsModule\AttDataAnalysis.cs" />
+    <Compile Include="HrmsModule\AttenEvent.cs" />
+    <Compile Include="HrmsModule\EmployeeBll.cs" />
+    <Compile Include="HrmsModule\HrmsAttendnceBll.cs" />
+    <Compile Include="Initialization\FilterAttribute.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QualityModule\ApparatusBll.cs" />
+    <Compile Include="QualityModule\Quality.cs" />
+    <Compile Include="SysModule\SystemAccountBll.cs" />
+    <Compile Include="SysModule\SystemActionBll.cs" />
+    <Compile Include="SysModule\SystemControllerBll.cs" />
+    <Compile Include="SysModule\EmailLog.cs" />
+    <Compile Include="SysModule\SystemModelBll.cs" />
+    <Compile Include="SysModule\SystemPowerBll.cs" />
+    <Compile Include="SysModule\SystemRecover.cs" />
+    <Compile Include="TpaModule\TpaSupplierBll.cs" />
+    <Compile Include="TpaModule\TpaCustomerBll.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Carlzhu.Iooin.Entity\Carlzhu.Iooin.Entity.csproj">
+      <Project>{AB4C35FF-8B46-4F22-8219-1F0D77BAE6AA}</Project>
+      <Name>Carlzhu.Iooin.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Note.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

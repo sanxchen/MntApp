@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "HistoryRecords";
+    Layout = "~/Areas/eSystem/Views/Shared/_eSystem.cshtml";
+}
+
+
+@model IEnumerable<Carlzhu.Iooin.Entity.FORM.f.FormWorkshopInspection>
+
+<ol class="breadcrumb">
+    <li>@Html.RouteLink("Deal", "Default", new { Controller = "Default", Action = "Deal" }, null)</li>
+    <li>@Html.RouteLink("Quality", new { Controller = "Pdm", Action = "Index", area = "eSystem" }, null)</li>
+    <li>@Html.RouteLink("待检产品", new { Controller = "Quality", Action = "WattingTest", area = "eSystem" }, null)</li>
+    <li class="active">历史查看</li>
+</ol>
+
+
+
+<div>
+    <form>
+        <div class="input-group" style="width: 750px;">
+
+            <span class="input-group-addon">检完日期始</span>
+            <input type="text" class="form-control datepicker" name="timestart" readonly="readonly" value="@(Request["timestart"] ?? DateTime.Now.ToString("yyyy/MM/dd"))" />
+
+            <span class="input-group-addon">检完日期止</span>
+            <input type="text" class="form-control datepicker" name="timeend" readonly="readonly" value="@(Request["timeend"] ?? DateTime.Now.ToString("yyyy/MM/dd"))" />
+            <span class="input-group-addon">姓名</span>
+            <input type="text" class="form-control" name="extend" placeholder="工单号，调机员，品号" value="@Request["extend"]" style="width: 230px;" />
+            <span class="input-group-btn">
+                <input type="submit" value="查询" class="form-control btn-primary" />
+            </span>
+        </div>
+    </form>
+</div>
+
+<table class="table table-bordered table-condensed ">
+    <thead>
+        <tr>
+            <td>#</td>
+            <th>@Html.DisplayNameFor(model => model.FormNo)</th>
+            <th>@Html.DisplayNameFor(model => model.ProductNo)</th>
+            <th>@Html.DisplayNameFor(model => model.ManNo)</th>
+            <th>@Html.DisplayNameFor(model => model.ProductType)</th>
+            <th>@Html.DisplayNameFor(model => model.Engineering)</th>
+            <th>@Html.DisplayNameFor(model => model.Machine)</th>
+            <th>@Html.DisplayNameFor(model => model.TransferMachine)</th>
+            <th>@Html.DisplayNameFor(model => model.StartDateTime)</th>
+            <th>@Html.DisplayNameFor(model => model.EndDateTime)</th>
+            <th>@Html.DisplayNameFor(model => model.DetectionResult)</th>
+            <th>@Html.DisplayNameFor(model => model.Checker)</th>
+            <th>产品图片</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var formWorkshopInspection in Model)
+        {
+            <tr>
+                <td>@formWorkshopInspection.RowId</td>
+                <td>@formWorkshopInspection.FormNo</td>
+                <td>@formWorkshopInspection.ProductNo</td>
+                <td>@formWorkshopInspection.ManNo</td>
+                <td>@formWorkshopInspection.ProductType</td>
+                <td>@formWorkshopInspection.Engineering</td>
+                <td>@formWorkshopInspection.Machine</td>
+                <td>@formWorkshopInspection.TransferMachine</td>
+                <td>@formWorkshopInspection.StartDateTime</td>
+                <td>@formWorkshopInspection.EndDateTime</td>
+                <td>@Enum.GetName(typeof(Carlzhu.Iooin.Entity.FORM.f.FormWorkshopInspection.Detection), formWorkshopInspection.DetectionResult)</td>
+                <td>@formWorkshopInspection.BaseEmployee.RealName</td>
+                <td>
+                    <a href="javascript:void(0)">图片未加载</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+

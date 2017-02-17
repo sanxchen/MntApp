@@ -1,0 +1,26 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.FormEquipmentSop
+
+
+<tr>
+    <td>@Html.LabelFor(model => model.EquipmentName)</td>
+    <td>@Html.TextBoxFor(model => model.EquipmentName)</td>
+    <td>@Html.ValidationMessageFor(model => model.EquipmentName)</td>
+    <td>@Html.LabelFor(model => model.Ver)</td>
+    <td>@Html.TextBoxFor(model => model.Ver)</td>
+    <td>@Html.ValidationMessageFor(model => model.Ver)</td>
+</tr>
+<tr>
+    <th>@Html.LabelFor(model => model.FileGroup)</th>
+    <td>@Html.TextBoxFor(model => model.FileGroup, new { READONLY = "READONLY", placeholder = "点击上传文件", title = "点击上传文件" })</td>
+    <td>@Html.ValidationMessageFor(model => model.FileGroup)</td>
+    <td colspan="3" id="upFileList"></td>
+</tr>
+
+<tr>
+    <td>@Html.LabelFor(model => model.PageCount)</td>
+    <td>@Html.TextBoxFor(model => model.PageCount)</td>
+    <td>@Html.ValidationMessageFor(model => model.PageCount)</td>
+    <td>@Html.LabelFor(model => model.Author)</td>
+    <td>@Html.TextBoxFor(model => model.Author)</td>
+    <td>@Html.ValidationMessageFor(model => model.Author)</td>
+</tr>

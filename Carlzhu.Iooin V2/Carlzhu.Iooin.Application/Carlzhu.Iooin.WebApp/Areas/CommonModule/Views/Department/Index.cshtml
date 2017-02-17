@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "部门管理";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+}
+<script src="~/Scripts/framework/jqgrid/grid.treegrid.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        GetGrid();
+    });
+    //加载表格
+   
+    function GetGrid() {
+        $("#gridTable").jqGrid({
+            url: "@Url.Content("~/CommonModule/Department/TreeGridListJson")",
+        datatype: "json",
+        treeGrid: true,
+        treeGridModel: "nested",
+        ExpandColumn: "Code",
+        height: $(window).height() - 77,
+        autowidth: true,
+        colModel: [
+        { label: '主键', name: 'DepartmentId', index: 'DepartmentId', width: 80, hidden: true },
+         { label: "名称", name: "FullName", index: "FullName", width: 200 },
+            { label: "编码", name: "Code", index: "Code", width: 100 },
+            { label: "简称", name: "ShortName", index: "ShortName", width: 100 },
+            { label: "性质", name: "Nature", index: "Nature", width: 50, align: "center" },
+            { label: "管理者", name: "Manager", index: "Manager", width: 100 },
+            { label: "规划人力", name: "ManpowerPlanning", index: "ManpowerPlanning", width: 80 ,align: "center"},
+            { label: "电话", name: "Phone", index: "Phone", width: 100 },
+            { label: "传真", name: "Fax", index: "Fax", width: 100 },
+            {
+                label: '有效', name: 'Enabled', index: 'Enabled', width: 45, align: 'center',
+                formatter: function (cellvalue, options, rowObject) {
+                    if (cellvalue == '1') return "<img src='/Content/Images/checkokmark.gif'/>";
+                    if (cellvalue == '0') return "<img src='/Content/Images/checknomark.gif'/>";
+                }
+            },
+            { label: '描述', name: 'Remark', index: 'Remark', width: 500 }
+        ],
+        pager: "false",
+        rowNum: 1000,
+        rownumbers: true,
+        shrinkToFit: false
+    });
+    columnModelData("#gridTable");
+    }
+
+
+    //新增
+    function btn_add() {
+        var DepartmentId = GetJqGridRowValue("#gridTable", "DepartmentId");
+        if (!DepartmentId) {
+            DepartmentId = 0;
+        }
+        var url = "/CommonModule/Department/Form?Department=" + DepartmentId;
+        openDialog(url, "Form", "新增部门", 650, 380, function (iframe) {
+            top.frames[iframe].AcceptClick();
+        });
+    }
+    //编辑
+    function btn_edit() {
+        var KeyValue = GetJqGridRowValue("#gridTable", "DepartmentId");
+        if (IsChecked(KeyValue)) {
+            var url = "/CommonModule/Department/Form?KeyValue=" + KeyValue;
+            openDialog(url, "Form", "编辑部门", 650, 380, function (iframe) {
+                top.frames[iframe].AcceptClick();
+            });
+        }
+    }
+    //删除
+    function btn_delete() {
+        var KeyValue = GetJqGridRowValue("#gridTable", "DepartmentId");
+        if (IsDelData(KeyValue)) {
+            var delparm = 'KeyValue=' + KeyValue + '&ParentId=' + KeyValue;
+            delConfig('/CommonModule/Department/DeleteDepartment', delparm, KeyValue.split(",").length);
+        }
+    }
+    //刷新
+    function windowload() {
+        $("#gridTable").trigger("reloadGrid"); //重新载入
+    }
+</script>
+<div class="tools_bar leftline rightline" style="margin-bottom: 0px; margin: 1px;">
+    <div class="PartialButton">
+        @Html.Partial("_PartialButton")
+    </div>
+</div>
+<div class="rightline" style="margin: 1px; margin-top: -1px;">
+    <table id="gridTable"></table>
+</div>

@@ -1,0 +1,43 @@
+﻿@using Carlzhu.Iooin.Business.TpaModule
+@model Carlzhu.Iooin.Entity.FORM.f.draw.DrawingsBase
+
+
+<tr>
+    <th>@Html.LabelFor(model => model.Customer.CustomerName)</th>
+    <td>@Html.DropDownList("CustomerNo", new TpaCustomerBll().GetCustomerDropList(""), new { CLASS = "form-contorl" })</td>
+    <td>@Html.ValidationMessageFor(model => model.CustomerNo)</td>
+    <th>@Html.LabelFor(model => model.PageSize)</th>
+    <td>@Html.TextBoxFor(model => model.PageSize)</td>
+    <td>@Html.ValidationMessageFor(model => model.PageSize)</td>
+</tr>
+<tr>
+    <th>@Html.LabelFor(model => model.DrawVer)</th>
+    <td>@Html.EditorFor(model => model.DrawVer)</td>
+    <td>@Html.ValidationMessageFor(model => model.DrawVer)</td>
+    <th>@Html.LabelFor(model => model.Reason)</th>
+    <td>
+        @Html.DropDownList("Reason", new List<SelectListItem>()
+                    {
+                        new SelectListItem {Text = "新发行",Value = "新发行",Selected = Model.Reason=="新发行"},
+                        new SelectListItem {Text = "ECN变更",Value = "ECN变更",Selected =Model.Reason=="ECN变更"},
+                    })
+    </td>
+    <td>@Html.ValidationMessageFor(model => model.Reason)</td>
+</tr>
+<tr>
+    <th>@Html.LabelFor(model => model.FileGroup)</th>
+    <td>@Html.TextBoxFor(model => model.FileGroup, new { READONLY = "READONLY", placeholder = "点击上传文件", title = "点击上传文件" })</td>
+    <td>@Html.ValidationMessageFor(model => model.FileGroup)</td>
+    <td colspan="2" id="upFileList"></td>
+    <td></td>
+</tr>
+<tr><td colspan="6"><hr /></td></tr>
+@RenderBody()
+
+
+
+
+<script type="text/javascript">
+    $("input:not([type='checkbox']),select").removeClass("form-control input-sm");
+</script>
+

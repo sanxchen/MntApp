@@ -1,0 +1,68 @@
+﻿@using Carlzhu.Iooin.Entity.FORM.f
+@model IEnumerable<Carlzhu.Iooin.Entity.FORM.f.FormPurchase>
+
+
+
+
+
+
+<thead>
+    <tr>
+        <th>@Html.DisplayName("项次")</th>
+        <th>@Html.DisplayNameFor(model => model.PartNo)</th>
+        <th>@Html.DisplayNameFor(model => model.Name)</th>
+        <th>@Html.DisplayNameFor(model => model.Details)</th>
+        <th>@Html.DisplayNameFor(model => model.Unit)</th>
+        <th>@Html.DisplayNameFor(model => model.Qty)</th>
+        <th>@Html.DisplayNameFor(model => model.Delivery)</th>
+        <th>@Html.DisplayNameFor(model => model.Usage)</th>
+        <th>@Html.DisplayNameFor(model => model.Reason)</th>
+    </tr>
+</thead>
+<tbody>
+    @{
+
+        var t = (List<FormPurchase>)Model;
+        if (t == null)
+        {
+            for (int i = 1; i < 10; i++)
+            {
+                @Html.Partial("/Areas/eForm/Views/f/PurchasingEdit.cshtml", new FormPurchase(), new ViewDataDictionary() { { "row", i } })
+            }
+        }
+        else
+        {
+            int count = t.Count;
+            for (int i = 0; i < count; i++)
+            {
+                @Html.Partial("/Areas/eForm/Views/f/PurchasingEdit.cshtml", t[i], new ViewDataDictionary() { { "row", i + 1 } })
+            }
+            for (int i = count + 1; i < 10; i++)
+            {
+                @Html.Partial("/Areas/eForm/Views/f/PurchasingEdit.cshtml", new FormPurchase(), new ViewDataDictionary() { { "row", i } })
+            }
+        }
+    }
+
+
+    <tr>
+        <td colspan="9" style="text-align: right;">文件编号：MJ4028-2</td>
+    </tr>
+    <tr>
+        <td colspan="9">
+            <ul>
+                <li>注:</li>
+                <li>
+                    请将要提交的项打勾，否决无法保存该项。
+                </li>
+                <li>
+                    请不要将没有内容的项打勾，否则会出现保存异常。
+                </li>
+            </ul>
+
+        </td>
+    </tr>
+</tbody>
+
+
+

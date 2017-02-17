@@ -1,0 +1,50 @@
+﻿@using System.Collections
+@using Carlzhu.Iooin.Business.FormModule
+@using Carlzhu.Iooin.Entity.FORM
+@using Carlzhu.Iooin.Entity.FORM.f.draw
+
+@{
+
+    //取得类型
+    FormType formType = (FormType)ViewData["Method"];
+
+    //反射并获取类型
+    F<FormDrawingsBom> f = new F<FormDrawingsBom>();
+    var type = f.ReflectionByFormType(formType);
+
+    //将类型反射创建类型实例
+    var t = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(type), ViewData["Model"]);
+
+    //反射创建类型实例，用于新建表单
+    var formDewellReport = Activator.CreateInstance(type);
+
+
+
+}
+
+
+<tbody>
+    @{
+
+
+
+
+        int count = t.Count;
+        for (int i = 0; i < count; i++)
+        {
+            @Html.Partial(string.Format("/Areas/eForm/Views/f/report/{0}Edit.cshtml", formType.Method), t[i], new ViewDataDictionary() { { "row", i + 1 } })
+        }
+        for (int i = count + 1; i < 10; i++)
+        {
+            @Html.Partial(string.Format("/Areas/eForm/Views/f/report/{0}Edit.cshtml", formType.Method), formDewellReport, new ViewDataDictionary() { { "row", i } })
+        }
+    }
+
+
+
+</tbody>
+
+
+<script type="text/javascript">
+    $("tbody td input[type=text][value=0]").val("");
+</script>

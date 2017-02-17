@@ -1,0 +1,52 @@
+﻿@using Carlzhu.Iooin.Business.FormModule
+@using Webdiyer.WebControls.Mvc
+@model PagedList<Carlzhu.Iooin.Entity.FORM.Form>
+@{
+    ViewBag.Title = "追寻申请";
+    Layout = "../Shared/_Bpm.cshtml";
+}
+
+
+
+
+<ol class="breadcrumb">
+    <li>@Html.RouteLink("Flow", new { Controller = "Applying", Action = "Index", area = "eForm" }, null)</li>
+    <li>@Html.RouteLink("追寻表单", new { Controller = "Tracking", Action = "Applyed", area = "eForm" }, null)</li>
+    <li class="disabled">追寻申请 </li>
+    <li class="pull-right">@Html.RouteLink("追寻签核", new { Controller = "Tracking", Action = "Signed", area = "eForm" }, null)</li>
+</ol>
+
+<div class="tracking">
+    <div class="panel panel-default">
+        <div class="panel-heading" style="margin:0;padding:0">
+            <div class="querybar">
+                @using (Ajax.BeginForm("applyed", "Tracking", new RouteValueDictionary { { "id", "" } }, new AjaxOptions { UpdateTargetId = "dataarea", InsertionMode = InsertionMode.Replace }, new RouteValueDictionary { { "id", "searchForm" } }))
+                {
+                    @Html.DropDownList("formtype", (ViewBag.FormType as List<SelectListItem>), "", new {  title = "选择表单类型进行筛选" })
+
+                    <span>&nbsp;</span>
+
+                    @Html.Label("申请时间：")  <input type="text" class="datetimepicker" placeholder="开始时间" title="表单申请时间" readonly="readonly" name="startTime" id="startTime" /><span class="to"></span><input type="text" class="datetimepicker" placeholder="结束时间" title="结束时间" readonly="readonly" name="endTime" id="endTime" />
+
+                    <span class="checkboxgroup">
+                        <label><input type="checkbox" name="cksigning" checked="checked" id="cksigning" />签核中</label>
+                        <label><input type="checkbox" name="ckfinish" checked="checked" id="ckfinish" />已完成</label>
+                        <label><input type="checkbox" name="ckreject" checked="checked" id="ckreject" />已否决</label>
+                        <label><input type="checkbox" name="ckcancel" checked="checked" id="ckcancel" />已撤消</label>
+                        <label><input type="checkbox" name="cknosend" checked="checked" id="cknosend" />未送出</label>
+                    </span>
+
+                    <input type="text" placeholder="表单号速查" title="可排除其他条件进行表单号速查" class="formno_query" name="formNo" id="formNo" />
+                    <input type="submit" class="query_submit" title="条件可多选" value="查询" />
+
+                }
+
+            </div>
+        </div>
+        <div class="panel-body" style="margin:0;padding:0">
+            <div id="dataarea">
+                @Html.Partial("_Applyed", Model, new ViewDataDictionary { { "Tr", ViewData["Page"] } })
+            </div>
+        </div>
+    </div>
+</div>

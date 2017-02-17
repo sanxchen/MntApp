@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Carlzhu.Iooin.Entity.FORM.FormProxy>
+
+
+
+<div>
+    <table class="table table-striped table-bordered table-condensed table-hover" id="proxyList">
+        <thead>
+            <tr>
+                <td colspan="7"><a href="javascript:void(0)" id="AddProxy" class="btn btn-block btn-default">新增</a></td>
+            </tr>
+            <tr>
+                <th>序号</th>
+                <th>@Html.DisplayNameFor(model => model.FormType.FormName)</th>
+                <th>@Html.DisplayNameFor(model => model.BaseEmployee.Account)</th>
+                <th>@Html.DisplayNameFor(model => model.StarTime)</th>
+                <th>@Html.DisplayNameFor(model => model.EndTime)</th>
+                <th>@Html.DisplayName("操作")</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int i = 0;
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@(++i)</td>
+                        <td>@item.FormType.FormName,@item.FormId </td>
+                        <td>@item.EmpNo (@item.BaseEmployee.Account)</td>
+                        <td>@item.StarTime</td>
+                        <td>@item.EndTime</td>
+                        <td>操作</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,29 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.FormReplaceDrawings
+
+@Html.HiddenFor(model => model.RowId)
+
+<tr>
+    <th colspan="2">@Html.DisplayNameFor(model => model.PublishedCode)</th>
+    <td colspan="2">@Html.TextBoxFor(model => model.PublishedCode, new { VALUE = "" })</td>
+    <td colspan="2">@Html.ValidationMessageFor(model => model.PublishedCode)</td>
+
+</tr>
+<tr>
+    <th colspan="2">@Html.DisplayNameFor(model => model.OldFormNo)</th>
+    <td colspan="2">@Html.TextBoxFor(model => model.OldFormNo)</td>
+    <td colspan="2">@Html.ValidationMessageFor(model => model.OldFormNo)</td>
+
+</tr>
+<tr>
+    <th colspan="2">@Html.DisplayNameFor(model => model.OldMd5)</th>
+    <td colspan="2">@Html.TextBoxFor(model => model.OldMd5)</td>
+    <td colspan="2">@Html.ValidationMessageFor(model => model.OldMd5)</td>
+
+</tr>
+<tr>
+    <th colspan="2">@Html.LabelFor(model => model.FileGroup)</th>
+    <td colspan="2">@Html.TextBoxFor(model => model.FileGroup, new { READONLY = "READONLY", placeholder = "点击上传文件", title = "点击上传文件" })</td>
+    <td colspan="2">@Html.ValidationMessageFor(model => model.FileGroup)</td>
+</tr>
+
+

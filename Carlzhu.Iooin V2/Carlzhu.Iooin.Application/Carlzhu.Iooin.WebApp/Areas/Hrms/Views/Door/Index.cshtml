@@ -1,0 +1,412 @@
+﻿@model IEnumerable<Carlzhu.Iooin.Entity.FORM.f.FormCar>
+@{
+    ViewBag.Title = "员工异常外出登记";
+    Layout = "~/Areas/eSystem/Views/Shared/_eSystem.cshtml";
+}
+
+
+
+<script type="text/javascript">
+    //document.oncontextmenu = function () { return false; }//屏蔽右键菜单
+    //document.onpaste = function () { return false; } //屏蔽粘贴
+    //document.oncopy = function () { return false; } //屏蔽复制
+    //document.oncut = function () { return false; } //屏蔽剪切
+    //document.onselectstart = function () { return false; } //屏蔽选择
+
+    $(function () {
+        var door = $("#txtIn,#txtOut");
+        var requestResult = $("#requestResult");
+        var oil = $("#oil");
+        var current = 0;
+        door.keydown(function (s) {
+            if (s.keyCode === 13) {
+                var e = $(this);
+                if (e.val().length === 10) {
+                    var forward = e.data("method");
+                    $.post("/Hrms/Door/Inouting/", { cardNo: e.val(), forward: forward }, function (data) {
+                        if (data === "error") {
+                            alert("查无此人，请核对后再试");
+                        } else {
+                            data = eval("(" + data + ")");
+                            var userMsg = data.DepartmentCode + "/" + data.RealName + "/" + data.EmpNo;
+
+                            if (forward === 0) {
+                                $("#inUserMsg").text(userMsg);
+                                requestResult.css("color", "green").text(data.RealName + "-进来");
+                            } else {
+                                $("#outUserMsg").text(userMsg);
+                                requestResult.css("color", "red").text(data.RealName + "-外出");
+                            }
+                            e.val("");
+                        }
+                    });
+                }
+            }
+        });
+
+        //car
+
+        var applyId = $("#applyId");
+
+        applyId.focus();
+
+
+        var carId = $("#carId");
+        var dirverId = $("#dirverId");
+        var kilometersOut = $("#kilometersOut");
+
+        var retrunCarId = $("#retrunCarId");
+        var kilometersIn = $("#kilometersIn");
+
+
+
+        var carid = setInterval(function () {
+            carId.val("");
+        }, 2000);
+
+
+        var dirverid = setInterval(function () {
+            dirverId.val("");
+        }, 2000);
+
+        var retruncarid = setInterval(function () {
+            retrunCarId.val("");
+        }, 2000);
+
+        var checkOut = setInterval(function () {
+            if (carId.val().length === 10) {
+                carId.attr("readonly", "readonly");
+                clearInterval(carid);
+                dirverId.focus();
+            }
+            if (dirverId.val().length === 10) {
+                dirverId.attr("readonly", "readonly");
+                clearInterval(dirverid);
+                kilometersOut.focus();
+            }
+
+            if (kilometersOut.val() !== "") {
+                clearInterval(checkOut);
+            }
+        }, 200);
+
+        var checkIn = setInterval(function () {
+            if (retrunCarId.val().length === 10) {
+                retrunCarId.attr("readonly", "readonly");
+                kilometersIn.focus();
+                clearInterval(retruncarid);
+                clearInterval(checkIn);
+            }
+        }, 200);
+
+        //加油隐藏
+        $("#oiltype").css("display", "none");
+        $("#money").css("display", "none");
+
+        $("input[name=oil]").click(function () {
+            if ($(this).attr("id") == "oil") {
+                $("#oiltype").css("display", "block");
+                $("#money").css("display", "block");
+            }
+            else {
+                $("#oiltype").css("display", "none");
+                $("#money").css("display", "none");
+            }
+        });
+
+
+        //获取申请单
+        applyId.change(function () {
+            $.post("/Hrms/Door/GetApplyUserInfo", { "empNo": $(this).val() }, function (data) {
+                $("#ChinaName").text(data[0]);
+                $("#applyInfo").find("tr").remove();
+
+                //将表单追加至前台,选定表单后解禁输入
+                $("#applyInfo").append(data[1]).find("input[name=form]").click(function () {
+                    carId.removeAttr("readonly").focus();
+                    dirverId.removeAttr("readonly");
+                    kilometersOut.removeAttr("readonly");
+                });
+            });
+        });
+
+
+
+
+        //获取车辆信息
+        $("#carId,#retrunCarId").blur(function () {
+            if ($(this).val() !== "" && $(this).attr("readonly") === "readonly") {
+                var _my = $(this);
+                $.post("/Hrms/Door/GetCar", { "carNo": $(this).val() }, function (data) {
+                    data = eval("(" + data + ")");
+                    if (_my.attr("id") === "carId") {
+                        current = data.CurrentKilometers;
+                        if (data.Location === 1) { alert("请注意，车辆未返回,请先将车辆返回"); location.href = location.href; }
+                    }
+                    else if (_my.attr("id") === "retrunCarId") {
+                        if (data.Location === 0) { alert("请注意，车辆未外出"); location.href = location.href; }
+                        $("#ckgls").text(data.CurrentKilometers);
+                    }
+                    _my.parent().parent().parent().find("td:eq(2)").text(data.Nameplate + "/" + data.Name).css("color", "red");
+                });
+            }
+        });
+
+        //获取司机信息
+        //GetPersonCaridInfo
+        $("#dirverId").blur(function () {
+            if ($(this).val() !== "" && $(this).attr("readonly") === "readonly") {
+                
+                $.post("/CommonModule/Employee/SetFormFiled", { "propertyName": "cardNo", "propertyValue": $(this).val() }, function (data) {
+                    //alert(data);
+                    data = eval("("+data+")");
+                    $("#dirverEmpNo").val(data.EmpNo);
+                    $("#kilometersOut").val(current);
+                    $("#dirverName").text(data.EmpNo + "/" + data.RealName).css("color", "red");
+                });
+            }
+        });
+
+        //车辆外出
+        $("#outSubmit").click(function () {
+            var result = false;
+            $("input[name=form]").each(function () {
+                if ($(this).attr("checked") == "checked") {
+                    result = true;
+                }
+            });
+            if (!result) { alert("没有符合的表单"); return; }
+            else {
+                if (carId.val() === "") {
+                    alert("请刷车卡...");
+                }
+                else if (dirverId.val() === "") {
+                    alert("请驾使员刷卡...");
+                }
+                else if (kilometersOut.val() === "") {
+                    alert("请填写公里数...");
+                }
+                else {
+                    if (confirm("请确认公里数是否正确")) {
+
+                        $(this).button("loading");
+                        var postData = {
+                            "FormNo": $("input[name=form]:checked").parent().text(),
+                            "CarNo": carId.val(),
+                            "DirverNo": $("#dirverEmpNo").val(),
+                            "OutKilometers": kilometersOut.val()
+                        };
+                        $.post("/Hrms/door/CarOut", postData, function (data) {
+                            alert(data);
+                            if (data === "请求成功")
+                                location.reload();
+                        });
+                    }
+                }
+            }
+        });
+
+        //车辆回家
+        $("#inSubmit").click(function () {
+
+            if (retrunCarId.val() === "") {
+                alert("请刷车卡...");
+            }
+            else if (kilometersIn.val() === "") {
+                alert("请输入公里数");
+            }
+            else if (oil.val() === "") {
+                alert("请输入公里数");
+            } else {
+                $(this).button("loading");
+                if (confirm("请确认公里数是否正确")) {
+                    var postData = {
+                        "CarNo": retrunCarId.val(),
+                        "InKilometers": kilometersIn.val(),
+                        "Oil": oil.val()
+                    };
+                    $.post("/Hrms/Door/CarIn", postData, function (data) {
+                        alert(data);
+                        if (data === "请求成功") { location.reload(); }
+                        else { alert('不对'); }
+                    });
+                }
+            }
+        });
+
+
+
+
+    });
+
+
+</script>
+<style type="text/css">
+    .col-carinout {
+    }
+
+        .col-carinout table tr td {
+            width: 350px;
+            vertical-align: middle;
+        }
+
+            .col-carinout table tr td:first-child {
+                width: 150px;
+            }
+</style>
+<ol class="breadcrumb">
+    <li class="disabled"><a href="/">首页</a></li>
+    <li class="disabled">异常进出</li>
+</ol>
+
+<div class="row">
+
+    <div class="col-md-7 col-carinout">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h3>车辆进出登记&nbsp;&nbsp;<small>@Html.ActionLink("车辆进出查询", "CarInoutQuery")</small></h3></div>
+            <div class="panel-body">
+                <div>
+                    <ul>
+                        <li>
+                            <div>
+                                <table class="table table-bordered table-condensed">
+                                    <tr>
+                                        <td>申请人:</td>
+                                        <td>
+                                            @Html.DropDownList("applyId", (ViewBag.UserList as IEnumerable<SelectListItem>), "", new { @class = "form-control" })
+                                        </td>
+                                        <td colspan="2">
+                                            <span onclick="javascript: location.reload();"><i class="glyphicon glyphicon-refresh"></i></span>
+                                            <b id="ChinaName"></b>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                        </li>
+                        <li>
+                            <table class="table table-bordered table-condensed" id="applyInfo"></table>
+                        </li>
+                        <li>
+                            <h4>车辆外出</h4>
+                            <div class="pOut">
+                                <table class="table table-bordered table-condensed">
+                                    <tr>
+                                        <td>车号：</td>
+                                        <td>
+                                            <input type="text" placeholder="请刷车卡.." id="carId" onkeyup="this.value=this.value.replace(/\D/g,'')" readonly="readonly" class="form-control" />
+                                        </td>
+                                        <td colspan="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>司机：</td>
+                                        <td>
+                                            <input type="text" placeholder="请输刷识别卡.." id="dirverId" onkeyup="this.value = this.value.replace(/\D/g, '')" readonly="readonly" class="form-control" />
+                                            <input type="hidden" id="dirverEmpNo" value="" />
+                                        </td>
+                                        <td colspan="2" id="dirverName"></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>公里数：</td>
+                                        <td>
+                                            <input type="text" placeholder="请输入汽车现在公里数..." id="kilometersOut" onkeyup="this.value=this.value.replace(/\D/g,'')" readonly="readonly" class="form-control" />
+                                        </td>
+                                        <td colspan="2">外出时公里数</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <input type="button" class="btn btn-default" value="提交信息" id="outSubmit" />
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </li>
+                        <li>
+                            <h4>车辆返回</h4>
+                            <div>
+                                <table class="table table-bordered table-condensed">
+                                    <tr>
+                                        <td>还车:</td>
+                                        <td>
+                                            <input type="text" placeholder="请刷车卡" id="retrunCarId" onkeyup="this.value=this.value.replace(/\D/g,'')" class="form-control" />
+                                        </td>
+                                        <td colspan="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>公里数:</td>
+                                        <td>
+                                            <input type="text" placeholder="公里数" id="kilometersIn" onkeyup="this.value=this.value.replace(/\D/g,'')" class="form-control" />
+                                        </td>
+                                        <td colspan="2">参考公里数：<span style="color:red" id="ckgls"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>加油量</td>
+                                        <td>
+                                            <input type="text" placeholder="加油量" onkeyup="this.value=this.value.replace(/\D/g,'')" class="form-control" id="oil" value="0" />
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <input type="button" class="btn btn-default" value="提交信息" id="inSubmit" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </div>
+            <div class="panel-footer">By.</div>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>异常外出登记&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>@Html.ActionLink("员工进出查询", "InOut")</small></h3>
+            </div>
+            <div class="panel panel-body">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-step-forward"></i>&nbsp;&nbsp;外出登记</span>
+                    <input type="text" class="form-control" id="txtOut" data-method="1" />
+                    <span class="input-group-addon" style="width: 160px;" id="outUserMsg"></span>
+                </div>
+                <br />
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-step-backward"></i>&nbsp;&nbsp;进门登记</span>
+                    <input type="text" class="form-control" id="txtIn" data-method="0" />
+                    <span class="input-group-addon" style="width: 160px;" id="inUserMsg"></span>
+                </div>
+            </div>
+            <div class="panel-footer" style="min-height: 100px;">
+                <h1 id="requestResult" style="font-size: 55px; text-align: center; vertical-align: middle; font-family: sans-serif; color: silver;"></h1>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>临时卡领用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small></small></h3>
+            </div>
+
+            <form class="form-inline"></form>
+            <div class="panel-body">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i>工号:</span>
+                    <input type="text" class="form-control number" placeholder="请输入7位工号" />
+                </div>
+                <br />
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i>卡号:</span>
+                    <input type="text" class="form-control number" placeholder="请输入临时卡号" />
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,147 @@
+﻿@{Layout = "~/Views/Shared/_Layout.cshtml";}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />
+    <title>By Minicut</title>
+    <link href="~/Content/Images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <!--框架必需start-->
+    <link href="~/Content/startmenu.css" rel="stylesheet" />
+    <link href="~/Content/framework.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="/Scripts/framework.js"></script>
+    <!--框架必需end-->
+    <!--引入弹窗组件start-->
+    <script src="/Scripts/framework/lhgdialog/lhgdialog.min.js"></script>
+    <!--引入弹窗组件end-->
+    <!--自定义滚动条组件start-->
+    <script src="/Scripts/framework/scrollbar/scrollbar.js"></script>
+    <!--自定义滚动条组件end-->
+    <!--日期组件start-->
+    <script src="/Scripts/framework/datepicker/WdatePicker.js"></script>
+    <!--日期组件start-->
+    <script src="/Scripts/Index.js"></script>
+    <script>
+        /**初始化**/
+        $(document).ready(function () {
+            AddTabMenu('Imain', '@Url.Content("~/Home/StartPanel")', '欢迎首页', "house.png", 'false');
+            GetStartmenu();
+            ShortcutsList();
+            setIframeH();
+            initStartMenu();
+            var interval = setInterval("IconSong('icon_message')", 400);
+            $("#div_icon_message").click(function () {
+                clearInterval(interval);
+                window.open('http://www.Iooin.com/', '_blank');
+            })
+        });
+
+        /*设置iframe高度*/
+        function setIframeH() {
+            resizeU();
+            $(window).resize(resizeU);
+
+            function resizeU() {
+                var divkuangH = $(window).height();
+                $("#ContentPannel").height(divkuangH - 137);
+            }
+        }
+
+        function initStartMenu() {
+            $('#overlay_startmenu').click(function () {
+                if ($('#start_menu_panel:visible').length) {
+                    $('#overlay_startmenu').hide();
+                    $('#start_menu_panel').slideUp(1);
+                    $('.nicescroll-rails').hide();
+                }
+            });
+            $('#start_menu').click(function () {
+                if ($('#start_menu_panel:visible').length) {
+                    $('#overlay_startmenu').hide();
+                    $('#start_menu_panel').slideUp(1);
+                    $('.nicescroll-rails').hide();
+                }
+                //遮罩层位置和显示
+                $('#overlay_startmenu').show();
+                //菜单面板位置
+                var top = $('#start_menu').offset().top - $('#start_menu_panel').outerHeight() - 1;
+                $('#start_menu_panel').css({ top: top });
+                $('#start_menu_panel').show();
+                $('.nicescroll-rails').show();
+            });
+        }
+
+        //导航一级菜单
+        var StartmenuJson = "";
+
+        function GetStartmenu() {
+            var index = 0;
+            var html = "";
+            getAjax("/Home/LoadStartMenu", "", function (data) {
+                StartmenuJson = eval("(" + data + ")");
+                $.each(StartmenuJson, function (i) {
+                    if (StartmenuJson[i].ParentId == '9f8ce93a-fc2d-4914-a59c-a6b49494108f') {
+                        html += "<li>";
+                        if (index == 0) {
+                            html += "<div class='main_menu leftselected' onclick=\"GetSubmenu('" + StartmenuJson[i].ModuleId + "')\">";
+                            GetSubmenu(StartmenuJson[i].ModuleId);
+                        } else {
+                            html += "<div onclick=\"GetSubmenu('" + StartmenuJson[i].ModuleId + "')\">";
+                        }
+                        html += "<img src='../Content/Images/Icon32/" + StartmenuJson[i].Icon + "' width='32' height='32'>" + StartmenuJson[i].FullName + "";
+                        html += "</div>";
+                        html += "</li>";
+                        index++;
+                    }
+                });
+            })
+            $("#htmlMenu").append(html);
+            var menuheight = $('.main_menu div').height() * $('.main_menu li').length + $('.main_menu li').length + 1;
+            if (menuheight <= 360) {
+                menuheight = 360
+            }
+            $(".panel-menu").height(menuheight);
+            $("#main_menu").height(menuheight);
+            $("#Submenu").height(menuheight);
+            divniceScroll("#Submenu");
+            readyIndex();
+        }
+
+        //导航子菜单
+        function GetSubmenu(ModuleId) {
+            $("#Submenu").html("");
+            var html = "";
+            $.each(StartmenuJson, function (i) {
+                if (StartmenuJson[i].ParentId == ModuleId) {
+                    var Icon = "";
+                    if (StartmenuJson[i].Icon != "") {
+                        Icon = StartmenuJson[i].Icon;
+                    }
+                    if (IsBelowMenu(StartmenuJson[i].ModuleId) > 0) {
+                        html += "<div title='" + StartmenuJson[i].FullName + "' class=\"shortcuticons\" onclick=\"GetSubmenu('" + StartmenuJson[i].ModuleId + "')\"><img src='../Content/Images/Icon32/" + Icon + "'><br />" + StartmenuJson[i].FullName + "</div>";
+                    } else {
+                        html += "<div title='" + StartmenuJson[i].FullName + "' class=\"shortcuticons\" onclick=\"AddTabMenu('" + StartmenuJson[i].ModuleId + "', '" + RootPath() + StartmenuJson[i].Location + "', '" + StartmenuJson[i].FullName + "',  '" + StartmenuJson[i].Icon + "','true');\"><img src='../Content/Images/Icon32/" + Icon + "'><br />" + StartmenuJson[i].FullName + "</div>";
+                    }
+                }
+            });
+            $("#Submenu").html(html);
+        }
+
+        //判断是否有子节点
+        function IsBelowMenu(ModuleId) {
+            var count = 0;
+            $.each(StartmenuJson, function (i) {
+                if (StartmenuJson[i].ParentId == ModuleId) {
+                    count++;
+                    return false;
+                }
+            });
+            return count;
+        }
+    </script>
+</head>
+
+
+@Html.Partial("_Body", "_StartFooter")
+</html>

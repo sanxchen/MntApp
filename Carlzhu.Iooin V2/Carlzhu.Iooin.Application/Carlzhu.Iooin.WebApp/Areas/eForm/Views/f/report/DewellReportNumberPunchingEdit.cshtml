@@ -1,0 +1,21 @@
+﻿
+@model Carlzhu.Iooin.Entity.FORM.f.report.FormDewellReportNumberPunching
+
+
+
+
+
+@{
+    var i = (int)ViewData["row"];
+}
+
+<tr>
+    @Html.Partial("/Areas/eForm/Views/f/formLayout/report/_editCommTd.cshtml", Model, new ViewDataDictionary() { { "row", i } })
+
+    <td>@Html.TextBox(string.Format("ShutdownReason{0}", i), Model.ShutdownReason )</td>
+    <td>@Html.TextBox(string.Format("DownTime{0}", i), Model.DownTime, new { placeholder = "数值可小数" })</td>
+    <td>@Html.TextBox(string.Format("ToolChangeQuantity{0}", i), Model.ToolChangeQuantity, new { placeholder = "数值可小数" })</td>
+    <td>@Html.TextBox(string.Format("DeckNo{0}", i), Model.DeckNo)</td>
+
+
+</tr>

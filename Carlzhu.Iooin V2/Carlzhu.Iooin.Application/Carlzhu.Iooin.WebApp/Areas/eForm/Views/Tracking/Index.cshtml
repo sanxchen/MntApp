@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "追寻历史表单";
+    Layout = "../Shared/_Bpm.cshtml";
+}
+
+
+<div>
+    <ol class="breadcrumb">
+        <li>@Html.RouteLink("Flow", new { Controller = "Applying", Action = "Index", area = "eForm" }, null)</li>
+        <li>@Html.ActionLink("追询申请", "Applyed", "Tracking")</li>
+        <li>@Html.ActionLink("追询签核", "Signed", "Tracking")</li>
+    </ol>
+</div>

@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutStyle.cshtml";
+}
+
+
+
+<section>
+    <div style="height: 46px; border: 1px solid silver; background-color: #e8e8e8 ">
+        <img src="/Content/Images/workflow.png" />
+    </div>
+</section>
+<section>
+    <div>
+        @RenderBody()
+    </div>
+</section>
+@RenderSection("scripts", required: false)

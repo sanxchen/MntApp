@@ -1,0 +1,28 @@
+﻿<div style="width: 30%; text-align: left; float: left;">
+    <div class="menu">
+        <div id="start_menu" style="width: 89px; height: 31px; line-height: 31px;">
+            <img src="~/Content/Images/start_menu.png" />
+        </div>
+    </div>
+    <!-- 导航菜单 -->
+    <div id="start_menu_panel">
+        <div class="panel-head"></div>
+        <!-- 登录用户信息 -->
+        <div class="panel-user">
+            <div class="avatar" title="我的信息">
+                <img src="~/Content/Images/man.png" />
+            </div>
+            <div class="name">
+                账户：@ViewBag.Account
+            </div>
+        </div>
+        <div class="panel-menu">
+            <div id="main_menu" class="main_menu" style="float: left;">
+                <ul id="htmlMenu"></ul>
+            </div>
+            <div id="Submenu" style="overflow: auto; background-color: #fff">
+            </div>
+        </div>
+    </div>
+    <div id="overlay_startmenu"></div>
+</div>

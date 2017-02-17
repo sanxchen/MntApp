@@ -1,0 +1,34 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.FormToGoout
+
+
+<tr>
+    <th>@Html.DisplayNameFor(model => model.OutTime)</th>
+    <td>
+        @Html.DisplayFor(a => a.OutTime)
+    </td>
+</tr>
+<tr>
+    <th>@Html.DisplayNameFor(model => model.InTime)</th>
+    <td>
+        @Html.DisplayFor(a => a.InTime)
+    </td>
+</tr>
+<tr>
+    <th>@Html.DisplayNameFor(model => model.Reason)</th>
+    <td>
+        @Html.DisplayFor(a => a.Reason)
+    </td>
+</tr>
+<tr>
+    <th>@Html.DisplayNameFor(model => model.Destination)</th>
+    <td>
+        @Html.DisplayFor(a => a.Destination)
+    </td>
+</tr>
+
+<tr>
+    <th>涉及人员:</th>
+    <td>
+        <input type="text" class="InvolvingTag"  data-guid="@Model.InvolvingUser" />
+    </td>
+</tr>

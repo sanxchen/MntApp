@@ -1,0 +1,26 @@
+﻿
+
+@using Carlzhu.Iooin.InteractiveAdapter
+@model Carlzhu.Iooin.Entity.FORM.Files
+
+@{
+    string md = (Model.Md5.Encrypt());
+    <div class="btn-group">
+        <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" title="@(Model.FileName)">
+            @Model.FileName.ToCut(18) <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+
+            @if (Model.FileType == ".pdf")
+            {
+                <li>@Html.ActionLink("查看...", "Online", "Download", new { md5 = md, method = "view", area = "" }, new { TARGET = "_blank" })</li>
+                <li class="divider"></li>
+                <li>@Html.ActionLink("打印...", "Online", "Download", new {md5 = md, method = "print", area = ""}, new {TARGET = "_blank"})</li>
+                <li class="divider"></li>
+            }
+
+            <li>@Html.ActionLink("下载...", "Form", "Download", new { md5 = md, area = "" }, new { TARGET = "_blank" })</li>
+
+        </ul>
+    </div>
+}

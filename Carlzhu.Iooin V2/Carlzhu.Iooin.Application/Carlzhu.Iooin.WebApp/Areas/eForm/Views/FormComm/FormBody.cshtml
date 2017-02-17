@@ -1,0 +1,12 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.Form
+<div class="formline"></div>
+
+<div class="formbody">
+    <div>
+        <table class="table table-bordered table-condensed @(Model.FormType.IsModel ? "model" : "list listtext")">
+            @Html.Action("FormComm", "F", new { formNo = Model.FormNo, method = "Details" })
+        </table>
+    </div>
+
+</div>
+<div class="formline"></div>

@@ -1,0 +1,183 @@
+@{
+    ViewBag.Title = "FormType》表单页面";
+    Layout = "~/Views/Shared/_LayoutForm.cshtml";
+}
+<script type="text/javascript">
+    var KeyValue = GetQuery('KeyValue'); //主键
+    $(function () {
+        InitControl();
+    })
+
+    //得到一个对象实体
+    function InitControl() {
+        if (!!GetQuery('KeyValue')) {
+            AjaxJson("/eForm/FormType/SetForm", { KeyValue: KeyValue }, function (data) {
+                SetWebControls(data);
+            });
+        }
+    }
+
+    //保存事件
+    function AcceptClick() {
+        if (!CheckDataValid('#form1')) {
+            return false;
+        }
+        var postData = GetWebControls("#form1");
+        AjaxJson("/eForm/FormType/SubmitForm?KeyValue=" + KeyValue, postData, function (data) {
+            tipDialog(data.Message, 3, data.Code);
+            top.frames[tabiframeId()].windowload();
+            closeDialog();
+        });
+    }
+</script>
+
+
+<form id="form1" style="margin: 1px">
+    <div id="message" style="display: none"></div>
+    <table class="form">
+        <tr>
+            <th class='formTitle'>FormId：</th>
+            <td class='formValue'>
+                <input id="FormId" maxlength=10 type="text" class="txt" />
+            </td>
+            <th class='formTitle'>FormName：</th>
+            <td class='formValue'>
+                <input id="FormName" maxlength=-1 type="text" class="txt" datacol="yes" err="FormName" checkexpession="NotNull" />
+            </td>
+        </tr>
+
+        <tr>
+            <th class='formTitle'>Method：</th>
+            <td class='formValue'>
+                <input id="Method" maxlength=-1 type="text" class="txt" datacol="yes" err="Method" checkexpession="NotNull" />
+            </td>
+            <th class='formTitle'>FormPage：</th>
+            <td class='formValue'>
+                <input id="FormPage" maxlength=-1 type="text" class="txt" datacol="yes" err="FormPage" checkexpession="NotNull" />
+            </td>
+        </tr>
+
+        <tr>
+            <th class='formTitle'>Class：</th>
+            <td class='formValue'>
+                <input id="Class" maxlength=128 type="text" class="txt" datacol="yes" err="Class" checkexpession="NotNull" />
+            </td>
+            <th class='formTitle'>CreateTime：</th>
+            <td class='formValue'>
+                <input id="CreateTime" maxlength=23 type="text" class="txt" datacol="yes" err="CreateTime" checkexpession="DateOrNull" />
+            </td>
+        </tr>
+
+        <tr>
+            <th class='formTitle'>Os：</th>
+            <td class='formValue'>
+                <input id="Os" maxlength=-1 type="text" class="txt" />
+            </td>
+            <th class='formTitle'>AllowFileType：</th>
+            <td class='formValue'>
+                <input id="AllowFileType" maxlength=-1 type="text" class="txt" />
+            </td>
+        </tr>
+
+        <tr>
+            <th class='formTitle'>RouteOne：</th>
+            <td class='formValue'>
+                <input id="RouteOne" maxlength=-1 type="text" class="txt" datacol="yes" err="RouteOne" checkexpession="NotNull" />
+            </td>
+            <th class='formTitle'>RouteTwo：</th>
+            <td class='formValue'>
+                <input id="RouteTwo" maxlength=-1 type="text" class="txt" />
+            </td>
+        </tr>
+
+        <tr>
+            <th class='formTitle'>RouteThree：</th>
+            <td class='formValue'>
+                <input id="RouteThree" maxlength=-1 type="text" class="txt" />
+            </td>
+            <th class='formTitle'>RouteFour：</th>
+            <td class='formValue'>
+                <input id="RouteFour" maxlength=-1 type="text" class="txt" />
+            </td>
+        </tr>
+
+
+
+        <tr>
+            <th class='formTitle'>FileLimit：</th>
+            <td class='formValue'>
+                <input id="FileLimit" maxlength=10 type="text" class="txt" datacol="yes" err="FileLimit" checkexpession="Num" />
+            </td>
+
+            <th class='formTitle'>ReqFileExp：</th>
+            <td class='formValue'>
+                <input id="ReqFileExp" maxlength=-1 type="text" class="txt"/>
+
+
+            </td>
+        </tr>
+        <tr>
+            <th class='formTitle'></th>
+            <td class='formValue' colspan="3">
+                <span class="item">
+                    <input id="IsHot" name="IsHot" type="checkbox" checked="checked" style="vertical-align: middle;" />
+                    <label for="IsHot" style="vertical-align: middle;">热门</label>
+                    &nbsp;&nbsp;
+                </span>
+                <span class="item">
+                    <input id="IsModel" name="IsModel" type="checkbox" checked="checked" style="vertical-align: middle;" />
+                    <label for="IsModel" style="vertical-align: middle;">单例</label>
+                    &nbsp;&nbsp;
+                </span>
+                <span class="item">
+                    <input id="IsDisplay" name="IsDisplay" type="checkbox" checked="checked" style="vertical-align: middle;" />
+                    <label for="IsDisplay" style="vertical-align: middle;">显示</label>
+                    &nbsp;&nbsp;
+                </span>
+            </td>
+
+        </tr>
+        <tr>
+            <th class='formTitle'></th>
+            <td class='formValue' colspan="3">
+
+                <span class="item">
+                    <input id="IsStart" name="IsStart" type="checkbox" checked="checked" style="vertical-align: middle;" />
+                    <label for="IsStart" style="vertical-align: middle;">提交检查</label>
+                    &nbsp;&nbsp;
+                </span>
+                <span class="item">
+                    <input id="IsColsed" name="IsColsed" type="checkbox" checked="checked" style="vertical-align: middle;" />
+                    <label for="IsColsed" style="vertical-align: middle;">结案</label>
+                    &nbsp;&nbsp;
+                </span>
+                <span class="item">
+                    <input id="IsRedirect" name="IsRedirect" type="checkbox" checked="checked" style="vertical-align: middle;" />
+                    <label for="IsRedirect" style="vertical-align: middle;">转签</label>
+                    &nbsp;&nbsp;
+                </span>
+                <span class="item">
+                    <input id="IsAdd" name="IsAdd" type="checkbox" checked="checked" style="vertical-align: middle;" />
+                    <label for="IsAdd" style="vertical-align: middle;">加签</label>
+                    &nbsp;&nbsp;
+                </span>
+                <span class="item">
+                    <input id="IsReplace" name="IsReplace" type="checkbox" checked="checked" style="vertical-align: middle;" />
+                    <label for="IsReplace" style="vertical-align: middle;">代签</label>
+                    &nbsp;&nbsp;
+                </span>
+                <span class="item">
+                    <input id="IsMyself" name="IsMyself" type="checkbox" checked="checked" style="vertical-align: middle;" />
+                    <label for="IsMyself" style="vertical-align: middle;">自签</label>
+                    &nbsp;&nbsp;
+                </span>
+
+               
+            </td>
+        </tr>
+        <tr>
+            <th class='formTitle'></th>
+            <td class='formValue' colspan="3"><label style="vertical-align: middle; color: red;">注意：取消勾选后，将禁用该功能。</label></td>
+        </tr>
+    </table>
+</form>

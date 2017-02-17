@@ -1,0 +1,46 @@
+﻿
+@model PagedList<Carlzhu.Iooin.Entity.CommonModule.BaseEmployee>
+@using Webdiyer.WebControls.Mvc;
+@{
+    ViewBag.Title = "签核表单";
+    Layout = "../Shared/_Bpm.cshtml";
+}
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.RealName)</th>
+            <th>@Html.DisplayNameFor(model => model.EmpNo)</th>
+            <th>@Html.DisplayNameFor(model => model.Account)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.RealName</td>
+                <td>@item.EmpNo</td>
+                <td>@item.Account</td>
+                <td>@item.RealName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<br />
+<br />
+@Html.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "id",
+    ShowPageIndexBox = true,
+    FirstPageText = "首页",
+    PrevPageText = "上一页",
+    NextPageText = "下一页",
+    LastPageText = "末页",
+    PageIndexBoxType = PageIndexBoxType.TextBox,
+    PageIndexBoxWrapperFormatString = "请输入页数{0}",
+    GoButtonText = "转到",
+    ShowGoButton = false
+}, new { CLASS = "pager" })
+    >>分页 共有 @Model.TotalItemCount 篇留言 @Model.CurrentPageIndex/@Model.TotalPageCount

@@ -1,0 +1,69 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.FormPath
+<tr>
+    <td colspan="8">
+        <div class="text-left">
+            <p>
+                异常现像：
+
+                <div class="ui-checkbox" id="AbnormalImage">
+                    @foreach (var en in Carlzhu.Iooin.Util.MvcHtml.SelectListExtendExpress.EnumToList(typeof(Carlzhu.Iooin.Entity.FORM.f.FormNcr.AbnormalImageEnum)))
+                    {
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="Image" value="@en.Value"> @en.Text
+                        </label>
+                    }
+                </div>
+            </p>
+            <p>
+                异常归属：
+                <div class="ui-checkbox" id="AbnormalAttribution">
+                    @foreach (var en in Carlzhu.Iooin.Util.MvcHtml.SelectListExtendExpress.EnumToList(typeof(Carlzhu.Iooin.Entity.FORM.f.FormNcr.AbnormalAttributionEnum)))
+                    {
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="Attribution" value="@en.Value"> @en.Text
+                        </label>
+                    }
+
+                </div>
+            </p>
+        </div>
+        @Html.TextAreaFor(model => model.Mark, new { PLACEHOLDER = "最多输入512个文字", TITLE = "临时措施请写在这里", CLASS = "form-control", ROW = "3", maxlength = 512 })
+        <input type="button" value="保存" data-loading-text="数据保存中...." class="btn btn-block" id="savePart" />
+    </td>
+</tr>
+<script type="text/javascript">
+
+    var abnormalImage = $("#AbnormalImage");
+    var abnormalAttribution = $("#AbnormalAttribution");
+
+    $("#savePart").click(function () {
+        var e = $(this);
+        abnormalImage.val("");
+        abnormalAttribution.val("");
+
+        $("input[name=Image][type=checkbox]:checked").each(function () {
+            abnormalImage.val(abnormalImage.val() + $(this).val());
+        });
+        $("input[name=Attribution][type=checkbox]:checked").each(function () {
+            abnormalAttribution.val(abnormalAttribution.val() + $(this).val());
+        });
+
+        e.button("loading");
+        $.post("@Url.Action("SavePart", "Abnormal")", {
+            "ParentFormNo": "@Model.FormNo",
+            "formid": "@Model.FormId",
+            "Mark": $("#Mark").val(),
+            "AbnormalImage": abnormalImage.val(),
+            "AbnormalAttribution": abnormalAttribution.val()
+        }, function (data) {
+            if (data === "success") {
+                alert("保存成功！");
+                location.reload();
+            } else {
+                alert("保存失败，请重试！");
+                e.button("reset");
+            }
+
+        });
+    });
+</script>

@@ -1,0 +1,35 @@
+﻿@using Carlzhu.Iooin.Util
+
+<!--copyright-->
+<div class="copyright">
+    @{
+
+        var programInfo = BaseHelper.ProgramInfo;
+        <p>@Html.Partial("_CopyRight") <span>@Html.Raw(programInfo["Description"] + " ") </span></p>
+
+    }
+</div>
+
+<!--Loading-->
+<div id="loadarea">
+    <div id="idCarlzhuProgressImage" class="progress hide">
+        <p id="idCarlzhuLoadingChar"></p>
+        <img alt="" src="@Url.Content("~/content/Images/ajax-loader2.gif")" />
+    </div>
+    <div id="idCarlzhuMaskImage" class="mask hide"></div>
+</div>
+
+
+@try
+{
+    var s = ManageProvider.Provider.Current();
+    <div style="display:none;" id="upFileDig" title="请选择要上传的文件">
+        @Html.Action("UpFilePage", "F")
+    </div>
+}
+catch (Exception)
+{
+    Console.WriteLine("login out");
+    //
+}
+<!--Upfile-->

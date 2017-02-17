@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+<div>
+    //异常查看
+    select * from MINICUT.DBO.BASEEMPLOYEE WHERE EMPNO IN (
+    SELECT EMP_NO FROM RMS.DBO.EMPLOYEE WHERE emp_no not in (
+    SELECT E.EMPNO FROM MINICUT.DBO.BASEEMPLOYEE E
+    LEFT JOIN MINICUT.DBO.BASEDEPARTMENT D ON E.DEPARTMENTID=D.DEPARTMENTID WHERE D.COMPANYID='MJCOMPANY')
+    )
+
+
+
+
+    //同步rms数据库
+    INSERT into MINICUT.DBO.BASEEMPLOYEE (empNO,realname,cardno,[Identity],Mobile,ProbationPeriod,ContractPeriod,IsShift)
+    (
+    SELECT EMP_NO,EMP_NAME,CARD_NO,'DL','13812910362',0,0,0 FROM RMS.DBO.EMPLOYEE WHERE emp_no not in (
+    SELECT E.EMPNO FROM MINICUT.DBO.BASEEMPLOYEE E
+    LEFT JOIN MINICUT.DBO.BASEDEPARTMENT D ON E.DEPARTMENTID=D.DEPARTMENTID WHERE D.COMPANYID='MJCOMPANY')
+    )
+
+
+    update MINICUT.DBO.baseemployee set
+    --account=a.EMP_ENGLISH_NAME,                                                 --员工姓名，同登陆帐号
+    cardNo =a.Card_NO,                                                          --考勤卡号
+    realname=a.EMP_NAME,                                                        --员工姓名
+    gender=(CASE a.EMP_SEX WHEN 'M' THEN '男' ELSE '女' END),                   --员工性别
+    Birthday=a.emp_birth,
+    departmentid=(SUBSTRING(a.emp_dept,1,2)+'A'+SUBSTRING(a.emp_dept,4,2)),     --员工部门
+    position=substring(a.emp_position, 1, 2),                                                              --员工职等
+    idcard=a.EMP_ID_CARD,                                                       --员工身份证号
+    homeaddress=a.EMP_BORN,                                                      --家庭住址
+    Mobile=isnull(a.Emp_TEL,'13800000000'),
+    --婚姻
+    Education=a.emp_Degree,
+    isDimission=(CASE a.EMP_STATUS WHEN 'Y' THEN '1' ELSE '0' END),				--在职状态
+    workingdate=a.EMP_DATE_FROM,                                                --入职日期
+    ContractDate=a.emp_contract_from,													--上次合同签订日期
+    ContractPeriod=24,
+    ProbationPeriod=3,
+    bankcode=a.EMP_BANK_CARD,                                                   --员工银行卡号
+    SocialSecurityNo=a.EMP_SOCIAL_SECURITY,										--社保卡号
+    DimissionDate=a.EMP_DISMISSED_DATE,											--员工离职日期
+    --email=a.EMP_EMAIL,                                                          --员工邮箱
+    officephone='1234',                                                         --员工分机号
+    officefax='65658025'                                                      --员工传真
+    from  rms.dbo.employee a,baseemployee b
+    where a.emp_no=b.empNo   and   a.EMP_DEPT not in ('相城','青岛','null') and a.emp_position not in ('null')
+
+
+
+
+
+    //UPDATE BASEUSER
+    INSERT INTO MINICUT.DBO.BASEUSER (userId,CompanyId,DepartmentId,InnerUser,Code,Account,Password,SecretKey,realname,Gender,Email)
+    (select EMPNO,'MJCompany',departmentId,'1',empno,account,'f674dfe399b28fe10c846553477a33f3','56547f6a20cc62a3',realname,gender,email from minicut.dbo.BASEEMPLOYEE
+    WHERE EMPNO IN
+    (
+    select EMPNO from MINICUT.DBO.BASEEMPLOYEE
+    WHERE EMPNO NOT IN (
+    select USERID from MINICUT.DBO.BASEUSER)
+    )
+    )
+
+
+
+    //update baseuser
+
+    UPDATE MINICUT.DBO.BASEUSER
+    SET
+    DEPARTMENTID= a.departmentid,
+    Gender=a.Gender,
+    email=a.email,
+    realname=a.realname,
+    account=a.account,
+    [enabled]=a.isDimission
+    from minicut.dbo.baseuser u,minicut.dbo.baseemployee a
+    where u.userid=a.empno
+
+
+
+
+
+    //UPDAATE POSITION
+
+    UPDATE MINICUT.DBO.BASEEMPLOYEE SET POSITION = C.EMP_POSITION
+    FROM MINICUT.DBO.BASEEMPLOYEE E,
+    (SELECT EMP_NO,SUBSTRING(EMP_POSITION,1,2) AS EMP_POSITION FROM (
+    SELECT EMP_NO,EMP_POSITION FROM RMS.DBO.EMPLOYEE
+    UNION
+    SELECT EMP_NO,EMP_POSITION FROM DRMS.DBO.EMPLOYEE
+    ) A) C
+
+    WHERE E.EMPNO =C.EMP_NO
+
+
+
+
+
+</div>
+</body>
+</html>

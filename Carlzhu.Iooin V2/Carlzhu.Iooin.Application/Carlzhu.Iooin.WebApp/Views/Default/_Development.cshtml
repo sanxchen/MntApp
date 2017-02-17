@@ -1,0 +1,5 @@
+﻿<div class="navbar navbar-default navbar-static-top navbar-inverse"  role="navigation">
+    <a class="navbar-brand disabled" href="javascript:;">开发中心</a>
+    @Html.RouteLink("首页", "Default", new { Controller = "Default", Action = "Index" }, new { CLASS = "navbar-brand" })
+    @Html.RouteLink("后台管理中心", "Default", new { Controller = "Manager", Action = "Login" }, new { CLASS = "navbar-brand" })
+</div>

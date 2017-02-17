@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Carlzhu.Iooin.Entity.FORM.f.FormPdAbnor>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/eSystem/Views/Shared/_eSystem.cshtml";
+}
+
+<ol class="breadcrumb">
+    <li>@Html.RouteLink("eSystem", new { Controller = "Home", Action = "Index", area = "eSystem" }, null)</li>
+    <li class="active">@Html.RouteLink("处理异常", new { Controller = "Product", Action = "Index", area = "eSystem" }, null)</li>
+</ol>
+
+<table class="table table-bordered table-condensed table-striped">
+    <thead>
+        <tr>
+            <td>#</td>
+            <td>确认</td>
+            <td>@Html.DisplayNameFor(model => model.AbnormalType)</td>
+            <td>@Html.DisplayNameFor(model => model.WorkshopCode)</td>
+            <td>@Html.DisplayNameFor(model => model.PartNo)</td>
+            <td>@Html.DisplayNameFor(model => model.WorkTag)</td>
+            <td>@Html.DisplayNameFor(model => model.WorkProcess)</td>
+            <td>@Html.DisplayNameFor(model => model.ResponsibilityDept)</td>
+            <td>@Html.DisplayNameFor(model => model.AbnormalTime)</td>
+            <td>@Html.DisplayNameFor(model => model.AbnormalDetails)</td>
+            <td>提报人</td>
+            <td>处理</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>#</td>
+                <td>@(item.Form.CreateEmpNo== ViewData["emp"].ToString() ? Html.Raw("<a href='javascript:CaseClose("+"\""+item.RowId+"\""+")'>确认本异常</a>") :Html.Raw(""))</td>
+                <td>@Enum.GetName(typeof(Carlzhu.Iooin.Entity.FORM.f.FormPdAbnor.EnumAbnormalType), item.AbnormalType)</td>
+                <td>@item.PartNo</td>
+                <td>@item.WorkTag</td>
+                <td>@item.WorkProcess</td>
+                <td>@item.Department.DepartmentName</td>
+                <td>@item.AbnormalTime</td>
+                <td>@item.AbnormalDetails</td>
+                <td>@item.Form.BaseEmployee.RealName</td>
+
+                <td>@Html.RouteLink("[处理]", new { Controller = "Product", Action = "EditProAbnormal", area = "eSystem", id = item.RowId }, null)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@*//=="1109001"?"":"<a href='javascript:CaseClose(' @item.RowId ')'>确认本异常</a>"*@
+<script type="text/javascript">
+    function CaseClose(item) {
+        $.post("@Url.Action("CaseClose","Product",new {area= "eSystem" })", { caseid: item }, function () {
+            if (data === "success") {
+                alert("结案成功！");
+                location.href = "/Default/Kanban";
+
+            } else {
+                alert("保存失败，请重试！");
+            }
+
+        });
+    }
+
+</script>

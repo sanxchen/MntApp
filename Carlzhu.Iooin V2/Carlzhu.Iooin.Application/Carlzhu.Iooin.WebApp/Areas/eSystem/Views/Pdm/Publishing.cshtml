@@ -1,0 +1,81 @@
+﻿
+@using Carlzhu.Iooin.Business.FormModule
+@using Carlzhu.Iooin.InteractiveAdapter
+@using Carlzhu.Iooin.Entity.FORM.f.draw
+@model IEnumerable<Carlzhu.Iooin.Entity.FORM.FormSign>
+@{
+    ViewBag.Title = "发行新图纸";
+    Layout = "../Shared/_eSystem.cshtml";
+}
+
+<style type="text/css">
+    .publishing {
+    }
+</style>
+<ol class="breadcrumb">
+    <li>@Html.RouteLink("Home",   new { Controller = "Default", Action = "Index",area="" }, null)</li>
+    <li class="active">@Html.RouteLink("发行新图纸",   new { Controller = "Pdm", Action = "Index" ,area="eSystem"}, null)</li>
+</ol>
+
+
+<table class="table table-bordered table-condensed table-responsive table-striped table-hover astatus">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>@Html.DisplayNameFor(model => model.Form.FormType.FormName)</th>
+            <th>@Html.DisplayNameFor(model => model.Form.CreateEmpNo)</th>
+            <th>出货料号</th>
+            <th>@Html.DisplayNameFor(model => model.Form.CreateTime)</th>
+            <th>@Html.DisplayNameFor(model => model.CreateTime)</th>
+            <th>@Html.DisplayNameFor(model => model.FormNo)</th>
+            <th>@Html.DisplayName("发行选项")</th>
+        </tr>
+    </thead>
+
+    @{
+        int i = 0;
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>@(++i)</td>
+                <td>@item.Form.FormType.FormName</td>
+                <td>@item.Form.BaseEmployee.Account @item.Form.BaseEmployee.RealName</td>
+                <td>
+                    @(((DrawingsBase)new Applying().GetFormEntityByFormNo(item.FormNo, item.Form.FormType)).ProductNo)
+                </td>
+                <td>@item.Form.CreateTime</td>
+                <td>@item.CreateTime</td>
+                <td><span><i class="glyphicon glyphicon-eye-open"></i></span> @Html.RouteLink(item.FormNo,  new { Action = "Details", Controller = "Tracking",area="eForm", p = (string.Format("{0},{1}", item.FormNo, "signed").Encrypt()) }, new { TARGET = "_blank" })  &raquo; </td>
+                <td>
+                    <span data-loading-text="@(string.Format("{0},{1},{2}", item.FormNo, item.RowId,"0").Encrypt())"><a href="javascript:;">正常发行</a></span>
+                    <span data-loading-text="@(string.Format("{0},{1},{2}", item.FormNo, item.RowId,"1").Encrypt())"><a href="javascript:;">加密发行</a></span>
+                </td>
+            </tr>
+
+        }}
+
+
+</table>
+
+@section scripts{
+    <script type="text/javascript">
+
+
+        $("td span a").click(function () {
+            var e = $(this);
+            var p = e.parent("span").attr("data-loading-text");
+
+            $.ajaxLoading({
+                url: '@Url.Action("Publishing", "Pdm")',
+                data: { p: p },
+                loadingdata: "图纸正在发行中，请等待...",
+                success: function (result) {
+                    if (result == "发行成功") {
+                        e.parent("span").parent("td").parent("tr").remove();
+                    }
+                    alert(result);
+                }
+            });
+        });
+    </script>
+}

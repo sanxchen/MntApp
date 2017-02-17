@@ -1,0 +1,126 @@
+﻿@model List<Carlzhu.Iooin.Entity.FORM.FormClass>
+
+@{
+    ViewBag.Title = "表单申请";
+    Layout = "../Shared/_Bpm.cshtml";
+}
+
+<style type="text/css">
+    body {
+        background-color: #fff;
+    }
+     .applying {
+         padding-top: 40px;
+     }
+
+    .applying .left {
+        float: left;
+        padding: 0 70px;
+        border-right: 1px solid silver;
+    }
+
+    .applying .left h5 {
+        cursor: pointer;
+    }
+
+    .applying .left ul li {
+        margin: 10px 0;
+        cursor: pointer;
+        padding: 2px 5px;
+        text-indent: 10px;
+    }
+
+    .applying .left ul li a {
+        text-decoration: none;
+    }
+
+    .applying .left ul li.click {
+        background-color: #efefef;
+        -ms-border-radius: 5px;
+        border-radius: 5px;
+        -ms-border-top-right-radius: 20px;
+        border-top-right-radius: 20px;
+        -ms-border-bottom-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        -webkit-box-shadow: #000080 3px 3px 3px;
+        -ms-box-shadow: #000080 3px 3px 3px;
+        box-shadow: #000080 3px 3px 3px;
+    }
+
+    .applying .right {
+        float: left;
+    }
+
+    .applying .right ul {
+        margin-left: 70px;
+    }
+
+    .applying .right ul li {
+        background: url('/content/images/icon16/add.png') no-repeat left center;
+        padding-left: 22px;
+        margin: 5px 2px;
+        float: left;
+        width: 320px;
+    }
+</style>
+
+
+<div>
+    <ol class="breadcrumb">
+        <li>@Html.RouteLink("Flow", new { Controller = "Applying", Action = "Index", area = "eForm" }, null)</li>
+        <li class="disabled">申请表单</li>
+    </ol>
+</div>
+
+<div>
+    <div class="row applying">
+        <div class="col-md-1"></div>
+        <div class="col-md-3 ">
+            <div class="left">
+                <h5>常用表单</h5>
+                <ul style="float:left">
+                    @foreach (var item in Model)
+                    {
+                        <li @(item.FormClassId == "热门表单" ? "class=click" : "")><a href="javascript:;" tabindex="@item.FormClassId">@item.ShortName</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="right" id="right">
+                @Html.Action("GetFormTypeByHot", "Applying")
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="applying">
+
+
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        if (location.hash != "" && location.hash != null)
+            loadClassModel(location.hash.substring(1));
+
+        $(".left h5").click(function () {
+            window.location = '@Url.Content("Index")';
+        });
+
+
+        function loadClassModel(departmentCode) {
+            location.href = "#" + departmentCode;
+            $("#right").load('/eForm/Applying/GetFormTypeByDepartmentCode?code=' + departmentCode);
+        }
+
+
+        $(".left ul li").click(function () {
+            $(this).addClass("click").siblings().removeClass("click");
+            loadClassModel($(this).find("a").attr("tabindex"));
+
+        });
+    </script>
+}

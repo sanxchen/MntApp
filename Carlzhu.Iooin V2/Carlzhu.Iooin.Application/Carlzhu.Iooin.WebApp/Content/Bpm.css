@@ -1,0 +1,394 @@
+﻿html, body {
+    height: 100%;
+    width: 100%;
+    /*background-color: #dcdcdc;*/
+}
+
+
+
+
+
+/*formtitle*/
+#formtitle {
+}
+/*#formtitle h3 {
+    height: 60px;line-height: 60px;
+    color: #444;
+}*/
+/*formtitle*/
+
+
+
+
+/*.note {
+    position: relative;
+    overflow: hidden;
+}
+
+    .note:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        border-width: 0 40px 40px 0;
+        border-style: solid;
+        border-color: #dcdcdc #dcdcdc #fff #fff;
+        display: block;
+        width: 0;
+    }
+
+
+    .note.taupe {
+        background: #e0e0e0;
+        color: #294782;
+    }*/
+
+
+
+
+/* head start*/
+
+.home_header {
+    background-color: #fff;
+}
+
+
+.system_name#bpm {
+    float: left;
+    width: 300px;
+    height: 90px;
+    background: url('/content/images/1227/Portal_flow.png')no-repeat left center;
+}
+
+.menu {
+    z-index: 1000;
+    margin: 15px auto;
+}
+
+    .menu a:hover, .menu a.hover {
+        color: #444 !important;
+    }
+
+    .menu li {
+        position: relative;
+    }
+
+    .menu > li {
+        float: left;
+        width: 12.666666666666664%;
+        /*border-top: 1px solid #d1cccc;*/
+    }
+
+        .menu > li:hover, .menu > li.hover {
+            /*border-top-color: #d1cccc;*/
+            z-index: 1;
+        }
+
+        .menu > li > a {
+            display: block;
+            font-size: 10px;
+            color: #444;
+            text-align: center;
+            text-transform: uppercase;
+            line-height: 18px;
+            padding: 0px 5px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+
+
+        .menu > li:hover > a,
+        .menu > li.hover > a {
+            color: #444;
+            text-decoration: none;
+        }
+
+.menu-icon {
+    display: block;
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 5px;
+    /*background: url(/Scripts/framework/Menu/images/icons/menu-icons.png) 0 0 no-repeat;*/
+    background: url(/Content/images/1227/icon/portal_logo_40.png) 0 0 no-repeat;
+}
+
+
+.menu-icon-0 {
+    background-position: 0 -340px;
+}
+
+.menu-icon-1 {
+    background-position: 0 -425px;
+}
+
+.menu-icon-2 {
+    background-position: 0 -170px;
+}
+
+.menu-icon-3 {
+    background-position: 0 -0px;
+}
+
+.menu-icon-4 {
+    background-position: 0 -127px;
+}
+
+.menu > li:hover > a .menu-icon-0, .menu > li.hover > a .menu-icon-2 {
+    background-position: -45px -340px;
+}
+
+.menu > li:hover > a .menu-icon-1, .menu > li.hover > a .menu-icon-2 {
+    background-position: -45px -425px;
+}
+
+.menu > li:hover > a .menu-icon-2, .menu > li.hover > a .menu-icon-3 {
+    background-position: -45px -170px;
+}
+
+.menu > li:hover > a .menu-icon-3, .menu > li.hover > a .menu-icon-4 {
+    background-position: -45px 0;
+}
+
+
+.menu > li:hover > a .menu-icon-4, .menu > li.hover > a .menu-icon-6 {
+    background-position: -45px -127px;
+}
+
+
+/* head end*/
+
+
+
+
+
+
+
+
+.home_line {
+    clear: both;
+    height: 5px;
+    background-color: #dadada;
+}
+
+
+
+
+
+
+
+
+
+/*apply sign template*/
+.template {
+    z-index: 2;
+    background-color: #dcdcdc;
+}
+
+    .template .memubar {
+        text-align: center;
+        height: 80px;
+        background-color: #113274;
+        text-align: center;
+    }
+
+        .template .memubar button {
+            background: #113274;
+            color: #00a8ee;
+            border: 1px solid #113274;
+        }
+
+            .template .memubar button:hover {
+                color: #ffffff;
+            }
+
+            .template .memubar button i {
+                margin-right: 5px;
+            }
+
+
+    .template .content {
+        z-index: 1000;
+        margin-top: -55px;
+        margin-bottom: 50px;
+        margin-left: auto;
+        margin-right: auto;
+        border-bottom: 2px solid #d8d8d8;
+        width: 950px;
+        padding: 0 5px;
+    }
+
+        .template .content #mycheckmsg {
+            display: none;
+            z-index: 888;
+        }
+
+
+        .template .content .form {
+            margin: 20px auto;
+            background-color: #fff;
+            padding-bottom: 50px;
+            /*border-radius: 10px;*/
+        }
+
+            .template .content .form .formname {
+                padding: 18px;
+                border-bottom: 4px solid #8c0000;
+                color: #103174;
+                font-size: 22px;
+            }
+
+                .template .content .form .formname small {
+                    font-size: 18px;
+                    color: #cdcdcd;
+                }
+
+
+            .template .content .form .applyinfo {
+                color: #444;
+                font-weight: normal;
+                height: 50px;
+                line-height: 50px;
+                padding: 5px 10px;
+            }
+            .template .content .form .applyinfo span {
+
+                font-weight: bold;
+                color: #103174;
+            }
+            .template .content .form .formline {
+                display: block;
+                height: 3px;
+                line-height: 3px;
+                background-color: #efefef;
+            }
+
+            .template .content .form .formbody {
+                padding: 10px 5px 0 5px;
+                margin: auto 20px;
+            }
+
+            .template .content .form .end {
+                border: 1px solid #d8d8d8;
+                background-color: #d8d8d8;
+                margin: 50px 0 100px 0;
+                height: 5px;
+            }
+
+            .template .content .form table hr {
+                margin: 0;
+                padding: 0;
+            }
+
+            .template .content .form table.model select, .template .content .form table.model input[type=text] {
+                width: 170px;
+            }
+
+
+
+
+            /*.template .content .form table.model .formmark {
+                height: 80px;
+            }
+
+                .template .content .form table.model .formmark textarea {
+                    width: 100%;
+                    padding: 3px 5px;
+                    border: 1px solid #969696;
+                }*/
+
+
+            /*List清单表单申请*/
+            .template .content .form table.list select, .template .content .form table.list input[type=text] {
+                width: 100%;
+                height: 100%;
+                border: none;
+            }
+
+                .template .content .form table.list input[type=text]:hover, .template .content .form table.list input[type=checkbox]:hover {
+                    border: none;
+                }
+
+            .template .content .form table.list th {
+                text-align: center;
+                vertical-align: middle;
+            }
+
+            .template .content .form table.list td {
+                padding: 0px;
+                margin: 0px;
+                text-align: center;
+            }
+
+            .template .content .form table.listtext td {
+                padding: 4px;
+                margin: 0px;
+                text-align: center;
+            }
+
+            .template .content .form table.list td label {
+                width: 25px;
+            }
+
+            .template .content .form table.list tr td:first-child {
+                width: 40px;
+            }
+        /*注意提醒意见*/
+
+        .template .content .explain {
+            margin-top: 20px;
+        }
+
+            .template .content .explain h5 {
+                color: red;
+            }
+
+            .template .content .explain ol {
+                margin-left: 25px;
+            }
+
+            .template .content .explain ul {
+                margin-left: 10px;
+            }
+
+
+/*签核记录与签核意见*/
+#sm, #srd {
+    position: absolute;
+    display: none;
+    background-color: #efefef;
+    border: 2px solid #aeaeae;
+    display: none;
+}
+
+
+/*表单追寻条件*/
+div.tracking div.querybar {
+    border: 1px solid #808080;
+    padding: 1px;
+}
+
+div.tracking span.to {
+    padding: 0 8px;
+    background: url('/content/images/to.png');
+}
+
+div.tracking span.checkboxgroup {
+    margin: 0px;
+    padding: 0px;
+    border: 1px solid #ccc;
+    padding: 0 3px;
+}
+
+    div.tracking span.checkboxgroup input[type=checkbox] {
+        vertical-align: -2px;
+        margin: 0 2px;
+    }
+
+div.tracking .formno_query {
+    margin-left: 20px;
+}
+
+div.tracking .query_submit {
+    width: 80px;
+}

@@ -1,0 +1,298 @@
+﻿ASP.net 海外主机
+FTP用户名： minicut2015 
+FTP密码： fvuje2hd 
+上传地址： minicut2015.gotoftp4.com 
+
+国内主机：minicut2015.cninfos.com|h_minicut2015|s7f9d7e8
+
+
+
+
+
+ Type open = typeof(Dictionary<,>);
+                Type closeType = open.MakeGenericType(typeof(Published), type);
+
+                var ss = method.Invoke(instance, new object[] { startTime, endTime, keys });
+
+iis8配置错误
+%windir%\system32\inetsrv\appcmd unlock config -section:system.webServer/handlers 
+%windir%\system32\inetsrv\appcmd lock config -section:system.webServer/handlers 
+
+
+tfsdeleteproject /collection:https://carlzhu.visualstudio.com/DefaultCollection "project"
+
+
+
+
+
+
+Visual studio Setup:F0AC1QW-D0F-805F36869N
+
+
+enable-migrations -force
+
+PM> Enable-Migrations -ProjectName ZRG.CarlzhuMVC.Model -StartUpProjectName ZRG.CarlzhuMVC.Web -Verbose
+
+add-migration initial
+
+
+update-databse
+
+Enable-Migrations -ProjectName Toombu.DataAccess -StartUpProjectName Toombu.Web -Verbose
+
+
+System.ComponentModel.DataAnnotations命名空间完成的。 我们要做的只是给Model类的各属性加上对应的验证标记（Attributes）就可以让MVC3框架帮我们完成验证。我以MVC3项目模板自带的登录 做例子讲解Model的验证。
+一、启用客户端验证：
+客户端验证主要是为了提高用户体验，在网页不回刷的情况下完成验证。
+第一步是要在web.config里启用客户端验证，这在MVC3自带的模板项目中已经有了：
+<add key="ClientValidationEnabled" value="true"/>
+<add key="UnobtrusiveJavaScriptEnabled" value="true"/> 
+然后在被验证的View页面上要加入这样两个JavaScript，注意，他们是依赖于JQuery的：
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script> 
+ 验证消息的显示有两种，一种是ValidationSummary，它可以显示一份验证消息的汇总，包括从后台Action里返回的消息。
+@Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.") 
+另一种是Model中各属性对应HTML控件的验证消息：
+@Html.ValidationMessageFor(m => m.UserName)
+二、在Model中加入验证标记
+MVC3项目模板自带的登录模型类如下：
+public class LogOnModel
+{
+    [Required]
+    [Display(Name = "User name")]
+    public string UserName { get; set; }
+ 
+    [Required]
+    [DataType(DataType.Password)]
+    [Display(Name = "Password")]
+    public string Password { get; set; }
+ 
+    [Display(Name = "Remember me?")]
+    public bool RememberMe { get; set; }
+} 
+ 对比普通的C#类，我们发现每个属性上都多了被方括号“[]”包围的标记。其中，[Required]是验证标记的一种，而[Display]、[DataType]则是为了显示对应的HTML控件，这不在本文讨论范围之内。
+除了Required，我们还可以在Model中添加其他有用的验证标记。下面是个较完整的列表：
+Model类中可以添加的验证标记：
+ 
+1. 必填字段
+[Required]
+public string FirstName { get; set; }
+2. 字段长度
+至多n位：
+[StringLength(160)]
+public string FirstName { get; set; }
+要求至少n位：
+[StringLength(160, MinimumLength=3)]
+public string FirstName { get; set; }
+
+3. 正则验证
+
+[RegularExpression(@”[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+/.[A-Za-z]{2,4}”)]
+public string Email { get; set; }
+
+4. 范围
+[Range(35,44)]
+public int Age { get; set; }
+小数的情况：
+[Range(typeof(decimal), “0.00”, “49.99”)]
+public decimal Price { get; set; }
+
+5. 服务端参与的验证
+
+[Remote(“CheckUserName”, “Account”)]
+public string UserName { get; set; }
+然后在AccountController里指定一个CheckUserName方法：
+public JsonResult CheckUserName(string username)
+{
+    var result = Membership.FindUsersByName(username).Count == 0;
+    return Json(result, JsonRequestBehavior.AllowGet);
+} 6. 比较
+[RegularExpression(@”[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+/.[A-Za-z]{2,4}”)]
+public string Email { get; set; }
+[Compare(“Email”)]
+public string EmailConfirm { get; set; }
+
+7. 自定义错误消息
+正则：
+[RegularExpression(@”[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+/.[A-Za-z]{2,4}”,
+ErrorMessage=”Email doesn’t look like a valid email address.”)]
+public string Email { get; set; }
+
+普通文本：
+
+[Required(ErrorMessage=”Your last name is required”)]
+[StringLength(160, ErrorMessage=”Your last name is too long”)]
+public string LastName { get; set; }
+
+占位符：
+
+[Required(ErrorMessage=”Your {0} is required.”)]
+[StringLength(160, ErrorMessage=”{0} is too long.”)]
+public string LastName { get; set; }
+ 
+三、后台Action的写法
+Action里要做的有两件事：判断ModelState是否合法、添加错误消息。MVC3模板自带的登录Action如下：
+ 
+[HttpPost]
+public ActionResult LogOn(LogOnModel model, string returnUrl)
+{
+    if (ModelState.IsValid)
+    {
+        if (Membership.ValidateUser(model.UserName, model.Password))
+        {
+            FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+            if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
+                && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("///"))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+        else
+        {
+            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+        }
+    }
+ 
+    // If we got this far, something failed, redisplay form
+    return View(model);
+} 
+[HttpPost]表示这个Action只能通过POST动作调用，这是为了配合View里的表单，因为FORM的ACTION是POST（当然也可以是GET），不过这不在本文的讨论范围内。
+if (ModelState.IsValid) 是重点，如果不出意外，即客户端浏览器没有关闭JavaScript，并且客户不是个黑客（黑客可能会通过一些工具模拟POST），那只要通过正常途径 POST到这个Action的Model都应该是IsValid的。当然，编程的一个重要原则是不能相信用户的输入，所以我们有必要再判断一次 ModelState.IsValid。
+ModelState.AddModelError方法是给View返回一个错误消息，最终交给@Html.ValidationSummary显示。
+ 
+最后附上常用正则表达式（网上找的）
+ 
+数字："^[0-9]*$"。
+
+n位的数字："^/d{n}$"。
+
+至少n位的数字："^/d{n,}$"。
+
+m~n位的数字：。"^/d{m,n}$"
+
+零和非零开头的数字："^(0|[1-9][0-9]*)$"。
+
+有两位小数的正实数："^[0-9]+(.[0-9]{2})?$"。
+
+有1~3位小数的正实数："^[0-9]+(.[0-9]{1,3})?$"。
+
+非零的正整数："^/+?[1-9][0-9]*$"。
+
+非零的负整数："^/-[1-9][]0-9"*$。
+
+长度为3的字符："^.{3}$"。
+
+由26个英文字母组成的字符串："^[A-Za-z]+$"。
+
+由26个大写英文字母组成的字符串："^[A-Z]+$"。
+
+由26个小写英文字母组成的字符串："^[a-z]+$"。
+
+由数字和26个英文字母组成的字符串："^[A-Za-z0-9]+$"。
+
+由数字、26个英文字母或者下划线组成的字符串："^/w+$"。
+
+验证用户密码："^[a-zA-Z]/w{5,17}$"正确格式为：以字母开头，长度在6~18之间，只能包含字符、数字和下划线。
+
+验证是否含有^%&’,;=?$/"等字符："[^%&’,;=?$/x22]+"。
+
+只能输入汉字："^[/u4e00-/u9fa5]{0,}$"
+
+验证Email地址："^/w+([-+.]/w+)*@/w+([-.]/w+)*/./w+([-.]/w+)*$"。
+
+验证InternetURL："^http://([/w-]+/.)+[/w-]+(/[/w-./?%&=]*)?$"。
+
+验证电话号码："^(/(/d{3,4}-)|/d{3.4}-)?/d{7,8}$"正确格式为："XXX-XXXXXXX"、"XXXX- XXXXXXXX"、"XXX-XXXXXXX"、"XXX-XXXXXXXX"、"XXXXXXX"和"XXXXXXXX"。
+
+验证身份证号(15位或18位数字)："^/d{15}|/d{18}$"。
+
+验证一年的12个月："^(0?[1-9]|1[0-2])$"正确格式为："01"～"09"和"1"～"12"。
+
+验证一个月的31天："^((0?[1-9])|((1|2)[0-9])|30|31)$"正确格式为;"01"～"09"和"1"～"31"。
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT * FROM MINICUT.dbo.FormDrawingsCustomer WHERE PRODUCTNO='3D.21S02.001'
+SELECT * FROM MINICUT.dbo.FormDrawingsInside WHERE PRODUCTNO='3D.21S02.001'
+
+
+SELECT * FROM MINICUT.DBO.FORM WHERE FORMNO IN ('2014040400015','2014040400016')
+
+
+SELECT * FROM MINICUT.DBO.FILES WHERE MD5 IN (
+SELECT MD5 FROM MINICUT.DBO.FILESfILEGROUP WHERE GROUPGUID='8DE79461-2A43-4D42-86E3-E922DB5AFF23')
+
+
+update minicut.dbo.form set formstatus='1' where formNo IN ('2014040400015','2014040400016') 
+
+update minicut.dbo.formsign set signresult='0' where formNo IN ('2014040400015','2014040400016')  and signempno='1109004'
+
+
+
+
+
+
+Code first 
+
+DropForeignKey("dbo.TpaUse", "Barcode", "dbo.TpaGoodWarehouse");
+DropIndex("dbo.Apparatus", new[] { "UseEmp" });
+DropTable("dbo.Apparatus");
+
+AddColumn("dbo.TpaGoodWarehouse", "Sn", c => c.String(nullable: false));
+AlterColumn("dbo.Employee", "CardNo", c => c.String(nullable: false));
+ @Html.Action("PutOut", "TpaManage")
+
+
+
+
+ -log4
+
+ %m(message):输出的日志消息，如ILog.Debug(…)输出的一条消息
+
+%n(new line):换行
+
+%d(datetime):输出当前语句运行的时刻
+
+%r(run time):输出程序从运行到执行到当前语句时消耗的毫秒数
+
+%t(thread id):当前语句所在的线程ID
+
+%p(priority): 日志的当前优先级别，即DEBUG、INFO、WARN…等
+
+%c(class):当前日志对象的名称，例如：
+
+       模式字符串为：%-10c -%m%n
+
+       代码为：
+
+ILog log=LogManager.GetLogger(“Exam.Log”);
+
+log.Debug(“Hello”);
+
+    则输出为下面的形式：
+
+Exam.Log       - Hello
+
+%L：输出语句所在的行号
+
+%F：输出语句所在的文件名
+
+%-数字：表示该项的最小长度，如果不够，则用空格填充
+
+例如，转换模式为%r [%t]%-5p %c - %m%n 的 PatternLayout 将生成类似于以下内容的输出：
+
+176 [main] INFO  org.foo.Bar - Located nearest gas station.

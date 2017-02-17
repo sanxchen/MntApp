@@ -1,0 +1,30 @@
+﻿@using Carlzhu.Iooin.Entity.FORM
+@using Carlzhu.Iooin.Entity.FORM.f
+@using Carlzhu.Iooin.Entity.FORM.f.report
+
+@model IEnumerable<FormDewellReportAssembling>
+@{
+    var t = (List<FormDewellReportAssembling>)Model;
+}
+
+@Html.Partial("/Areas/eForm/Views/f/formLayout/report/_editHeader.cshtml", new ViewDataDictionary() { { "Model", t.FirstOrDefault() } })
+
+
+
+<tr>
+
+    @Html.Partial("/Areas/eForm/Views/f/formLayout/report/_editCommTh.cshtml", new FormDewellReport())
+    @*my*@
+
+    <th>@Html.DisplayNameFor(model => model.ManConsumption)</th>
+    <th>@Html.DisplayNameFor(model => model.ManFactConsumption)</th>
+    <th>@Html.DisplayNameFor(model => model.DifferenceDescription)</th>
+
+</tr>
+
+
+
+@Html.Partial("/Areas/eForm/Views/f/formLayout/report/_editBody.cshtml", new ViewDataDictionary() { { "Method", ViewBag.FormType }, { "Model", t } })
+
+
+

@@ -1,0 +1,133 @@
+@{
+    ViewBag.Title = "FormType》明细页面";
+    Layout = "~/Views/Shared/_LayoutForm.cshtml";
+}
+<script type="text/javascript">
+    $(function () {
+        InitControl();
+    })
+    //得到一个对象实体
+    function InitControl() {
+        if (!!GetQuery('KeyValue')) {
+            AjaxJson("/CommonModule/FormType/SetForm", { KeyValue: GetQuery('KeyValue') }, function (data) {
+                SetWebControls(data);
+            });
+        }
+    }
+</script>
+<form id="form1" style="margin: 1px">
+    <table class="form">
+        <tr>
+            <th class='formTitle'>FormName：</th>
+            <td class='formValue'>
+                <label id="FormName" />
+            </td>
+            <th class='formTitle'>Method：</th>
+            <td class='formValue'>
+                <label id="Method" />
+            </td>
+        </tr>
+        <tr>
+            <th class='formTitle'>FormPage：</th>
+            <td class='formValue'>
+                <label id="FormPage" />
+            </td>
+            <th class='formTitle'>Class：</th>
+            <td class='formValue'>
+                <label id="Class" />
+            </td>
+        </tr>
+        <tr>
+            <th class='formTitle'>CreateTime：</th>
+            <td class='formValue'>
+                <label id="CreateTime" />
+            </td>
+            <th class='formTitle'>IsHot：</th>
+            <td class='formValue'>
+                <label id="IsHot" />
+            </td>
+        </tr>
+        <tr>
+            <th class='formTitle'>IsRedirect：</th>
+            <td class='formValue'>
+                <label id="IsRedirect" />
+            </td>
+            <th class='formTitle'>IsReplace：</th>
+            <td class='formValue'>
+                <label id="IsReplace" />
+            </td>
+        </tr>
+        <tr>
+            <th class='formTitle'>Os：</th>
+            <td class='formValue'>
+                <label id="Os" />
+            </td>
+            <th class='formTitle'>AllowFileType：</th>
+            <td class='formValue'>
+                <label id="AllowFileType" />
+            </td>
+        </tr>
+        <tr>
+            <th class='formTitle'>RouteOne：</th>
+            <td class='formValue'>
+                <label id="RouteOne" />
+            </td>
+            <th class='formTitle'>RouteTwo：</th>
+            <td class='formValue'>
+                <label id="RouteTwo" />
+            </td>
+        </tr>
+        <tr>
+            <th class='formTitle'>RouteThree：</th>
+            <td class='formValue'>
+                <label id="RouteThree" />
+            </td>
+            <th class='formTitle'>RouteFour：</th>
+            <td class='formValue'>
+                <label id="RouteFour" />
+            </td>
+        </tr>
+        <tr>
+            <th class='formTitle'>IsColsed：</th>
+            <td class='formValue'>
+                <label id="IsColsed" />
+            </td>
+            <th class='formTitle'>IsModel：</th>
+            <td class='formValue'>
+                <label id="IsModel" />
+            </td>
+        </tr>
+        <tr>
+            <th class='formTitle'>IsDisplay：</th>
+            <td class='formValue'>
+                <label id="IsDisplay" />
+            </td>
+            <th class='formTitle'>FileLimit：</th>
+            <td class='formValue'>
+                <label id="FileLimit" />
+            </td>
+        </tr>
+        <tr>
+            <th class='formTitle'>IsStart：</th>
+            <td class='formValue'>
+                <label id="IsStart" />
+            </td>
+            <th class='formTitle'>IsAdd：</th>
+            <td class='formValue'>
+                <label id="IsAdd" />
+            </td>
+        </tr>
+        <tr>
+            <th class='formTitle'>IsMyself：</th>
+            <td class='formValue'>
+                <label id="IsMyself" />
+            </td>
+            <th class='formTitle'>ReqFileExp：</th>
+            <td class='formValue'>
+                <label id="ReqFileExp" />
+            </td>
+        </tr>
+        <tr>
+        </tr>
+    </table>
+</form>

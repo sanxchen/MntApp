@@ -1,0 +1,22 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.draw.FormDrawingsInside
+@{
+    Layout = "/Areas/eForm/Views/f/formLayout/_DrawingBaseEdit.cshtml";
+}
+
+<tr>
+    <td>@Html.LabelFor(model => model.DrawPartNo)</td>
+    <td>@Html.TextBoxFor(model => model.DrawPartNo)</td>
+    <td>@Html.ValidationMessageFor(model => model.DrawPartNo)</td>
+    <td>@Html.LabelFor(model => model.ProductNo)</td>
+    <td>@Html.TextBoxFor(model => model.ProductNo)</td>
+    <td>@Html.ValidationMessageFor(model => model.ProductNo)</td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.ProductName)</td>
+    <td>@Html.TextBoxFor(model => model.ProductName)</td>
+    <td>@Html.ValidationMessageFor(model => model.ProductName)</td>
+    <td>@Html.LabelFor(model => model.Drafter)</td>
+    <td>@Html.TextBoxFor(model => model.Drafter)</td>
+    <td>@Html.ValidationMessageFor(model => model.Drafter)</td>
+</tr>
+

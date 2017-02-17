@@ -1,0 +1,123 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.FormType
+@{
+    ViewBag.Title = "表单申请-" + Model.FormName;
+    Layout = "../Shared/_Bpm.cshtml";
+}
+
+
+
+<div>
+    <ol class="breadcrumb">
+        <li>@Html.RouteLink("Flow", new { Controller = "Applying", Action = "Index", area = "eForm" }, null)</li>
+        <li>@Html.RouteLink("申请表单", new { Controller = "Applying", Action = "Index", area = "eForm" }, null)</li>
+        <li class="disabled">@Model.FormName</li>
+    </ol>
+</div>
+<div class="template">
+    <div class="memubar" id="savememu">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default" hreflang="Save"><i class="glyphicon glyphicon-floppy-saved"></i>保存</button>
+            <button type="button" class="btn btn-default" hreflang="Cancel"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+            <button type="button" class="btn btn-default" hreflang="Exit"><i class="glyphicon glyphicon-log-out"></i>离开</button>
+        </div>
+    </div>
+
+
+
+    <div class="content">
+        <div class="form">
+            @using (Html.BeginForm("SubmitForm", "F", new { area = "eForm" }, FormMethod.Post, new { id = "cctv", enctype = "multipart/form-data" }))
+            {
+                <input type="submit" value="Create" style="display: none" id="submit" />
+                @Html.Hidden("formid", Model.FormId)
+
+                <div class="formname" id="formtitle">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>
+                                <small>[Form @Model.FormId.ToString().PadLeft(3, '0')]</small>&nbsp; @(Model.FormName)申请单
+                                <input type="checkbox" name="isemergents" style="margin-top: 3px;" title="急" />
+                            </label>
+                        </div>
+                    </div>
+                    @*<span class="pull-right"><a href="javascript:;" id="btnShrink" data-sw="off">拉伸</a></span>*@
+                </div>
+                <div class="applyinfo">
+                    <div class="row">
+                        <div class="col-md-3">表单号：</div>
+                        <div class="col-md-3">申请人：</div>
+                        <div class="col-md-3">申请部门：</div>
+                        <div class="col-md-3">申请时间：</div>
+                    </div>
+                </div>
+                <div class="formbody">
+                    <div>
+                        <table class="table table-bordered table-condensed @(Model.IsModel ? "model" : "list")" id="formBody">
+                            @Html.Action("FormComm", "F", new { formId = Model.FormId, area = "eForm" })
+                        </table>
+                    </div>
+
+                </div>
+            }
+            <div class="end"></div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+
+
+
+
+        $("#savememu button").click(function () {
+            var method = $(this).attr("hreflang");
+            switch (method) {
+                case "Save":
+                    $("#submit").click();
+                    break;
+                case "Cancel":
+                    location.reload();
+                    break;
+                case "Exit":
+                    location.href = '@Url.Action("Index", "Applying", new {area = "eForm"})';
+                    break;
+                default:
+            }
+        });
+
+        $(function () {
+
+            //文件上传
+            $("#FileGroup").bind("click", function () {
+                UpFile("#FileGroup", "@(Model.FileLimit)", "@(Model.AllowFileType)", "@(Model.ReqFileExp)");
+            }).val("");
+
+
+            $("#btnShrink").click(function () {
+                var shrink = $(this);
+                var element = $(".template .content");
+                if (shrink.data("sw") === "off") {
+                    element.css("width", "100%");
+                    shrink.data("sw", "on").text("收缩");
+                } else {
+                    element.css("width", "1000px");
+                    shrink.data("sw", "off").text("拉伸");
+                }
+            });
+
+            //列表表单自动选中
+            $("select").each(function () {
+                $(this).children("option[value='" + $(this).attr("GO") + "']").attr("selected", "selected");
+            });
+
+            //阻止回车提交表单
+            $(':input').keypress(function (e) {
+                return e.keyCode !== 13;
+            });
+        });
+
+
+    </script>
+}

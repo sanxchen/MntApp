@@ -1,0 +1,16 @@
+﻿@model List<Carlzhu.Iooin.Entity.FORM.f.FormWorkshopInspection>
+    
+
+@foreach (var item in Model)
+{
+    <div class="row @ViewBag.Style">
+        <div class="col-sm-4" style="border-right: 1px solid #008080">
+            <span style="height: 100%; line-height: 100px; font-size: 20px; font-weight: lighter;">@(string.Format("{0}/{1}", item.RowId, item.Form.BaseEmployee.RealName))</span>
+        </div>
+        <div class="col-sm-8 ">
+            <span style="height: 50px; line-height: 50px; font-size: 20px; font-weight: lighter;">@(string.Format("料号：{0}", item.ProductNo))</span>
+            <hr />
+            <span style="height: 50px; line-height: 50px; font-size: 20px; font-weight: lighter;">@(string.Format("工艺{0}", item.Engineering))</span>
+        </div>
+    </div>
+}

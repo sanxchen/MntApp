@@ -1,0 +1,72 @@
+﻿@using Carlzhu.Iooin.Entity.FORM.f
+@model IEnumerable<FormPassEntry>
+@{
+    var m = Model.First();
+}
+
+<thead>
+    <tr>
+        <th colspan="2">采购负责人</th>
+        <td colspan="3">
+            <input type="text" value="@m.PurchasePrincipal" />
+        </td>
+        <th>采购主管</th>
+        <td colspan="2"><input type="text" value="@m.PurchaseMaster" /></td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayName("项次")</th>
+        <th>@Html.DisplayNameFor(model => model.DetailedContent)</th>
+        <th>@Html.DisplayNameFor(model => model.CustomerName)</th>
+        <th>@Html.DisplayNameFor(model => model.UseDepartment)</th>
+        <th>@Html.DisplayNameFor(model => model.SupplierCode)</th>
+        <th>@Html.DisplayNameFor(model => model.AmountOfMoney)</th>
+        <th>@Html.DisplayNameFor(model => model.InvoiceNo)</th>
+        <th>@Html.DisplayNameFor(model => model.TimeOfPayment)</th>
+    </tr>
+</thead>
+<tbody>
+    @{
+        int i = 0;
+        decimal sumMoney = 0;
+        foreach (var a in Model)
+        {
+            sumMoney += a.AmountOfMoney;
+            <tr>
+                <td>@(++i)</td>
+                <td>@a.DetailedContent</td>
+                <td>@a.CustomerName</td>
+                <td>@a.UseDepartment</td>
+                <td>@a.SupplierCode</td>
+                <td>@a.AmountOfMoney</td>
+                <td>@a.InvoiceNo</td>
+                <td>@a.TimeOfPayment.ToShortDateString()</td>
+            </tr>
+        }
+        for (int j = i; j < 10; j++)
+        {
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+
+            </tr>
+        }
+        <tr>
+            <td colspan="6" class="text-left" ><b>人民币（大写）：&nbsp;&nbsp;&nbsp;&nbsp;<em id="rmbUpper" data-rmb="@sumMoney"></em></b></td>
+            <td colspan="2" class="text-primary" style="text-align: right;"> 总计：@sumMoney</td>
+        </tr>
+    }
+    <tr>
+        <td colspan="8" style="text-align: right;">文件编号：MJ4028-2</td>
+    </tr>
+</tbody>
+
+
+
+
+

@@ -1,0 +1,141 @@
+﻿@using Carlzhu.Iooin.InteractiveAdapter
+@model IEnumerable<Carlzhu.Iooin.Entity.CommonModule.BaseEmployee>
+
+@{
+    ViewBag.Title = "Save";
+    Layout = "../Shared/_Bpm.cshtml";
+    string formNo = ViewBag.FormNo;
+}
+
+<style type="text/css">
+    .sendsign {
+        width: 800px;
+        margin: 20px auto;
+    }
+
+        .sendsign h3 {
+            text-align: center;
+        }
+
+        .sendsign .functiondetails ul li {
+            text-indent: 15px;
+        }
+
+            .sendsign .functiondetails ul li.notice {
+                color: #fa740f;
+            }
+
+        .sendsign .checkmsg {
+            margin-top: 30px;
+            color: #666;
+        }
+
+        .sendsign .signlist {
+            margin-top: 50px;
+        }
+
+            .sendsign .signlist p {
+                text-align: center;
+            }
+
+                .sendsign .signlist p input[type=button] {
+                    margin: 0 5px;
+                    padding: 0 10px;
+                }
+</style>
+
+<div class="sendsign">
+    <h3>预览表单签核人</h3>
+    <div class="functiondetails">
+        <h5>功能说明：</h5>
+        <ul>
+            <li><b>"送签"</b>完成表单，并将表单送出</li>
+            <li><b>"修改"</b>暂未开发</li>
+            <li><b>"删除"</b>删除此表单</li>
+            <li class="notice">注意：请确认签核列表无误后按<span style="color: red; font-weight: bold">[送签]</span>按钮才能将表单送签出去</li>
+        </ul>
+    </div>
+    <div class="checkmsg">
+        <p>您申请的表单需要以下人员签核，请您核对签核人资料是否正确</p>
+        <p>若有任何问题请联系管理员</p>
+    </div>
+    <div class="signlist">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th colspan="6" style="text-align:center;">表单号：@formNo</th>
+                </tr>
+                <tr>
+                    <th>#</th>
+                    <th>签核人</th>
+                    <th>结果</th>
+                    <th>签核意见</th>
+                    <th>签核日期</th>
+                    <th>签核角色</th>
+                </tr>
+            </thead>
+            @{
+                int i = 0;
+                foreach (var a in Model)
+                {
+                    ++i;
+                    <tr>
+                        <td>@i</td>
+                        <td>@a.DepartmentId/ @a.Account  @a.RealName</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>@a.BaseDepartment.FullName</td>
+                    </tr>
+                }
+            }
+
+        </table>
+        <p>
+            <input type="button" data-loading-text="送签中..." value="送签" id="Send" />
+            <input type="button" value="修改" id="Edit" />
+            <input type="button" value="离开" id="Cancel" />
+        </p>
+
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        document.oncontextmenu = function () { return false; } //屏蔽右键菜单
+        document.onpaste = function () { return false; } //屏蔽粘贴
+        document.oncopy = function () { return false; } //屏蔽复制
+        document.oncut = function () { return false; } //屏蔽剪切
+        document.onselectstart = function () { return false; } //屏蔽选择
+
+
+        $("#Send").click(function () {
+            var e = $(this);
+            e.button("loading");
+            
+                 $.post("/eForm/Applying/Send?formNo=@formNo", function (data) {
+                if (data == "success") {
+                    alert("送签成功！！！！");
+                    window.location.href = "@Url.Action("Index","Applying",new {area="eForm"})";
+                } else {
+                    e.button("reset");
+                    alert("送签失败，请联系管理员或重试！！！！");
+                }
+
+            });
+
+
+        });
+
+        $("#Edit").click(function () {
+            window.location.href = '/eForm/Tracking/ApplyOperators?p=@((string.Format("edit,{0}", formNo).Encrypt()))';
+            
+        });
+
+        $("#Cancel").click(function () {
+            window.location.href = "@Url.Action("Index","Applying",new {area="eForm"})";
+        });
+    </script>
+}

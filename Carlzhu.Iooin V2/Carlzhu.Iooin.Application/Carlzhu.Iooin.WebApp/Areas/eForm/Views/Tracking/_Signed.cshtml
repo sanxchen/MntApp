@@ -1,0 +1,63 @@
+﻿
+@using Carlzhu.Iooin.Business.FormModule
+@using Carlzhu.Iooin.InteractiveAdapter
+@using Webdiyer.WebControls.Mvc
+@model PagedList<Carlzhu.Iooin.Entity.FORM.FormSign>
+@{
+    var row = ((int)(ViewData["Page"] ?? 1) - 1) * 15;
+}
+
+<table class="table table-bordered table-condensed table-responsive">
+    <tr>
+        <th>#</th>
+        <th>@Html.DisplayNameFor(model => model.Form.FormType.FormName)</th>
+        <th>@Html.DisplayNameFor(model => model.FormNo)</th>
+        <th>@Html.DisplayNameFor(model => model.Form.BaseEmployee.RealName)</th>
+        <th>@Html.DisplayNameFor(model => model.CreateTime)</th>
+        <th>@Html.DisplayNameFor(model => model.SignTime)</th>
+        <th>@Html.DisplayNameFor(model => model.SignResult)</th>
+        <th>整体进度</th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        var processbar = new Signing().SignProgress(item.FormNo);
+        <tr>
+            <td>@(++row)</td>
+            <td>[@item.Form.FormType.FormId]&nbsp;@item.Form.FormType.FormName</td>
+            <td><span><i class="glyphicon glyphicon-eye-open"></i></span> @Html.RouteLink(item.FormNo,  new {area="eForm", Action = "Details", Controller = "Tracking", p = (string.Format("{0},{1}", item.FormNo, "signed").Encrypt()) }, null) &raquo;</td>
+            <td>@item.Form.BaseEmployee.Account @item.Form.BaseEmployee.RealName</td>
+            <td>@item.CreateTime</td>
+            <td>@item.SignTime</td>
+            <td>@(Enum.GetName(typeof(Carlzhu.Iooin.Entity.FORM.FormSign.SignResultEnum), item.SignResult))</td>
+            <td>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: @processbar%;"></div>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+<div>
+    <div style="float:left;width:50%">共 @Model.TotalPageCount 页 @Model.TotalItemCount 条记录，当前为第 @Model.CurrentPageIndex 页</div>
+    @Ajax.Pager(Model, new PagerOptions
+    {
+        PageIndexParameterName = "id",
+        ShowPageIndexBox = true,
+        PageIndexBoxType = PageIndexBoxType.DropDownList,
+        ShowGoButton = false
+    },
+        new MvcAjaxOptions
+        {
+            UpdateTargetId = "dataarea",
+            HttpMethod = "Post",
+            DataFormId = "searchForm"
+        }, new { style = "float:right" })
+</div>
+
+<script src="~/Scripts/carlzhu.common.js"></script>

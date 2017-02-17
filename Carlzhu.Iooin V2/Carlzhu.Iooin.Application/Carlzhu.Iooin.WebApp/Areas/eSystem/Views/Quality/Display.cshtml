@@ -1,0 +1,114 @@
+﻿@*@model List<Carlzhu.Iooin.Entity.FORM.f.FormWorkshopInspection>*@
+@{
+    ViewBag.Title = "Display";
+    Layout = "~/Views/Shared/_LayoutStyle.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $(".col-lg-4").height($(document).height() - 50);
+        window.setInterval('showTime()', 1000);
+    });
+</script>
+<style type="text/css">
+    .col-lg-4 {
+        border: 1px solid silver;
+        padding: 10px;
+    }
+
+    .box {
+    }
+
+    .wattingbox {
+        margin: 0 10px;
+        border-radius: 5px;
+        box-shadow: #1e90ff 3px 3px 3px 3px;
+        font-family: "雅黑";
+    }
+
+    .testingbox {
+        margin: 0 10px;
+        border-radius: 5px;
+        box-shadow: #d2691e 3px 3px 3px 3px;
+        font-family: "雅黑";
+    }
+
+    .testedbox {
+        margin: 0 10px;
+        border-radius: 5px;
+        box-shadow: green 3px 3px 3px 3px;
+        font-family: "雅黑";
+    }
+</style>
+
+<div class="row">
+    <div class="page-header" style="margin: 10px 0 0px 20px;">
+        <h3>在线检测<small id="time"></small></h3>
+    </div>
+
+
+    <div class="col-lg-4">
+        <div style="margin: 0 0 10px 10px;">
+            <h3>待检</h3>
+            <hr/>
+        </div>
+
+
+    
+
+        @Html.Action("Kanban", "Quality" ,new RouteValueDictionary() { {"area","eSystem"}, { "method", 0 }, { "style", "wattingbox" } })
+
+        @*@foreach (var item in Model.Where(c => c.StartDateTime == null))
+        {
+            <div class="row wattingbox">
+                <div class="col-sm-4" style="border-right: 1px solid #008080">
+                    <span style="height: 100%; line-height: 100px; font-size: 20px; font-weight: lighter;">@(string.Format("{0}/{1}", item.RowId, item.Form.BaseEmployee.RealName))</span>
+                </div>
+                <div class="col-sm-8 ">
+                    <span style="height: 50px; line-height: 50px; font-size: 20px; font-weight: lighter;">@(string.Format("料号：{0}", item.ProductNo))</span>
+                    <hr />
+                    <span style="height: 50px; line-height: 50px; font-size: 20px; font-weight: lighter;">@(string.Format("工艺{0}", item.Engineering))</span>
+                </div>
+            </div>
+        }*@
+
+
+    </div>
+    <div class="col-lg-4">
+        <div style="margin: 0 0 10px 10px;">
+            <h3>检验中</h3>
+            <hr/>
+        </div>
+        @Html.Action("Kanban", "Quality", new RouteValueDictionary() { { "area", "eSystem" }, { "method", 1 }, { "style", "testingbox" } })
+        @*@foreach (var item in Model.Where(c => c.StartDateTime != null))
+        {
+            <div class="row testingbox">
+                <div class="col-sm-4" style="border-right: 1px solid #008080">
+                    <span style="height: 100%; line-height: 100px; font-size: 20px; font-weight: lighter;">@(string.Format("{0}/{1}", item.RowId, item.Form.BaseEmployee.RealName))</span>
+                </div>
+                <div class="col-sm-8 ">
+                    <span style="height: 50px; line-height: 50px; font-size: 20px; font-weight: lighter;">@(string.Format("料号：{0}", item.ProductNo))</span>
+                    <hr />
+                    <span style="height: 50px; line-height: 50px; font-size: 20px; font-weight: lighter;">@(string.Format("工艺：{0}", item.Engineering))</span>
+                </div>
+            </div>
+        }*@
+    </div>
+    <div class="col-lg-4">
+        <div style="margin: 0 0 10px 10px;">
+            <h3>已完成</h3>
+            <hr/>
+        </div>
+        @Html.Action("Kanban", "Quality", new RouteValueDictionary() { { "area", "eSystem" }, { "method", 2 }, { "style", "testedbox" } })
+        @*<div class="row testedbox">
+            <div class="col-sm-4" style="border-right: 1px solid #008080">
+                <span style="height: 100%; line-height: 100px; font-size: 20px; font-weight: lighter;">34/MINICUT</span>
+            </div>
+            <div class="col-sm-8 ">
+                <span style="height: 50px; line-height: 50px; font-size: 20px; font-weight: lighter;">料号:111111</span>
+                <hr />
+                <span style="height: 50px; line-height: 50px; font-size: 20px; font-weight: lighter;">工艺:CNC</span>
+            </div>
+        </div>*@
+    </div>
+</div>

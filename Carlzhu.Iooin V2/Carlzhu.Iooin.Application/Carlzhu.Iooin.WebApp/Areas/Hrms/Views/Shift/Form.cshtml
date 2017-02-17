@@ -1,0 +1,116 @@
+﻿@{
+    ViewBag.Title = "HrmsShift》表单页面";
+    Layout = "~/Views/Shared/_LayoutForm.cshtml";
+}
+<script type="text/javascript">
+    var KeyValue = GetQuery('KeyValue');//主键
+    $(function () {
+        InitControl();
+    })
+    //得到一个对象实体
+    function InitControl() {
+        if (!!GetQuery('KeyValue')) {
+            AjaxJson("/Hrms/Shift/SetForm", { KeyValue: KeyValue }, function (data) {
+                SetWebControls(data);
+            });
+        }
+    }
+    //保存事件
+    function AcceptClick() {
+        if (!CheckDataValid('#form1')) {
+            return false;
+        }
+        var postData = GetWebControls("#form1");
+        AjaxJson("/Hrms/Shift/SubmitForm?KeyValue=" + KeyValue, postData, function (data) {
+            tipDialog(data.Message, 3, data.Code);
+            top.frames[tabiframeId()].windowload();
+            closeDialog();
+        });
+    }
+</script>
+<form id="form1" style="margin: 1px">
+    <div id="message" style="display: none"></div>
+    <table class="form">
+        <tr>
+            <th class='formTitle'>ShiftId：</th>
+            <td class='formValue'>
+                <input id="ShiftId" maxlength=128 type="text" class="txt" datacol="yes" err="ShiftId" checkexpession="NotNull" />
+            </td>
+            <th class='formTitle'>班别代码：</th>
+            <td class='formValue'>
+                <input id="Code" maxlength=-1 type="text" class="txt" datacol="yes" err="Code" checkexpession="NotNull" />
+            </td>
+        </tr>
+        <tr>
+            <th class='formTitle'>工作开始时间：</th>
+            <td class='formValue'>
+                <input id="WorkStart" maxlength=23 type="text" class="txt" />
+            </td>
+            <th class='formTitle'>工作结末时间：</th>
+            <td class='formValue'>
+                <input id="WorkStop" maxlength=23 type="text" class="txt" />
+            </td>
+        </tr>
+        <tr>
+            <th class='formTitle'>休息开始时间1：</th>
+            <td class='formValue'>
+                <input id="Rist1Start" maxlength=23 type="text" class="txt" />
+            </td>
+            <th class='formTitle'>休息结束时间1：</th>
+            <td class='formValue'>
+                <input id="Rist1Stop" maxlength=23 type="text" class="txt" />
+            </td>
+        </tr>
+        <tr>
+            <th class='formTitle'>休息开始时间2：</th>
+            <td class='formValue'>
+                <input id="Rist2Start" maxlength=23 type="text" class="txt" />
+            </td>
+            <th class='formTitle'>休息结束时间2：</th>
+            <td class='formValue'>
+                <input id="Rist2Stop" maxlength=23 type="text" class="txt" />
+            </td>
+        </tr>
+        <tr>
+            <th class='formTitle'>休息开始时间3：</th>
+            <td class='formValue'>
+                <input id="Rist3Start" maxlength=23 type="text" class="txt" />
+            </td>
+            <th class='formTitle'>休息结束时间3：</th>
+            <td class='formValue'>
+                <input id="Rist3Stop" maxlength=23 type="text" class="txt" />
+            </td>
+        </tr>
+        <tr>
+            <th class='formTitle'>全称：</th>
+            <td class='formValue'>
+                <input id="FullName" maxlength=-1 type="text" class="txt" />
+            </td>
+            <th class='formTitle'>备注：</th>
+            <td class='formValue'>
+                <input id="Remark" maxlength=-1 type="text" class="txt" />
+            </td>
+        </tr>
+        <tr>
+            <th class='formTitle'>是否启用：</th>
+            <td class='formValue'>
+                <input id="Enabled" maxlength=10 type="text" class="txt" />
+            </td>
+            <th class='formTitle'>排序码：</th>
+            <td class='formValue'>
+                <input id="SortCode" maxlength=10 type="text" class="txt" />
+            </td>
+        </tr>
+     
+        <tr>
+            <th class='formTitle'>起算时间1：</th>
+            <td class='formValue'>
+                <input id="SettlementMin" maxlength=10 type="text" class="txt" />
+            </td>
+            <th class='formTitle'>起算时间2：</th>
+            <td class='formValue'>
+                <input id="SettlementMax" maxlength=10 type="text" class="txt"/>
+            </td>
+        </tr>
+    </table>
+</form>

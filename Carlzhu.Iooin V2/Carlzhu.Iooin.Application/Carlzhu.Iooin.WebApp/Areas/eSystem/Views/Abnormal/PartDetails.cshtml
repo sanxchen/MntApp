@@ -1,0 +1,16 @@
+﻿@using Carlzhu.Iooin.Business.HrmsModule
+@model Carlzhu.Iooin.Entity.FORM.f.FormNcrPart
+
+
+<tr>
+    <td colspan="8" class="text-left">
+        <div class="details">
+            @Model.Mark
+            <div class="row">
+                <div class="col-md-4">部门主管审核:&nbsp;@(Model.AuditEmp == null ? null : string.Format("{0} ({1})", (new EmployeeBll().Single(Model.AuditEmp).RealName), Model.AuditTime)) </div>
+                <div class="col-md-4">责任人:&nbsp;@(Model.Reviewer == null ? null : Model.BaseEmployee.RealName)</div>
+                <div class="col-md-4">日期:&nbsp;@(Model.Reviewer == null ? null : Model.ReviewTime.ToString("yyyy/MM/dd HH:mm:ss"))</div>
+            </div>
+        </div>
+    </td>
+</tr>

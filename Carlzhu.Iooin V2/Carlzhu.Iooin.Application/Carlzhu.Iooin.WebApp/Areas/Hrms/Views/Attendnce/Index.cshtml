@@ -1,0 +1,218 @@
+﻿@{
+    ViewBag.Title = "原始数据";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+}
+
+
+
+<script type="text/javascript">
+    var ObjectId = GetQuery('ObjectId');                  //对象主键
+    var Category = GetQuery('Category');                  //分类
+    //初始化
+    $(function () {
+        $("#layoutA").splitter({
+            type: "v",
+            outline: true,
+            minLeft: 180, sizeLeft: 180, maxLeft: 180,
+            anchorToWindow: true,
+            accessKey: "L"
+        });
+        GetScopeUserTree();
+        GetGrid();
+
+        BindDropItem("#yearmonth", "CalendarEventsId");
+    });
+
+
+
+    //加载用户
+    function GetScopeUserTree() {
+        var itemtree = {
+            showcheck: true,
+            onnodeclick: function (item) {
+                $("#CenterTitle").html(" - " + item.text);
+                $("#gridTable").jqGrid('setGridParam', {
+                    url: "@Url.Content("~/Hrms/Attendnce/GridPageListJson")?keywords=" + escape(item.id), page: 1
+                }).trigger('reloadGrid');
+            },
+            url: "@Url.Content("~/CommonModule/Permission/ScopeUserList")?ObjectId=" + ObjectId + '&Category=' + Category
+
+        };
+        $("#ConditionInstall").treeview(itemtree);
+    }
+
+
+
+    //搜索
+    function btn_Search(keywords) {
+
+        if (keywords === "" || keywords == undefined) {
+            keywords = $("#keywords").val();
+        }
+        var yearmonth = $("#yearmonth option:selected").val();
+        $("#gridTable").jqGrid('setGridParam', {
+            url: "@Url.Content("~/Hrms/Attendnce/GridPageListJson")?yearmonth=" + yearmonth + "&keywords=" + escape(keywords), page: 1
+        }).trigger('reloadGrid');
+    }
+
+
+
+
+    function btn_SelectQuery() {
+        //获取员工工号
+        btn_Search(GridTreeSelect());
+    }
+
+  
+
+    function btn_tempTo() {
+
+        var KeyValue = GetJqGridRowValue("#gridTable", "rowid");
+
+        if (KeyValue !== undefined) {
+            var empno = prompt("请输入转入的工号：", "");
+            $.post("/CommonModule/Employee/SetForm", { keyValue: empno }, function (data) {
+                data = eval("(" + data + ")");
+                confirmDialog("临时卡转正式卡", "你确认要将记录转给：" + data["RealName"] + "  ?", function (dt) {
+                    if (dt) {
+                        AjaxJson("/Hrms/Attendnce/TempCardTo", { empNo: empno, kv: KeyValue }, function (res) {
+                            if (res === 1) {
+                                tipDialog('转入成功。', 4, 'warning');
+                            }
+                        });
+                    }
+                });
+            });
+
+
+
+            // alert(KeyValue);
+        } else {
+            tipDialog('请选择要转的记录。', 4, 'warning');
+        }
+
+
+
+    }
+    //数据分析
+    function btn_analysis() {
+        if (GridTreeSelect() !== "") {
+            AjaxJson("/Hrms/Attendnce/AttDataAnalysis", { "ResourceId": GridTreeSelect(), "yearmonth": $("#yearmonth option:selected").val() }, function (res) {
+                if (res === 1) {
+                    alert("分析完成！");
+                }
+            });
+        } else {
+            alert("请先选择分析人员");
+        }
+
+    }
+
+    function GetGrid() {
+        var SelectRowIndx;
+        $("#gridTable").jqGrid({
+            url: "@Url.Content("~/Hrms/Attendnce/GridPageListJson")",
+            datatype: "json",
+            height: $(window).height() - 178,
+            autowidth: true,
+            colModel: [
+                 { label: '主键', name: 'rowid', index: 'rowid', width: 70, align: 'left', hidden: true },
+                { label: '工号', name: 'empno', index: 'empno', width: 70, align: 'left' },
+                { label: '姓名', name: 'realname', index: 'realname', width: 70, align: 'left' },
+                { label: '卡号', name: 'cardno', index: 'cardno', width: 120, align: 'left' },
+                { label: '说明', name: 'mark', index: 'mark', width: 120, align: 'left' },
+                { label: '标记', name: 'flag', index: 'flag', width: 70, align: 'left' },
+                { label: '补卡单号', name: 'billno', index: 'billno', width: 120, align: 'left' },
+                { label: '卡机代号', name: 'clockno', index: 'clockno', width: 70, align: 'left' },
+                {
+                    label: '刷卡时间', name: 'signtime', index: 'signtime', width: 120, align: 'left',
+                    formatter: function (cellvalue, options, rowObject) {
+                        return formatDate(cellvalue, 'yyyy-MM-dd hh:mm:ss');
+                    }
+                }
+            ],
+            viewrecords: true,
+            rowNum: 30,
+            rowList: [30, 50, 100, 500, 1000],
+            pager: "#gridPager",
+            sortname: 'signtime',
+            sortorder: 'desc',
+            rownumbers: true,
+            shrinkToFit: false,
+            gridview: true,
+            multiselect: true,
+            onSelectRow: function () {
+                SelectRowIndx = GetJqGridRowIndx("#" + this.id);
+            },
+            gridComplete: function () {
+                $("#" + this.id).jqGrid('setSelection', SelectRowIndx);
+            }
+        });
+        columnModelData("#gridTable");
+        //自应高度
+        $(window).resize(function () {
+            $("#gridTable").setGridHeight($(window).height() - 178);
+        });
+    }
+
+
+</script>
+<div id="layout" class="layout">
+
+    <!--左边-->
+    <div class="layoutPanel layout-west">
+        <div class="ScrollBar" id="ItemsTree">
+            <div id="ConditionInstall">
+            </div>
+        </div>
+
+    </div>
+    <!--中间-->
+
+
+    <div class="layoutPanel layout-center">
+        <div class="btnbartitle">
+            <div>
+                原始数据 <span id="CenterTitle"></span>
+            </div>
+        </div>
+        <!--工具栏-->
+        <div class="tools_bar" style="border-top: none; margin-bottom: 0px;">
+            <div class="PartialButton">
+                @Html.Partial("_PartialButton")
+            </div>
+        </div>
+        <!--列表-->
+        <div id="grid_List">
+            <div class="bottomline QueryArea" style="margin: 1px; margin-top: 0px; margin-bottom: 0px;">
+                <table border="0" class="form-find" style="height: 45px;">
+                    <tr>
+                        <th class="formTitle">分析月份：</th>
+                        <td class="formValue">
+                            <select id="yearmonth" class="txtselect"></select>
+                        </td>
+                        <th>
+                            关键字：
+                        </th>
+                        <td>
+                            <input id="keywords" type="text" class="txt" style="width: 200px" />
+                        </td>
+                        <td>
+                            <input id="btnSearch" type="button" class="btnSearch" value="搜 索" onclick="btn_Search()" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <table id="gridTable"></table>
+            <div id="gridPager"></div>
+        </div>
+        <!--视图-->
+        <div id="grid_View" class="ScrollBar">
+        </div>
+    </div>
+
+
+
+
+</div>
+

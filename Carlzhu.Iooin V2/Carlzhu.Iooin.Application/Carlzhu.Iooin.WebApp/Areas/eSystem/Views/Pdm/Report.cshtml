@@ -1,0 +1,325 @@
+﻿@{
+    ViewBag.Title = "图纸发行档";
+    Layout = "../Shared/_eSystem.cshtml";
+}
+
+
+
+<style type="text/css">
+
+    .chart, .pie, .bars {
+        height: 300px;
+        max-width: 100%;
+    }
+
+    #tooltip {
+        position: absolute;
+        display: none;
+        border: none;
+        padding: 3px 8px;
+        border-radius: 3px;
+        font-size: 10px;
+        background-color: #222222;
+        color: #ffffff;
+        z-index: 25;
+    }
+    /* Widgets */
+    .widget-box {
+        background: none repeat scroll 0 0 #F9F9F9;
+        border-left: 1px solid #CDCDCD;
+        border-top: 1px solid #CDCDCD;
+        border-right: 1px solid #CDCDCD;
+        clear: both;
+        position: relative;
+    }
+
+        .widget-box.widget-calendar, .widget-box.widget-chat {
+            overflow: hidden !important;
+        }
+
+    .widget-title, .modal-header, .table th, div.dataTables_wrapper .ui-widget-header {
+        background: #efefef;
+        border-bottom: 1px solid #CDCDCD;
+        height: 36px;
+    }
+
+        .widget-title span.icon {
+            padding: 9px 10px 7px 11px;
+            float: left;
+            border-right: 1px solid #dadada;
+        }
+
+        .widget-title h5 {
+            color: #666;
+            float: left;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 12px;
+            line-height: 12px;
+            margin: 0;
+        }
+
+
+
+    .widget-calendar .widget-title .label {
+        margin-right: 190px;
+    }
+
+    .widget-content {
+        padding: 15px;
+        border-bottom: 1px solid #cdcdcd;
+    }
+
+    .widget-box.widget-plain .widget-content {
+        padding: 12px 0 0;
+    }
+
+    .widget-box.collapsible .collapse.in .widget-content {
+        border-bottom: 1px solid #CDCDCD;
+    }
+
+    .recent-posts, .recent-comments, .recent-users {
+        margin: 0;
+        padding: 0;
+    }
+
+        .recent-posts li, .recent-comments li, .article-post li, .recent-users li {
+            border-bottom: 1px dotted #AEBDC8;
+            list-style: none outside none;
+            padding: 10px;
+        }
+
+            .recent-posts li.viewall, .recent-comments li.viewall, .recent-users li.viewall {
+                padding: 0;
+            }
+
+                .recent-posts li.viewall a, .recent-comments li.viewall a, .recent-users li.viewall a {
+                    padding: 5px;
+                    text-align: center;
+                    display: block;
+                    color: #888888;
+                }
+
+                    .recent-posts li.viewall a:hover, .recent-comments li.viewall a:hover, .recent-users li.viewall a:hover {
+                        background-color: #eeeeee;
+                    }
+
+            .recent-posts li:last-child, .recent-comments li:last-child, .recent-users li:last-child {
+                border-bottom: none !important;
+            }
+
+</style>
+<ol class="breadcrumb">
+    <li>@Html.RouteLink("eSystem",  new { Controller = "Home", Action = "Index" ,area="eSystem"}, null)</li>
+    <li class="active">@Html.RouteLink("发行报表",  new { Controller = "Pdm", Action = "Report" ,area="eSystem"}, null)</li>
+</ol>
+
+
+
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon"> <i class="glyphicon glyphicon-signal"></i> </span>
+                <h5>
+                    年度发行总量：
+                    <select id="year">
+                        <option value="2008">2008</option>
+                        <option value="2009">2009</option>
+                        <option value="2010">2010</option>
+                        <option value="2011">2011</option>
+                        <option value="2012">2012</option>
+                        <option value="2013">2013</option>
+                        <option value="2014">2014</option>
+                        <option value="2015">2015</option>
+                        <option value="2016">2016</option>
+                        <option value="2017">2017</option>
+                    </select>
+                </h5>
+            </div>
+            <div class="widget-content">
+                <div class="chart"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon"> <i class="glyphicon glyphicon-star"></i> </span>
+                <h5>
+                    每月发行总量：
+                    <select id="month">
+                        <option value="1">一月</option>
+                        <option value="2">二月</option>
+                        <option value="3">三月</option>
+                        <option value="4">四月</option>
+                        <option value="5">五月</option>
+                        <option value="6">六月</option>
+                        <option value="7">七月</option>
+                        <option value="8">八月</option>
+                        <option value="9">九月</option>
+                        <option value="10">十月</option>
+                        <option value="11">十一月</option>
+                        <option value="12">十二月</option>
+                    </select>
+                </h5>
+            </div>
+            <div class="widget-content">
+                <div class="pie"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon"> <i class="glyphicon glyphicon-search"></i> </span>
+                <h5>本年度厂商发行量： @Html.DropDownList("CustomerNo", (ViewBag.DropCustomer as List<SelectListItem>), "", new { STYLE = "width:115px" })</h5>
+            </div>
+            <div class="widget-content">
+                <div class="bars"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script type="text/javascript">
+
+    function getYearReport(year) {
+        $.post("/Pdm/GetYearReport", { year: year }, function (ds) {
+            // === Make chart === //
+            $.plot($(".chart"), eval("(" + ds + ")"), {
+                series: {
+                    lines: { show: true },
+                    points: { show: true }
+                },
+                grid: { hoverable: true, clickable: true },
+                yaxis: { min: -1, max: 50 }
+            });
+
+
+        });
+    }
+    function getMonthReport(month) {
+        $.post("/Pdm/GetMonthReport", { month: month }, function (data) {
+            var pie = $.plot($(".pie"), eval("(" + data + ")"), {
+                series: {
+                    pie: {
+                        show: true,
+                        radius: 3 / 4,
+                        label: {
+                            show: true,
+                            radius: 3 / 4,
+                            formatter: function (label, series) {
+                                return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">' + label + '<br/>' + Math.round(series.percent) + '%</div>';
+                            },
+                            background: {
+                                opacity: 0.5,
+                                color: '#000'
+                            }
+                        },
+                        innerRadius: 0.2
+                    },
+                    legend: {
+                        show: false
+                    }
+                }
+            });
+
+        });
+    }
+    function getCustomerReport(customer) {
+
+        $.post("/Pdm/GetCustomerReport", { customerNo: customer }, function (d1) {
+            d1 = eval("(" + d1 + ")");
+            var data = new Array();
+            data.push({
+                data: d1,
+                bars: {
+                    show: true,
+                    barWidth: 0.4,
+                    order: 1
+                }
+            });
+
+            //Display graph
+            var bar = $.plot($(".bars"), data, { legend: true, grid: { hoverable: true, clickable: true } });
+        });
+    }
+    maruti = {
+        // === Tooltip for flot charts === //
+        flot_tooltip: function (x, y, contents) {
+
+            $('<div id="tooltip">' + contents + '</div>').css({
+                top: y + 5,
+                left: x + 5
+            }).appendTo("body").fadeIn(200);
+        }
+    }
+
+    $("#year").val('@DateTime.Now.Year');
+    getYearReport('@DateTime.Now.Year');
+
+    $("#month").val('@DateTime.Now.Month');
+    getMonthReport('@DateTime.Now.Month');
+
+    $("#CustomerNo").val('C0008');
+    getCustomerReport("C0008");
+
+    $(document).ready(function () {
+
+        // === Point hover in chart === //
+        var previousPoint = null;
+        $(".chart,.bars").bind("plothover", function (event, pos, item) {
+
+            if (item) {
+                if (previousPoint != item.dataIndex) {
+                    previousPoint = item.dataIndex;
+
+                    $('#tooltip').fadeOut(200, function () {
+                        $(this).remove();
+                    });
+                    var x = item.datapoint[0].toFixed(2),
+                        y = item.datapoint[1].toFixed(2);
+
+                    maruti.flot_tooltip(item.pageX, item.pageY, (item.series.label == undefined ? "" : item.series.label) + " of " + x + " = " + y);
+                }
+
+            } else {
+                $('#tooltip').fadeOut(200, function () {
+                    $(this).remove();
+                });
+                previousPoint = null;
+            }
+        });
+
+
+
+
+
+        $("#year").change(function () {
+            getYearReport($(this).val());
+        });
+
+        $("#month").change(function () {
+            getMonthReport($(this).val());
+        });
+
+        $("#CustomerNo").change(function () {
+            getCustomerReport($(this).val());
+        });
+    });
+
+
+
+
+</script>

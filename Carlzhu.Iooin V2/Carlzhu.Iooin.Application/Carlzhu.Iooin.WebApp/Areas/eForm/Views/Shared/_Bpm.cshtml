@@ -1,0 +1,41 @@
+﻿@using Carlzhu.Iooin.Business.FormModule
+@using Carlzhu.Iooin.Util
+@{
+    Layout = "~/Views/Shared/_LayoutStyle.cshtml";
+    ViewBag.Title = "工作流程管理系统";
+}
+
+
+<link href="~/Content/Bpm.css" rel="stylesheet" />
+<section>
+    <div class="row home_header">
+        <div class="col-md-3">
+            <div class="system_name" id="bpm"></div>
+        </div>
+        <div class="col-md-9">
+            <div class="memu">
+                <ul class="menu ">
+                    <li><a href="/"><i class="menu-icon menu-icon-0"></i>首页</a></li>
+                    <li><a href="/eform/Applying/Index"><i class="menu-icon menu-icon-1"></i>申请表单</a></li>
+                    <li><a href="/eform/Tracking/Applyed"><i class="menu-icon menu-icon-2"></i>追寻表单</a></li>
+                    <li><a href="/eform/Signing/Index"><i class="menu-icon menu-icon-3"></i>签核表单</a></li>
+                    <li><a href="/eform/Personal/Index"><i class="menu-icon menu-icon-4"></i>个人中心</a></li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+
+
+
+</section>
+
+<div class="home_line"></div>
+<div>
+    @RenderBody()
+</div>
+
+
+
+
+@RenderSection("scripts", required: false)

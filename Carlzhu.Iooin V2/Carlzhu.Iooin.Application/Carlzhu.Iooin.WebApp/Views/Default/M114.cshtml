@@ -1,0 +1,28 @@
+﻿@model string
+@{
+    ViewBag.Title = "员工查询";
+    Layout = "/Areas/eSystem/Views/Shared/_eSystem.cshtml";
+}
+<div id="columns"></div>
+
+
+<link href="~/Scripts/framework/JsonTable/jquery.columns.min.css" rel="stylesheet" />
+<script src="~/Scripts/framework/JsonTable/jquery.columns.min.js"></script>
+
+
+    <script type="text/javascript">
+
+        $(function () {
+            $.post("/CommonModule/Employee/SetForm114", { KeyValue: '@(ViewBag.KeyValue)' }, function (data) {
+                $('#columns').columns({ data: eval("(" + data + ")") });
+                $(".ui-columns-search").append("<div style='float:left'><p class='text-warning'>以下查询结果，如有信息不符，请联系人事修改</p></div>");
+            });
+
+            
+        });
+
+    </script>
+
+
+
+

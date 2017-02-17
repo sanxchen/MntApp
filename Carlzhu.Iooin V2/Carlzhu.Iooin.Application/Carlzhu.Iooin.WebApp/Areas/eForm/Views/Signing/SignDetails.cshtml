@@ -1,0 +1,425 @@
+﻿@using Carlzhu.Iooin.Business.HrmsModule
+@using Carlzhu.Iooin.Entity.CommonModule
+@using Carlzhu.Iooin.Entity.FORM
+@using Carlzhu.Iooin.Framework.Data.Repository
+@using Carlzhu.Iooin.InteractiveAdapter
+@using Carlzhu.Iooin.Util
+@model Carlzhu.Iooin.Entity.FORM.Form
+@{
+    ViewBag.Title = "签核-" + Model.FormNo;
+    Layout = "../Shared/_Bpm.cshtml";
+    int item = ViewBag.Item;
+    string formNo = Model.FormNo;
+    BaseEmployee employee = new EmployeeBll().Single(ManageProvider.Provider.Current().UserId);
+    var empInfo = employee.Account + " (" + employee.EmpNo + ")";
+
+    bool IsHander = ViewBag.IsHander;
+}
+
+
+
+<div>
+    <ol class="breadcrumb">
+        <li>@Html.RouteLink("Flow", new { Controller = "Applying", Action = "Index", area = "eForm" }, null)</li>
+        <li>@Html.RouteLink("签核表单", new { Controller = "Signing", Action = "Index", area = "eForm" }, null)</li>
+        <li class="disabled">@formNo</li>
+    </ol>
+</div>
+
+
+<div class="template">
+    <div class="memubar" id="optmemu">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default" hreflang="agree"><i class="glyphicon glyphicon-ok-circle"></i>同意</button>
+            <button type="button" class="btn btn-default" hreflang="reject"><i class="glyphicon glyphicon-remove-circle"></i>否决</button>
+            <button type="button" class="btn btn-default" hreflang="ignore"><i class="glyphicon glyphicon-ban-circle"></i>略过</button>
+            <button type="button" class="btn btn-default" hreflang="add"><i class="glyphicon glyphicon-link"></i>加签</button>
+            <button type="button" class="btn btn-default" hreflang="redirect"><i class="glyphicon glyphicon-share-alt"></i>转签</button>
+            <button type="button" class="btn btn-default" hreflang="mark"><i class="glyphicon glyphicon-paperclip"></i>签核意见</button>
+            <button type="button" class="btn btn-default" hreflang="print"><i class="glyphicon glyphicon-print"></i>打印</button>
+            <button type="button" class="btn btn-default" hreflang="Exit"><i class="glyphicon glyphicon-log-out"></i>离开</button>
+        </div>
+    </div>
+
+
+    <div class="content" id="formdetails">
+        <div class="form">
+            <div class="formname">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <small>[Form @Model.FormId.ToString().PadLeft(3, '0')]</small>&nbsp; @(Model.FormType.FormName)申请单
+                        @*@if (IsHander)
+                            {
+                            <small style="position: absolute; right: 5px; height: 20px; line-height: 20px;">
+                                @Html.ActionLink("编辑", "ApplyOperators", "Tracking", new {area = "eForm", p = (string.Format("edit,{0}", Model.FormNo).Encrypt())}, null)
+                            </small>
+                            }*@
+                    </div>
+                </div>
+            </div>
+
+            <div class="applyinfo">
+                <div class="row">
+                    <div class="col-md-3"><span>表单号：</span>@Model.FormNo</div>
+                    <div class="col-md-3"><span>申请人：</span>@string.Format("{0}/{1}", Model.BaseEmployee.EmpNo, Model.BaseEmployee.RealName)</div>
+                    <div class="col-md-3"><span>申请部门：</span>@string.Format("{0}/{1}", Model.BaseEmployee.BaseDepartment.DepartmentId, Model.BaseEmployee.BaseDepartment.FullName)</div>
+                    <div class="col-md-3"><span>申请时间：</span>@Model.CreateTime</div>
+                </div>
+            </div>
+            <div>
+                @Html.Partial("~/Areas/eForm/Views/FormComm/FormBody.cshtml", Model)
+            </div>
+
+            <div>
+                <table class="table table-bordered table-condensed table-striped">
+                    <tr>
+                        <td colspan="2">
+                            <p class="text-center text-info">如果有审核文件上传，请先上传文件，生成文件码后更新即可！</p>
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <th style="width: 120px; vertical-align: middle;text-align:center">
+                            历史审核文件:
+                        </th>
+                        <th>
+                            <div class="col-sm-4 col-sm-offset-8">
+                                @if (IsHander)
+                                {
+                                    <div class="input-group">
+                                        <input type="text" placeholder="审核文件上传" class="form-control input-sm" readonly="readonly" id="FileGroup" name="FileGroup">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default input-sm" type="button" onclick="UpdateFile()">更新</button>
+                                        </span>
+                                    </div>
+                                }
+                            </div>
+                        </th>
+                    </tr>
+
+                    @foreach (var fs in ViewBag.Signed as List<FormSign>)
+                    {
+                        <tr>
+                            <td>
+                                @fs.ActualSignEmpNo
+                            </td>
+
+                            <td>
+                                @foreach (var file in new Carlzhu.Iooin.Business.BaseModule.FilesFileGroupBll().GetFileListByGroupGuid(fs.AuditingFileGroup))
+                                {
+                                    @Html.Partial("~/Areas/eForm/Views/F/formLayout/_FileDetails.cshtml", DataFactory.Database().FindEntity<Files>(file.Md5))
+                                }
+                            </td>
+
+                        </tr>
+                    }
+
+
+
+
+
+                </table>
+            </div>
+        </div>
+
+        <div class="signrecords">
+            <div class="panel panel-info">
+                <div class="panel-head text-center">签核记录</div>
+                <div class="panel-body">
+
+                    @Html.Action("GetSignRecoredsByFormNo", new { formNo = Model.FormNo })
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="dialog" title="加签" id="addSign">
+        <table class="table table-striped">
+            <tr>
+                <td style="width: 100px;">发起人：</td>
+                <td style="width: 180px">@empInfo</td>
+                <td style="width: 220px" id="direction"></td>
+            </tr>
+            <tr>
+                <td>接收人：</td>
+                <td><input type="text" placeholder="请输入接收人工号" id="employeedepartment" class="form-control" /></td>
+                <td><p class='text-warning'><a href="/" target="_blank">首页查询工号</a></p></td>
+            </tr>
+            <tr>
+                <td>发起理由：</td>
+                <td colspan="2">
+                    <input type="text" id="addreason" class="form-control" />
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="panel panel-collapse panel-default" id="sm">
+        <div class="panel-heading">
+            <small>签核意见</small>
+        </div>
+        <div class="panel-body" style="margin: 0; padding: 0">
+            <textarea maxlength="512" id="trackingmark" class="form-control" style="width: 350px;">请输入信息</textarea>
+        </div>
+        <div class="panel-content">
+            <div class="pull-right">
+                <span class="text-danger">目前还能输入<em>512</em>&nbsp;个汉字</span>
+                <input type="button" value="提交" onclick="Mark.Update()" class="btn btn-success btn-sm" />
+                <input type="button" value="取消" onclick="Mark.Close()" class="btn btn-primary btn-sm" />
+            </div>
+        </div>
+    </div>
+
+    <span id="parentPara" data-para="@(string.Format("{0},{1}", formNo, item).Encrypt())"></span>
+</div>
+
+
+
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        //表单号
+        var formNo = '@formNo';
+        //记录号
+        var item = '@item';
+        //url参数
+        var p = '@(string.Format("{0},{1}", formNo, item).Encrypt())';
+
+
+        var dia = $("#addSign");
+
+
+        //关闭签核记录窗口
+        $("#srd").dblclick(function () {
+            $(this).css("display", "none");
+        });
+
+        //签核意见录入
+        var Mark = {
+            Update: function () {
+                $.post('@Url.Action("UpdateSignMarkByItemAndFormNo", "Signing", new { area="eForm"})', { formNo: formNo, item: item, mark: $("#sm").find("textarea").val() }, function (data) {
+                    if (data != "success") {
+                        alert("更新失败！！！");
+                    } else {
+                        $("#sm").css("display", "none");
+                        location.href = location.href;
+                    }
+                });
+            },
+            Close: function () {
+                $("#sm").css("display", "none");
+            }
+        };
+
+
+
+        //加签转签方法
+        function MakeOther(title) {
+            $("#addreason").val("");
+            $("#employeedepartment").val("");
+            dia.dialog("option", "minWidth", "550");
+            dia.dialog("option", "minHeight", "220");
+            dia.dialog("option", "title", title);
+            dia.dialog("option", "resizable", false);
+            dia.dialog("option", "buttons", {
+                "确认": function () {
+                    $.post('@Url.Action("MakeOtherEmployee", "Signing", new { area = "eForm" })',
+                        {
+                            formNo: formNo,
+                            item: item,
+                            receiveEmp: $("#employeedepartment").val(),
+                            reason: $("#addreason").val(),
+                            direction: $("input[type=radio]:checked").val()
+                        },
+                        function (data) {
+                            rightCornerMsg(data.msg);
+
+
+                            if (data.result) {
+                                location.href = '@Url.Action("Index", "Signing", new { area = "eForm" })';
+                            };
+                        });
+                },
+                "取消": function () {
+                    dia.dialog("close");
+                }
+            });
+            dia.dialog("open");
+            $("#addreason").focus();
+        }
+
+
+        //memu options
+        $("#optmemu button").click(function () {
+            var e = $(this);
+            var method = $(this).attr("hreflang");
+            switch (method) {
+                case "agree":
+                    SD.Agree();
+                    break;
+                case "reject":
+                    SD.Reject();
+                    break;
+                case "ignore":
+                    SD.Ignore();
+                    break;
+                case "redirect":
+                    SD.Redirect();
+                    break;
+                case "add":
+                    SD.Add();
+                    break;
+                case "mark":
+                    SD.Mark(e);
+                    break;
+                case "copyto":
+                    SD.CopyTo();
+                    break;
+                case "print":
+                    SD.Print();
+                    break;
+                case "Exit":
+                    location.href = '@Url.Action("Index", "Signing", new {area = "eForm"})';
+                    break;
+                default:
+                    alert("参数类型错误，请联系管理员处理！！！");
+            }
+        });
+
+        //signDetails
+        var SD = {
+            Agree: function () {
+                $.ajaxLoading({
+                    url: '@Url.Action("Agree", "Signing", new { area = "eForm" })',
+                    data: { p: p },
+                    loadingdata: "数据处理中，请等待。。。",
+                    success: function (data) {
+                        if (data === "success") {
+                            alert("签核成功");
+                            location.href = '@Url.Action("Index", "Signing", new { area = "eForm" })';
+                            //SD.Ignore();
+                        } else {
+                            alert("签核失败！！！！！！！");
+                        }
+                    }
+                });
+            },
+            Reject: function () {
+
+                $.ajaxLoading({
+                    url: '@Url.Action("Reject", "Signing")',
+                    data: { p: p },
+                    loadingdata: "数据处理中，请等待。。。",
+                    success: function (data) {
+                        if (data === "success") {
+                            alert("否决成功");
+                            location.href = '@Url.Action("Index", "Signing", new { area = "eForm" })';
+                        } else {
+                            alert("否决失败！！！！！！！");
+                        }
+                    }
+                });
+
+
+            },
+            Ignore: function () {
+                $.ajaxLoading({
+                    url: '@Url.Action("Ignore", "Signing", new { area = "eForm" })',
+                    data: { formNo: formNo },
+                    loadingdata: "正在加载下一表单，请等待。。。",
+                    success: function (data) {
+                        if (data != "") {
+                            location.href = '@Url.Action("SignDetails", "Signing", new { area = "eForm" })' + '?p=' + data;
+                        } else {
+                            alert("这已是最后一条记录");
+                            location.href = '@Url.Action("Index", "Signing", new { area = "eForm" })';
+                        }
+                    }
+                });
+            },
+            Redirect: function () {
+                MakeOther("转签");
+                $("#direction").text("");
+            },
+            Add: function () {
+                $("#direction").text("");
+                MakeOther("加签");
+                $("<label class='radio-inline'><input type='radio' name='direction'  value='-1' checked >之前" +
+                    "</label><label class='radio-inline'><input type='radio' name='direction'  value='0'>平行" +
+                    "</label><label class='radio-inline'><input type='radio' name='direction'  value='1'>之后</label>").appendTo("#direction");
+
+
+
+            },
+            Mark: function (e) {
+                var sm = $("#sm");
+                sm.css({ "display": "block", "z-index": $("#srd").css("z-index") + 1 }).offset({ "left": e.position().left + 70, "top": e.position().top + 180 });
+                $.post('@Url.Action("GetSignMarkByItemAndFormNo", "Signing", new { area = "eForm" })', { formNo: formNo, item: item }, function (data) {
+                    sm.find("em").text(512 - data.length);
+                    sm.find("textarea").val(data)
+                    .bind("keyup", function () {
+                        sm.find("em").text(512 - $(this).val().length);
+                    });
+                });
+            },
+            CopyTo: function () {
+                //hidden
+                $("#layout_head, .breadcrumb, .memubar, .copyright").css("display", "none");
+                $.ajaxLoading({
+                    url: '@Url.Action("CopyTo", "Signing", new { area = "eForm" })',
+                    data: { url: p, formNo: formNo },
+                    loadingdata: "正在获取页面内容，请等待...",
+                    success: function (result) {
+                        alert(result);
+                        $("#layout_head, .breadcrumb, .memubar, .copyright").css("display", "");
+                    }
+                });
+
+            },
+            Print: function () {
+                $("#layout_head, .breadcrumb, .memubar, .copyright").css("display", "none");
+                window.print();
+                $("#layout_head, .breadcrumb, .memubar, .copyright").css("display", "");
+            }
+        };
+
+
+        //文件上传
+        $("#FileGroup").bind("click", function () {
+            UpFile("#FileGroup", "3", ".xls,.xlsx,.pdf", "");
+        }).val("");
+
+
+        function UpdateFile() {
+
+            $.ajaxLoading({
+                url: '@Url.Action("UpdateFile", "Signing", new { area = "eForm" })',
+                data: { fileGroup: $("#FileGroup").val(), item: '@item' },
+                loadingdata: "数据处理中，请等待。。。",
+                success: function (data) {
+                    if (data === "1") {
+                        alert("更新成功");
+                        $("#FileGroup").val("");
+                    } else {
+                        alert("签核失败！！！！！！！");
+                    }
+                }
+            });
+        }
+
+    </script>
+}
+
+
+<style type="text/css">
+    button[value=确认] {
+        background: red;
+    }
+</style>

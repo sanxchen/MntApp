@@ -1,0 +1,230 @@
+﻿@using Carlzhu.Iooin.Business.BaseModule
+@using Carlzhu.Iooin.Business.HrmsModule
+@using Carlzhu.Iooin.Entity.FORM
+@using Carlzhu.Iooin.Entity.FORM.f
+@using Carlzhu.Iooin.Framework.Data.Repository
+@using Carlzhu.Iooin.InteractiveAdapter
+@using Carlzhu.Iooin.Util.MvcHtml
+@model FormNcr
+
+
+
+<tr>
+    <td colspan="4" class="text-left">
+        @Html.DisplayNameFor(model => model.FileNo)：@Model.FileNo &nbsp;
+        @Html.DisplayNameFor(model => model.Ver)：@Model.Ver
+    </td>
+    <td colspan="4">
+        @Html.DisplayNameFor(model => model.NoticeNo)：@Model.NoticeNo
+    </td>
+</tr>
+<tr>
+    <td style="width: 80px;vertical-align: middle">@Html.DisplayNameFor(model => model.PartNo)</td>
+    <td style="width:100px;vertical-align: middle"><a href="@Html.Action("GetDrawLink", "Default", new { partNo = Model.PartNo,area="" })" target="_blank">@Model.PartNo</a></td>
+    <td style="width:80px;vertical-align: middle">@Html.DisplayNameFor(model => model.CustomerNo)</td>
+    <td style="width:100px;vertical-align: middle">@Model.Customer.CustomerName</td>
+    <td style="width:100px;vertical-align: middle">@Html.DisplayNameFor(model => model.CatchTime)</td>
+    <td style="width:100px;vertical-align: middle">@Model.CatchTime.ToShortDateString()</td>
+    <td style="width:100px;vertical-align: middle">@Html.DisplayNameFor(model => model.LotNo)</td>
+    <td style="width:100px;vertical-align: middle">@Model.LotNo</td>
+</tr>
+
+<tr>
+    <td>@Html.DisplayNameFor(model => model.BatchNo)</td>
+    <td>@Model.BatchNo</td>
+    <td>@Html.DisplayNameFor(model => model.SamplingNo)</td>
+    <td colspan="5">@Html.DisplayTextFor(model => model.SamplingNo)</td>
+
+</tr>
+
+<tr>
+    <td>@Html.DisplayNameFor(model => model.DefectsNo)</td>
+    <td>@Model.DefectsNo</td>
+    <td>@Html.DisplayNameFor(model => model.SamplingStandardSip)</td>
+    <td colspan="5">
+        <span><i class="glyphicon @(Model.SamplingStandardSip ? "glyphicon-check" : "glyphicon-unchecked")"></i>SIP</span>
+        &nbsp;&nbsp;
+
+        <span>
+            <i class="glyphicon @(Model.SamplingStandardAql>0 ? "glyphicon-check" : "glyphicon-unchecked")"></i>
+            GB/T2828-2003 Ⅱ 正常检验单次抽样 (@Html.DisplayNameFor(model => model.SamplingStandardAql):
+            <span class="underLine">@Model.SamplingStandardAql</span>)
+        </span>
+    </td>
+</tr>
+
+<tr>
+    <td>不良率</td>
+    <td>@(((Model.DefectsNo / Model.SamplingNo) * 100).ToString("F1"))%</td>
+    <td>@Html.DisplayNameFor(model => model.AcceptanceCriteriaC)</td>
+    <td colspan="5">
+        <span><i class="glyphicon @(Model.AcceptanceCriteriaC ? "glyphicon-check" : "glyphicon-unchecked")"></i>C=0</span>
+        &nbsp;&nbsp;
+
+        <span>
+            <i class="glyphicon @(Math.Abs(Model.AcceptanceCriteriaAc) > 0 || Math.Abs(Model.AcceptanceCriteriaRe) > 0 ? "glyphicon-check" : "glyphicon-unchecked")"></i>
+            @Html.DisplayNameFor(model => model.AcceptanceCriteriaAc)<span class="underLine">@Model.AcceptanceCriteriaAc</span>
+            @Html.DisplayNameFor(model => model.AcceptanceCriteriaRe)<span class="underLine">@Model.AcceptanceCriteriaRe</span>
+        </span>
+
+    </td>
+</tr>
+<tr>
+    <td>@Html.DisplayNameFor(model => model.DefectsGradeCr)</td>
+    <td colspan="6">
+        <span><i class="glyphicon @(Model.DefectsGradeCr ? "glyphicon-check" : "glyphicon-unchecked")"></i>致命缺陷 Cr</span>
+        <span><i class="glyphicon @(Model.DefectsGradeMa ? "glyphicon-check" : "glyphicon-unchecked")"></i>主缺 Ma</span>
+        <span><i class="glyphicon @(Model.DefectsGradeMi ? "glyphicon-check" : "glyphicon-unchecked")"></i>次缺 Mi</span>
+    </td>
+    <td></td>
+</tr>
+<tr>
+    <td style="vertical-align: middle; height: 180px;">@Html.DisplayNameFor(model => model.AbnormalPoint)</td>
+    <td colspan="3" class="text-left" style="vertical-align: middle">
+        <ul>
+            <li>
+                <span>
+                    <i class="glyphicon @(Model.AbnormalPoint == 0 ? "glyphicon-check" : "glyphicon-unchecked")"></i>
+                    @EnumUtil.GetEnumShowName(typeof(FormNcr.AbnormalPointEnum), 0)
+                    &nbsp;(@Html.DisplayNameFor(model => model.AbnormalPointFeed) &nbsp;@(Model.Supplier.Name) &nbsp;)
+                </span>
+            </li>
+            <li>
+                <span>
+                    <i class="glyphicon @(Model.AbnormalPoint == 1 ? "glyphicon-check" : "glyphicon-unchecked")"></i>
+                    @EnumUtil.GetEnumShowName(typeof(FormNcr.AbnormalPointEnum), 1)
+                </span>
+            </li>
+            <li>
+                <span>
+                    <i class="glyphicon @(Model.AbnormalPoint == 2 ? "glyphicon-check" : "glyphicon-unchecked")"></i>
+                    @EnumUtil.GetEnumShowName(typeof(FormNcr.AbnormalPointEnum), 2)
+                </span>
+            </li>
+            <li>
+                <span>
+                    <i class="glyphicon @(Model.AbnormalPoint == 3 ? "glyphicon-check" : "glyphicon-unchecked")"></i>
+                    @EnumUtil.GetEnumShowName(typeof(FormNcr.AbnormalPointEnum), 3)
+                    <br />
+                    <em style="padding-left: 20px;">
+                        车间：<span class="underLine">@EnumUtil.GetEnumShowName(typeof(FormNcr.AbnormalPointWorkshopEnum), Model.AbnormalPointWorkshop)</span>
+                        工序：<span class="underLine">@Model.AbnormalPointProcess</span>
+                    </em>
+                </span>
+            </li>
+            <li>
+                <span>
+                    <i class="glyphicon @(Model.AbnormalPoint == 4 ? "glyphicon-check" : "glyphicon-unchecked")"></i>
+                    @EnumUtil.GetEnumShowName(typeof(FormNcr.AbnormalPointEnum), 4)
+                </span>
+            </li>
+        </ul>
+    </td>
+    <td colspan="4">
+        <div class="picture">
+
+            <link href="~/Content/zoom.css" rel="stylesheet" />
+            <ul class="gallery">
+                @foreach (Carlzhu.Iooin.Entity.FORM.FilesFileGroup file in new FilesFileGroupBll().GetFileListByGroupGuid(Model.FileGroup))
+                {
+                    var ff = DataFactory.Database().FindEntity<Files>(file.Md5);
+                    <li>
+                        <span class="abnorpic">
+
+                            <a href="@Url.Action("ViewImages", "Default", new {fileName = ff.Md5, area = ""})"><img src="@Url.Action("GetThumbnail", "Default", new {area = "", width = 150, height = 155, fileName = ff.Md5})" /></a>
+                            <em>@Html.ActionLink(ff.FileName, "Form", "DownLoad", new { area = "", md5 = StringExtendExpress.Encrypt(ff.Md5) }, null)</em>
+                        </span>
+                    </li>
+                }
+            </ul>
+            <script src="~/Scripts/zoom.js"></script>
+        </div>
+
+
+
+
+    </td>
+</tr>
+
+<tr><th colspan="8">@Html.DisplayNameFor(model => model.QualityDescription)</th></tr>
+<tr>
+    <td colspan="8" class="text-left">
+        <div class="details">
+            @Model.QualityDescription
+            <div class="row">
+                <div class="col-md-4">批准:&nbsp;@(Model.AuditEmp == null ? null : new Carlzhu.Iooin.Business.HrmsModule.EmployeeBll().Single(Model.AuditEmp).RealName)</div>
+                <div class="col-md-4">QC组长:&nbsp;@Model.Form.BaseEmployee.RealName</div>
+                <div class="col-md-4">检验员:&nbsp;@Model.BaseEmployee.RealName</div>
+            </div>
+        </div>
+    </td>
+</tr>
+<style type="text/css">
+    td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .underLine {
+        width: 120px !important;
+        border: none;
+        padding: 0 5px;
+        border-bottom: 1px solid silver;
+    }
+
+    input[type=checkbox] {
+        margin-top: 0px;
+    }
+
+    div.details {
+        height: 80px;
+        position: relative;
+    }
+
+        div.details div.row {
+            /*border: 1px solid red;*/
+            margin: 0;
+            padding: 0px;
+            position: absolute;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+        }
+
+    div.picture {
+        margin: 0px;
+        padding: 0;
+        padding: 2px;
+        width: 100%;
+        height: 180px;
+        border: 1px solid silver;
+        position: relative;
+    }
+
+    span.abnorpic {
+        float: left;
+        display: block;
+        margin: 0px 10px 0 0px;
+        height: 175px;
+        width: 152px;
+        border: 1px solid #ffebcd;
+        position: relative;
+        background-color: silver;
+    }
+
+        span.abnorpic img {
+            width: 150px;
+            height: 155px;
+            padding: 1px 1px 0 1px;
+        }
+
+        span.abnorpic em {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0px;
+            line-height: 20px;
+            height: 20px;
+            background-color: silver;
+        }
+</style>

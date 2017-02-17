@@ -1,0 +1,53 @@
+﻿@using System.Web.Mvc.Html
+@using Carlzhu.Iooin.Business.BaseModule
+@using Carlzhu.Iooin.Entity.FORM
+@using Carlzhu.Iooin.Framework.Data.Repository
+@model Carlzhu.Iooin.Entity.FORM.f.FormStamps
+
+
+<tr>
+    <td>@Html.LabelFor(model => model.FileSummary)</td>
+    <td colspan="3">@Html.DisplayTextFor(model => model.FileSummary)</td>
+
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.GongZhang)</td>
+    <td>@Html.DisplayTextFor(model => model.GongZhang)/份</td>
+    <td>@Html.LabelFor(model => model.FapiaoZhang)</td>
+    <td>@Html.DisplayTextFor(model => model.FapiaoZhang)/份</td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.HetongZhang)</td>
+    <td>@Html.DisplayTextFor(model => model.HetongZhang)/份</td>
+    <td>@Html.LabelFor(model => model.CaiwuZhang)</td>
+    <td>@Html.DisplayTextFor(model => model.CaiwuZhang)/份</td>
+</tr>
+
+<tr>
+    <td>@Html.LabelFor(model => model.FarenZhang)</td>
+    <td>@Html.DisplayTextFor(model => model.FarenZhang)/份</td>
+    <td>@Html.LabelFor(model => model.RenshiZhang)</td>
+    <td>@Html.DisplayTextFor(model => model.RenshiZhang)/份</td>
+
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.BaoguanZhang)</td>
+    <td>@Html.DisplayTextFor(model => model.BaoguanZhang)/份</td>
+    <td>@Html.LabelFor(model => model.QitaZhang)</td>
+    <td>@Html.DisplayTextFor(model => model.QitaZhang)/份</td>
+</tr>
+
+<tr>
+    <th>@Html.LabelFor(model => model.FileGroup)</th>
+    <td colspan="3">
+        @foreach (var file in new FilesFileGroupBll().GetFileListByGroupGuid(Model.FileGroup))
+        {
+            @Html.Partial("~/Areas/eForm/Views/F/formLayout/_FileDetails.cshtml", DataFactory.Database().FindEntity<Files>(file.Md5));
+        }
+    </td>
+</tr>
+
+
+
+
+

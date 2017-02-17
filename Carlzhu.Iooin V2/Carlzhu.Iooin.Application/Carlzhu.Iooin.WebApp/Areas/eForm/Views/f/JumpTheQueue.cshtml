@@ -1,0 +1,14 @@
+﻿@using Carlzhu.Iooin.Util.MvcHtml
+@model Carlzhu.Iooin.Entity.FORM.f.FormJumpTheQueue
+@{
+    var tt = Carlzhu.Iooin.Business.BaseUtility.ContextFactory.ContextHelper.FormWorkshopInspections.Where(c => c.Form.FormStatus == 3 && string.IsNullOrEmpty(c.EndDateTime.ToString())).ToSelectListItem(c => c.FormNo, c => c.FormNo, null, new SelectListItem());
+}
+
+
+<tr>
+    <th>@Html.DisplayNameFor(model => model.JumpForm)</th>
+    <td>@Html.DropDownList("JumpForm", tt)</td>
+    @*<td>@Html.TextBoxFor(model=>model.JumpForm)</td>*@
+</tr>
+
+

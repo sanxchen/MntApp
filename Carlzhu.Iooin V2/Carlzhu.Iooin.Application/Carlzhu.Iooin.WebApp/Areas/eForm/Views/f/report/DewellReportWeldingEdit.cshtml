@@ -1,0 +1,20 @@
+﻿
+@model Carlzhu.Iooin.Entity.FORM.f.report.FormDewellReportWelding
+
+
+
+
+
+@{
+    var i = (int)ViewData["row"];
+}
+
+<tr>
+    @Html.Partial("/Areas/eForm/Views/f/formLayout/report/_editCommTd.cshtml", Model, new ViewDataDictionary() { { "row", i } })
+
+    <td>@Html.TextBox(string.Format("ManConsumption{0}", i), Model.ManConsumption, new { placeholder = "数值可小数" })</td>
+    <td>@Html.TextBox(string.Format("ManFactConsumption{0}", i), Model.ManFactConsumption, new { placeholder = "数值可小数" })</td>
+    <td>@Html.TextBox(string.Format("DifferenceDescription{0}", i), Model.DifferenceDescription)</td>
+
+
+</tr>

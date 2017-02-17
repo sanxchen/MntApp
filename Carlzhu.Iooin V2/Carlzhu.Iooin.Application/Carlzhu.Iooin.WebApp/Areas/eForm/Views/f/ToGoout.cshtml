@@ -1,0 +1,34 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.FormToGoout
+
+
+<tr>
+    <th style="width: 90px;">@Html.DisplayNameFor(model => model.OutTime)</th>
+    <td>@Html.TextBoxFor(model => model.OutTime, new { CLASS = "datetimepicker", VALUE = DateTime.Now.ToString("yyyy/MM/dd hh:mm"), @readonly = "READONLY" })</td>
+    <td>@Html.ValidationMessageFor(model => model.OutTime)</td>
+    <th>@Html.DisplayNameFor(model => model.InTime)</th>
+    <td>@Html.TextBoxFor(model => model.InTime, new { CLASS = "datetimepicker", VALUE = DateTime.Now.ToString("yyyy/MM/dd hh:mm"), @readonly = "READONLY" })</td>
+    <td>@Html.ValidationMessageFor(model => model.InTime)</td>
+</tr>
+<tr>
+    <th>@Html.DisplayNameFor(model => model.Reason)</th>
+    <td colspan="4">@Html.TextBoxFor(model => model.Reason, new { style = "width:100%;", placeholder = "请输入外出原因" })</td>
+    <td>@Html.ValidationMessageFor(model => model.Reason)</td>
+</tr>
+<tr>
+    <th>@Html.DisplayNameFor(model => model.Destination)</th>
+    <td colspan="4">@Html.TextBoxFor(model => model.Destination, new { style = "width:100%;", placeholder = "请输入具体目的地" })</td>
+    <td>@Html.ValidationMessageFor(model => model.Destination)</td>
+</tr>
+
+
+
+
+<tr>
+    <th>@Html.DisplayNameFor(model=>model.InvolvingUser)</th>
+    <td colspan="4" id="InvolvingUserPanel" data-guid="@Model.InvolvingUser"></td>
+    <td>@Html.HiddenFor(model => model.InvolvingUser)</td>
+</tr>
+
+
+
+

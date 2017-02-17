@@ -1,0 +1,12 @@
+﻿
+
+@using Carlzhu.Iooin.InteractiveAdapter
+@model Carlzhu.Iooin.Entity.FORM.f.draw.FormDrawingsSopDewell
+
+
+    <td><label title="@Model.DrawPartNo">@Model.DrawPartNo.ToCut(15)</label></td>
+
+    <td><label title="@Model.ProductNo">@Model.ProductNo.ToCut(15)</label></td>
+    <td>@Html.DisplayTextFor(model => model.Author)</td>
+
+    @Html.Partial("cent/BaseBody", Model)

@@ -1,0 +1,183 @@
+﻿@{
+    ViewBag.Title = "个人中心";
+    Layout = "../Shared/_Bpm.cshtml";
+}
+<style type="text/css">
+    .title, .submemu {
+        height: 26px;
+        line-height: 22px;
+        border-bottom: 2px solid #ddd;
+        border-top: 2px solid #adadad;
+        -ms-border-radius: 0;
+        border-radius: 0;
+        padding-bottom: 1px;
+    }
+
+        .title span {
+            display: block;
+            -ms-border-radius: 0;
+            border-radius: 0;
+            background-color: #e5e5e5;
+            width: 100px;
+            text-align: left;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-indent: 10px;
+        }
+
+        .submemu ul {
+            height: 22px;
+            list-style-type: none;
+            background-color: #efefef;
+        }
+
+            .submemu ul li {
+                height: 22px;
+                line-height: 22px;
+                float: left;
+                vertical-align: middle;
+                padding: 0 5px;
+                margin: 0 5px 0 0;
+            }
+
+                .submemu ul li:hover {
+                    background-color: #ddd;
+                }
+
+                .submemu ul li.click {
+                    background-color: #ddd;
+                    border-bottom: 1px solid #8b4513;
+                }
+
+                .submemu ul li a {
+                    text-decoration: none;
+                }
+
+    #part4 table tr td:first-child {
+        vertical-align: middle;
+        text-align: center;
+        width: 80px;
+    }
+</style>
+
+<div>
+    <div class="submemu" id="psubmemu">
+        <ul>
+            <li tabindex="1" class="click"><a href="javascript:;">个人信息</a></li>
+            <li tabindex="2"><a href="javascript:;">工作委托</a></li>
+            <li tabindex="3"><a href="javascript:;">工作被委托</a></li>
+            <li tabindex="4"><a href="javascript:;">修改密码</a></li>
+        </ul>
+    </div>
+    <div id="personal">
+
+        <div id="part1">
+            <div class="row-fluid">
+                <div class="col-md-12  panel panel-default" style="margin:0;padding:0">
+                    <div class="panel-body" style="margin:0;padding:0">
+                        @Html.Action("Information", "Personal", new { area = "eForm" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="part2">
+            <div class="row-fluid">
+                <div class="col-md-12  panel panel-default" style="margin:0;padding:0">
+                    <div class="panel-body" style="margin:0;padding:0">
+                        @Html.Action("ProxySetting", "Personal", new { area = "eForm" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="part3">
+            <div class="row-fluid">
+                <div class="col-md-12  panel panel-default" style="margin:0;padding:0">
+                    <div class="panel-body" style="margin:0;padding:0">
+                        @Html.Action("MyReplaceProxy", "Personal", new { area = "eForm" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="part4">
+            <div class="row-fluid">
+                <div class="col-md-6  panel panel-default" style="margin:0;padding:0">
+                    <div class="panel-body" style="margin:0;padding:0">
+                        @Html.Action("ChangePassword", "Personal", new { area = "eForm" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="proxyCreate" class="dialog">
+        @Html.Action("CreateProxy", "Personal")
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        $(function () {
+            $("#personal > div:not(div:first)").css("display", "none");
+
+            if (location.hash != "" && location.hash != null) {
+                var rs = location.hash.substring(1);
+                if (rs != 1) {
+                    $("#psubmemu ul li[tabindex=" + rs + "]").click();
+                }
+            }
+
+            $("#AddProxy").click(function () {
+                $(".dialog#proxyCreate").dialog({
+                    minWidth: 500,
+                    minHeight: 300
+                }).dialog("open");
+            });
+
+
+        });
+
+
+        $(".submemu ul li").click(function () {
+            location.hash = $(this).attr("tabindex");
+            $(this).addClass("click").siblings().removeClass("click");
+            var e = $("div#part" + $(this).attr("tabindex"));
+            e.css("display", "block").siblings().css("display", "none");
+        });
+
+
+        var CreateProxy = {
+            Begin: function () { },
+            Success: function (data) {
+                if (data == "success") {
+                    rightCornerMsg("新增成功", "success");
+                    $("#proxyCreate").dialog("close");
+                    location.reload();
+                } else {
+                    rightCornerMsg("新增失败", "error");
+                }
+            },
+            Complete: function () { },
+            Error: function () { }
+        };
+
+        var ChangePwd = {
+            Success: function (data) {
+                if (data == "success") {
+                    rightCornerMsg("密码修改成功", "success");
+                    location.href = reload();
+                } else {
+                    rightCornerMsg("密码修改失败，请重试", "error");
+                }
+
+
+            },
+            Error: function () { alert("系统处理错误，请返回重试或联系管理员！！！！"); }
+        };
+    </script>
+}

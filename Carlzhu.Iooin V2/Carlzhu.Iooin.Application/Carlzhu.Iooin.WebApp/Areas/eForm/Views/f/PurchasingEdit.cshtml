@@ -1,0 +1,20 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.FormPurchase
+
+@{
+    var i = (int)ViewData["row"];
+}
+
+<tr>
+
+
+    <td><label>@i <input type="checkbox" name=@string.Format("IsValid{0}", i) @((!string.IsNullOrEmpty(Model.Name)) ? "checked='checked'" : "") /></label>@Html.Hidden(string.Format("RowId{0}", i), Model.RowId)</td>
+    <td>@Html.TextBox(string.Format("PartNo{0}", i), Model.PartNo, new { STYLE = "width: 60PX;" })</td>
+    <td>@Html.TextBox(string.Format("Name{0}", i), Model.Name, new { STYLE = "width: 140px;" })</td>
+    <td>@Html.TextBox(string.Format("Details{0}", i), Model.Details)</td>
+    <td>@Html.DropDownList(string.Format("Unit{0}", i), new List<SelectListItem>() { new SelectListItem() { Text = "PCS", Value = "PCS" }, new SelectListItem() { Text = "KG", Value = "KG" }, }, new { STYLE = "width: 50px", GO = Model.Unit })</td>
+    <td>@Html.TextBox(string.Format("Qty{0}", i), Model.Qty, new { STYLE = "width: 30px;vertical-align: middle;text-align: center" })</td>
+    <td>@Html.TextBox(string.Format("Delivery{0}", i), Model.Delivery, new { STYLE = "width: 70px;", CLASS = "datepicker" })</td>
+    <td>@Html.TextBox(string.Format("Usage{0}", i), Model.Usage)</td>
+    <td>@Html.TextBox(string.Format("Reason{0}", i), Model.Reason)</td>
+
+</tr>

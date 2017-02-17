@@ -1,0 +1,132 @@
+﻿@{
+    ViewBag.Title = "Minicut System Center";
+}
+<style type="text/css">
+    div.logo {
+        height: 100px;
+        width: 100%;
+        background: url('/content/images/searchLogo.png') no-repeat center center;
+    }
+
+
+    p a {
+        font-family: "Arial";
+        padding: 2px 5px;
+    }
+</style>
+
+
+
+<div style="text-align: center;padding-top:6%;">
+    <div class="logo">
+    </div>
+    <div>
+        @using (Html.BeginForm("Search", "Default", FormMethod.Post, new { id = "Search", enctype = "multipart/form-data" }))
+        {
+
+            <div>
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            @Html.TextBox("DateStart", null, new { CLASS = "form-control datepicker", TITLE = "查询起日期", READONLY = "readonly", VALUE = DateTime.Now.AddYears(-10).ToString("yyyy/MM/dd"), STYLE = "width:103px" })
+                        </span>
+                        @Html.DropDownList("SearchType", (ViewBag.SearchType as List<System.Web.Mvc.SelectListItem>), null, new { CLASS = "form-control ", TITLE = "查询类型" })
+                        <span class="input-group-btn">
+                            @Html.TextBox("DateEnd", null, new { CLASS = "form-control datepicker", TITLE = "查询止日期", READONLY = "readonly", VALUE = DateTime.Now.ToString("yyyy/MM/dd"), STYLE = "width:103px" })
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="col-md-6 col-md-offset-3" style="padding: 20px 0">
+                    <div class="input-group">
+                        @Html.TextBox("Keywords", null, new { CLASS = "form-control", PLACEHOLDER = string.Format("任意多条件混合输入，中间用空格隔开,已发行[-{0}]份 查看数[-{1}]次", ViewData["All"], ViewData["See"]), TITLE = "关键字不区分大小写" })
+                        <span class="input-group-btn">
+                            <input type="submit" value="查询一下" id="submit" class="btn btn-primary" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div>
+        <div class="col-md-12">
+            <p>
+                <a href="/">返回首页</a>
+            </p>
+        </div>
+    </div>
+
+   
+
+
+    @*<div>
+        <div class="col-md-12" style="padding-top: 200px;">
+        
+            <p class="clear  clearfix">
+                <hr />
+            </p>
+            <div>
+                <p style="color: red">网页功能不受影响，请使用最新的 @Html.RouteLink("浏览器", "Default", new { Controller = "Download", Action = "Chrome" }, new { TITLE = "下载Chrome" })</p>
+                <p>明捷精密机械有限公司</p>
+                <p><span id="Testing" title="loading"><a href="javascript:;">Testing</a></span></p>
+
+            </div>
+        </div>
+    </div>*@
+
+
+
+</div>
+
+<link href="~/Scripts/framework/JsonTable/jquery.columns.min.css" rel="stylesheet" />
+<script src="~/Scripts/framework/JsonTable/jquery.columns.min.js"></script>
+
+@section Scripts{
+    <script type="text/javascript">
+
+        //$.messager.lays(500, 140);
+        //$.messager.anim('fade', 1000);
+        //$.messager.show("<span style='color:red'>系统提醒<span>", "1.系统以Google浏览器为载体开发<br />2.为达到使用上的最佳效果，请使用Google浏览器！");
+
+        $("#Testing").click(function () {
+            jPrompt("请输入要测试的项进行测试", "", "系统没试", function (e) {
+                jConfirm("您输入的是 " + e + " 这个吗?", "输入确认", function (s) {
+                    if (s) {
+                        if (e == "上传测试") {
+                            UpFile("#Keywords", 1, "xls,pdf", null);
+                            $.messager("caomi");
+                        } else if (e == "进度测试") {
+                            LoadingTest();
+                        } else {
+                            jAlert("测试项不存在，将在线查看", "测试完成", function () {
+                                return;
+                            });
+                        }
+                    }
+                });
+
+            });
+        });
+
+
+        function LoadingTest() {
+            $.ajaxLoading({
+                url: '/Home/Test',
+                data: { h: '测试顺利完成' },
+                loadingdata: "进度条测试5，4，3，2，1，0秒钟，请等待。。。",
+                success: function (data) {
+                    alert(data);
+                }
+            });
+        }
+
+      
+
+
+    </script>
+}
+
+
+

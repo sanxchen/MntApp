@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AB4C35FF-8B46-4F22-8219-1F0D77BAE6AA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Carlzhu.Iooin.Entity</RootNamespace>
+    <AssemblyName>Carlzhu.Iooin.Entity</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Carlzhu.Iooin.Framework.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\References\Carlzhu.Iooin.Framework.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Carlzhu.Iooin.Util, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\References\Carlzhu.Iooin.Util.dll</HintPath>
+    </Reference>
+    <Reference Include="Carlzhu.Iooin.Util.MvcHtml, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Carlzhu.Iooin.WebApp\bin\Carlzhu.Iooin.Util.MvcHtml.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\DLL\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\DLL\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\..\..\..\DLL\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseRepository.cs" />
+    <Compile Include="BaseUtility\BaseEntity.cs" />
+    <Compile Include="BaseUtility\EntityModel\FileProperty.cs" />
+    <Compile Include="CommonModule\BaseBackupJob.cs" />
+    <Compile Include="CommonModule\BaseButton.cs" />
+    <Compile Include="CommonModule\BaseButtonPermission.cs" />
+    <Compile Include="CommonModule\BaseCompany.cs" />
+    <Compile Include="CommonModule\BaseDataDictionary.cs" />
+    <Compile Include="CommonModule\BaseDataDictionaryDetail.cs" />
+    <Compile Include="CommonModule\BaseDataScopePermission.cs" />
+    <Compile Include="CommonModule\BaseDepartment.cs" />
+    <Compile Include="CommonModule\BaseEmployee.cs" />
+    <Compile Include="CommonModule\BaseExcelImport.cs" />
+    <Compile Include="CommonModule\BaseExcelImportDetail.cs" />
+    <Compile Include="CommonModule\BaseFormAttribute.cs" />
+    <Compile Include="CommonModule\BaseFormAttributeValue.cs" />
+    <Compile Include="CommonModule\BaseGroupUser.cs" />
+    <Compile Include="CommonModule\BaseInterfaceManage.cs" />
+    <Compile Include="CommonModule\BaseInterfaceManageParameter.cs" />
+    <Compile Include="CommonModule\BaseModule.cs" />
+    <Compile Include="CommonModule\BaseModulePermission.cs" />
+    <Compile Include="CommonModule\BaseObjectUserRelation.cs" />
+    <Compile Include="CommonModule\BasePost.cs" />
+    <Compile Include="CommonModule\BaseProvinceCity.cs" />
+    <Compile Include="CommonModule\BaseQueryRecord.cs" />
+    <Compile Include="CommonModule\BaseRoles.cs" />
+    <Compile Include="CommonModule\BaseShortcuts.cs" />
+    <Compile Include="CommonModule\BaseSysLog.cs" />
+    <Compile Include="CommonModule\BaseSysLogDetail.cs" />
+    <Compile Include="CommonModule\BaseUser.cs" />
+    <Compile Include="CommonModule\BaseView.cs" />
+    <Compile Include="CommonModule\BaseViewPermission.cs" />
+    <Compile Include="CommonModule\BaseViewWhere.cs" />
+    <Compile Include="BaseUtility\CustomerAttribute.cs" />
+    <Compile Include="BaseUtility\FormHeaderAttribute.cs" />
+    <Compile Include="FORM\f\draw\BehandQuery.cs" />
+    <Compile Include="FORM\f\draw\FormDrawingsSopDewell.cs" />
+    <Compile Include="FORM\f\FormJumpTheQueue.cs" />
+    <Compile Include="FORM\f\FormInvolvingUser.cs" />
+    <Compile Include="FORM\f\FormPassEntry.cs" />
+    <Compile Include="FORM\f\FormPdAbnor.cs" />
+    <Compile Include="FORM\f\FormTransactionDepartment.cs" />
+    <Compile Include="FORM\f\FormWorkshopInspection.cs" />
+    <Compile Include="FORM\f\Involving.cs" />
+    <Compile Include="FORM\f\FormPath.cs" />
+    <Compile Include="FORM\f\draw\FormDrawingsSupplierSampleAck.cs" />
+    <Compile Include="FORM\f\FormNcr.cs" />
+    <Compile Include="FORM\f\FormNcrPart.cs" />
+    <Compile Include="FORM\f\FormWorkLeave.cs" />
+    <Compile Include="FORM\f\FormToGoout.cs" />
+    <Compile Include="FORM\f\report\FormDewellReport.cs" />
+    <Compile Include="FORM\f\report\FormDewellReportAssembling.cs" />
+    <Compile Include="FORM\f\report\FormDewellReportBending.cs" />
+    <Compile Include="FORM\f\report\FormDewellReportFitter.cs" />
+    <Compile Include="FORM\f\report\FormDewellReportFullInspectionPackage.cs" />
+    <Compile Include="FORM\f\report\FormDewellReportLaser.cs" />
+    <Compile Include="FORM\f\report\FormDewellReportNumberPunching.cs" />
+    <Compile Include="FORM\f\report\FormDewellReportWelding.cs" />
+    <Compile Include="HRMS\HrmsAdStorage.cs" />
+    <Compile Include="HRMS\HrmsAttAnalysis.cs" />
+    <Compile Include="HRMS\HrmsCalendarEvents.cs" />
+    <Compile Include="HRMS\HrmsConfig.cs" />
+    <Compile Include="HRMS\HrmsCar.cs" />
+    <Compile Include="HRMS\DoorInout.cs" />
+    <Compile Include="HRMS\HrmsCarInOut.cs" />
+    <Compile Include="HRMS\HrmsPersonAttView.cs" />
+    <Compile Include="HRMS\HrmsShiftSnaps.cs" />
+    <Compile Include="HRMS\HrmsShift.cs" />
+    <Compile Include="MANAGER\SystemPower.cs" />
+    <Compile Include="MANAGER\SystemRecover.cs" />
+    <Compile Include="BaseUtility\CarlzhuContext.cs" />
+    <Compile Include="DownLoad.cs" />
+    <Compile Include="Migrations\201611210110549_DeleteFile.cs" />
+    <Compile Include="Migrations\201611210110549_DeleteFile.Designer.cs">
+      <DependentUpon>201611210110549_DeleteFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611220054396_RemoveTpa.cs" />
+    <Compile Include="Migrations\201611220054396_RemoveTpa.Designer.cs">
+      <DependentUpon>201611220054396_RemoveTpa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612042345110_AddMaritalStatus.cs" />
+    <Compile Include="Migrations\201612042345110_AddMaritalStatus.Designer.cs">
+      <DependentUpon>201612042345110_AddMaritalStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612280359164_AddTaskSch.cs" />
+    <Compile Include="Migrations\201612280359164_AddTaskSch.Designer.cs">
+      <DependentUpon>201612280359164_AddTaskSch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702140718142_AddEmployeeManager.cs" />
+    <Compile Include="Migrations\201702140718142_AddEmployeeManager.Designer.cs">
+      <DependentUpon>201702140718142_AddEmployeeManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702150603345_RemoveArr.cs" />
+    <Compile Include="Migrations\201702150603345_RemoveArr.Designer.cs">
+      <DependentUpon>201702150603345_RemoveArr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702150640452_RemoveArr2.cs" />
+    <Compile Include="Migrations\201702150640452_RemoveArr2.Designer.cs">
+      <DependentUpon>201702150640452_RemoveArr2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702150722223_RemoveArr3.cs" />
+    <Compile Include="Migrations\201702150722223_RemoveArr3.Designer.cs">
+      <DependentUpon>201702150722223_RemoveArr3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702150731162_RemoveArr4.cs" />
+    <Compile Include="Migrations\201702150731162_RemoveArr4.Designer.cs">
+      <DependentUpon>201702150731162_RemoveArr4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702150805300_RemoveArr5.cs" />
+    <Compile Include="Migrations\201702150805300_RemoveArr5.Designer.cs">
+      <DependentUpon>201702150805300_RemoveArr5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="TaskSch.cs" />
+    <Compile Include="TPA\TpaCustomer.cs" />
+    <Compile Include="Email.cs" />
+    <Compile Include="EmailLog.cs" />
+    <Compile Include="FORM\FileGroup.cs" />
+    <Compile Include="FORM\FilesFileGroup.cs" />
+    <Compile Include="FORM\Form.cs" />
+    <Compile Include="FORM\FormProxy.cs" />
+    <Compile Include="FORM\FormSign.cs" />
+    <Compile Include="FORM\FormType.cs" />
+    <Compile Include="FORM\f\draw\DrawingsBase.cs" />
+    <Compile Include="FORM\f\draw\FormDrawingsControlPlan.cs" />
+    <Compile Include="FORM\f\draw\FormDrawingsFmea.cs" />
+    <Compile Include="FORM\f\draw\FormDrawingsProfile.cs" />
+    <Compile Include="FORM\f\F.cs" />
+    <Compile Include="FORM\f\draw\FormDrawingsEcn.cs" />
+    <Compile Include="FORM\f\draw\FormDrawingsExternal.cs" />
+    <Compile Include="FORM\f\draw\FormDrawingsFqc.cs" />
+    <Compile Include="FORM\f\draw\FormDrawingsProgram.cs" />
+    <Compile Include="FORM\f\draw\FormDrawingsSop.cs" />
+    <Compile Include="FORM\f\FormBll.cs" />
+    <Compile Include="FORM\f\FormCar.cs" />
+    <Compile Include="FORM\f\draw\FormDrawingsBom.cs" />
+    <Compile Include="FORM\f\draw\FormDrawingsPackage.cs" />
+    <Compile Include="FORM\f\draw\FormDrawingsProcess.cs" />
+    <Compile Include="FORM\f\draw\FormDrawingsCustomer.cs" />
+    <Compile Include="FORM\f\draw\FormDrawingsInside.cs" />
+    <Compile Include="FORM\f\FormEquipmentSop.cs" />
+    <Compile Include="FORM\f\FormPurchase.cs" />
+    <Compile Include="FORM\f\FormStamps.cs" />
+    <Compile Include="FORM\f\FormTest.cs" />
+    <Compile Include="FORM\Files.cs" />
+    <Compile Include="FORM\f\IForm.cs" />
+    <Compile Include="FORM\f\FormReplaceDrawings.cs" />
+    <Compile Include="FORM\f\FormItEquipment.cs" />
+    <Compile Include="FORM\f\FormAbnormalAttendance.cs" />
+    <Compile Include="HRMS\HrmsAttendance.cs" />
+    <Compile Include="FORM\FormClass.cs" />
+    <Compile Include="mes\MesRkwBox.cs" />
+    <Compile Include="mes\MesRkwSn.cs" />
+    <Compile Include="mes\MesRkwPackage.cs" />
+    <Compile Include="mes\MesRkwPackageView.cs" />
+    <Compile Include="mes\MesRkwPo.cs" />
+    <Compile Include="TPA\TpaGoods.cs" />
+    <Compile Include="Link.cs" />
+    <Compile Include="MANAGER\SystemAccount.cs" />
+    <Compile Include="MANAGER\SystemPermission.cs" />
+    <Compile Include="MANAGER\SystemAction.cs" />
+    <Compile Include="MANAGER\SystemController.cs" />
+    <Compile Include="MANAGER\SystemModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QUALITY\Apparatus.cs" />
+    <Compile Include="QUALITY\Published.cs" />
+    <Compile Include="FileReplaceRecords.cs" />
+    <Compile Include="TPA\TpaSupplier.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201611210110549_DeleteFile.resx">
+      <DependentUpon>201611210110549_DeleteFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611220054396_RemoveTpa.resx">
+      <DependentUpon>201611220054396_RemoveTpa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612042345110_AddMaritalStatus.resx">
+      <DependentUpon>201612042345110_AddMaritalStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612280359164_AddTaskSch.resx">
+      <DependentUpon>201612280359164_AddTaskSch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702140718142_AddEmployeeManager.resx">
+      <DependentUpon>201702140718142_AddEmployeeManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702150603345_RemoveArr.resx">
+      <DependentUpon>201702150603345_RemoveArr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702150640452_RemoveArr2.resx">
+      <DependentUpon>201702150640452_RemoveArr2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702150722223_RemoveArr3.resx">
+      <DependentUpon>201702150722223_RemoveArr3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702150731162_RemoveArr4.resx">
+      <DependentUpon>201702150731162_RemoveArr4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702150805300_RemoveArr5.resx">
+      <DependentUpon>201702150805300_RemoveArr5.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

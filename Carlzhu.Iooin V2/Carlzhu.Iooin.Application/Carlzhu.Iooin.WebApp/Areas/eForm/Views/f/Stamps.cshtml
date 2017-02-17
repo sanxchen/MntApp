@@ -1,0 +1,54 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.FormStamps
+
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr>
+    <td>@Html.LabelFor(model => model.FileSummary)</td>
+    <td colspan="4">@Html.TextBoxFor(model => model.FileSummary,new{STYLE="width: 100%;"})</td>
+    <td>@Html.ValidationMessageFor(model => model.FileSummary)</td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.GongZhang)</td>
+    <td>@Html.TextBoxFor(model => model.GongZhang)</td>
+    <td>@Html.ValidationMessageFor(model => model.GongZhang)</td>
+    <td>@Html.LabelFor(model => model.FapiaoZhang)</td>
+    <td>@Html.TextBoxFor(model => model.FapiaoZhang)</td>
+    <td>@Html.ValidationMessageFor(model => model.FapiaoZhang)</td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.HetongZhang)</td>
+    <td>@Html.TextBoxFor(model => model.HetongZhang)</td>
+    <td>@Html.ValidationMessageFor(model => model.HetongZhang)</td>
+    <td>@Html.LabelFor(model => model.CaiwuZhang)</td>
+    <td>@Html.TextBoxFor(model => model.CaiwuZhang)</td>
+    <td>@Html.ValidationMessageFor(model => model.CaiwuZhang)</td>
+</tr>
+
+<tr>
+    <td>@Html.LabelFor(model => model.FarenZhang)</td>
+    <td>@Html.TextBoxFor(model => model.FarenZhang)</td>
+    <td>@Html.ValidationMessageFor(model => model.FarenZhang)</td>
+    <td>@Html.LabelFor(model => model.RenshiZhang)</td>
+    <td>@Html.TextBoxFor(model => model.RenshiZhang)</td>
+    <td>@Html.ValidationMessageFor(model => model.RenshiZhang)</td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.BaoguanZhang)</td>
+    <td>@Html.TextBoxFor(model => model.BaoguanZhang)</td>
+    <td>@Html.ValidationMessageFor(model => model.BaoguanZhang)</td>
+    <td>@Html.LabelFor(model => model.QitaZhang)</td>
+    <td>@Html.TextBoxFor(model => model.QitaZhang, new { TITLE = "其他章请在备注里面写明" })</td>
+    <td>@Html.ValidationMessageFor(model => model.QitaZhang)</td>
+</tr>
+
+<tr>
+    <th>@Html.LabelFor(model => model.FileGroup)</th>
+    <td>@Html.TextBoxFor(model => model.FileGroup, new { READONLY = "READONLY", placeholder = "点击上传文件", title = "点击上传文件" })</td>
+    <td>@Html.ValidationMessageFor(model => model.FileGroup)</td>
+    <td colspan="2"><span class="text-danger">请输入对应印章的数量，数量为份数，为0则不使用此章</span></td>
+    <td></td>
+</tr>
+
+
+
+
+

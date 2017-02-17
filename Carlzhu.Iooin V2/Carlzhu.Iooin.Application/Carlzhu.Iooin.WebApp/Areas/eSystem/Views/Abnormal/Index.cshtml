@@ -1,0 +1,207 @@
+﻿@{
+    ViewBag.Title = "异常表单管理中心";
+    Layout = "../Shared/_eSystem.cshtml";
+    int i = 0;
+    var context = Carlzhu.Iooin.Business.BaseUtility.ContextFactory.ContextHelper;
+}
+
+@using Carlzhu.Iooin.InteractiveAdapter
+@using Carlzhu.Iooin.Entity.FORM.f
+@using Webdiyer.WebControls.Mvc
+@model PagedList<FormNcr>
+<ol class="breadcrumb">
+    <li>@Html.RouteLink("Home", new { Controller = "Default", Action = "Index", area = "" }, null)</li>
+    <li class="active">@Html.RouteLink("异常处理单", new { Controller = "Abnormal", Action = "Index", area = "eSystem" }, null)</li>
+    <li class="pull-right">@Html.RouteLink("异常导出", new { Controller = "Abnormal", Action = "AbnormalExport", area = "eSystem" }, null)</li>
+</ol>
+
+
+<div style="max-width: 700px">
+    <form>
+        <table class="table table-bordered table-condensed table-striped">
+            <tr>
+                <th>搜寻起</th>
+                <td><input type="text" class="datepicker" style="width: 120px;" name="timestart" readonly="readonly" value="@(Request["timestart"] ?? DateTime.Now.AddDays(-1).ToString("yyyy/MM/dd"))" /></td>
+                <th>搜寻止</th>
+                <td><input type="text" class="datepicker" style="width: 120px;" name="timeend" readonly="readonly" value="@(Request["timeend"] ?? DateTime.Now.ToString("yyyy/MM/dd"))" /></td>
+            </tr>
+            <tr>
+                <th>申请单号</th>
+                <td><input type="text" name="formno" value="@(Request["formno"])" /></td>
+                <th>供应商名称</th>
+                <td>@Html.DropDownList("customerno", new Carlzhu.Iooin.Business.TpaModule.TpaSupplierBll().GetSupplierDropList(), "", null)</td>
+            </tr>
+            <tr>
+                <th>料号</th>
+                <td colspan="3"><input type="text" style="width: 100%" name="partno" value="@(Request["partno"])" /></td>
+            </tr>
+            <tr>
+                <th>车间</th>
+                <td colspan="3">
+                  @foreach (var en in Carlzhu.Iooin.Util.MvcHtml.SelectListExtendExpress.EnumToList(typeof(Carlzhu.Iooin.Entity.FORM.f.FormNcr.AbnormalPointWorkshopEnum)))
+                  {
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="chejian" value="@en.Value"> @en.Text
+                    </label>
+                  }
+                    <input type="hidden" name="workstation" id="workstation" value="@(Request["workstation"])"/>
+                </td>
+            </tr>
+            <tr>
+                <th>异常现象</th>
+                <td colspan="3">
+                   @foreach (var en in Carlzhu.Iooin.Util.MvcHtml.SelectListExtendExpress.EnumToList(typeof(Carlzhu.Iooin.Entity.FORM.f.FormNcr.AbnormalImageEnum)))
+                   {
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="Image" value="@en.Value"> @en.Text
+                    </label>
+                   }
+                    <input type="hidden" name="AbnormalImage" id="AbnormalImage" value="@(Request["AbnormalImage"])"/>
+                </td>
+            </tr>
+            <tr>
+                <th>异常归属</th>
+                <td colspan="3">
+                   @foreach (var en in Carlzhu.Iooin.Util.MvcHtml.SelectListExtendExpress.EnumToList(typeof(Carlzhu.Iooin.Entity.FORM.f.FormNcr.AbnormalAttributionEnum)))
+                   {
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="Attribution" value="@en.Value"> @en.Text
+                    </label>
+                   }
+                    <input type="hidden" name="AbnormalAttribution" id="AbnormalAttribution" value="@(Request["AbnormalAttribution"])" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <input type="submit" value="查询" class="btn btn-primary" id="search" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<table class="table table-bordered table-condensed table-striped">
+    <thead>
+        <tr>
+            <td>总计：@Model.TotalItemCount</td>
+            <td>@Html.DisplayNameFor(model => model.FormNo)</td>
+            <td>@Html.DisplayNameFor(model => model.PartNo)</td>
+            <td>@Html.DisplayNameFor(model => model.CustomerNo)</td>
+            <td>@Html.DisplayNameFor(model => model.CatchTime)</td>
+            <td>@Html.DisplayNameFor(model => model.LotNo)</td>
+            <td>@Html.DisplayNameFor(model => model.BatchNo)</td>
+            <td>@Html.DisplayNameFor(model => model.SamplingNo)</td>
+            <td>@Html.DisplayNameFor(model => model.DefectsNo)</td>
+            <td>@Html.DisplayNameFor(model => model.AbnormalPoint)</td>
+            <td>@Html.DisplayNameFor(model => model.AbnormalImage)</td>
+            <td>@Html.DisplayNameFor(model => model.AbnormalAttribution)</td>
+            <td>@Html.DisplayName("不良率")</td>
+            <td>@Html.DisplayName("处理进度")</td>
+
+            <td>@Html.DisplayName("详细")</td>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+
+
+
+        var jd = (context.FormNcrParts.Count(c => c.ParentFormNo == item.FormNo) / 4d) * 100;
+
+
+        <tr>
+            <td>@((Model.CurrentPageIndex - 1) * 15 + ++i)</td>
+            <td>@item.Form.FormNo</td>
+            <td><a href="@Html.Action("GetDrawLink", "Default", new {partNo = item.PartNo,area=""})" target="_blank">@item.PartNo</a></td>
+            <td>@item.Customer.CustomerName</td>
+            <td>@item.CatchTime.ToShortDateString()</td>
+            <td>@item.LotNo</td>
+            <td>@item.BatchNo</td>
+            <td>@item.SamplingNo</td>
+            <td>@item.DefectsNo</td>
+            <td>@Carlzhu.Iooin.Util.MvcHtml.EnumUtil.GetEnumShowName(typeof (FormNcr.AbnormalPointWorkshopEnum), item.AbnormalPointWorkshop)</td>
+            <td>
+                @{
+                    if (!string.IsNullOrEmpty(item.AbnormalImage))
+                    {
+                        foreach (char im in item.AbnormalImage)
+                        {
+                            <span>@Carlzhu.Iooin.Util.MvcHtml.EnumUtil.GetEnumShowName(typeof(FormNcr.AbnormalImageEnum), int.Parse(im.ToString()))&nbsp;</span>
+                        }
+                    }
+                }
+            </td>
+            <td>
+                @{
+                    if (!string.IsNullOrEmpty(item.AbnormalAttribution))
+                    {
+                        foreach (char im in item.AbnormalAttribution.ToCharArray())
+                        {
+                            <span>@Carlzhu.Iooin.Util.MvcHtml.EnumUtil.GetEnumShowName(typeof(FormNcr.AbnormalAttributionEnum), int.Parse(im.ToString()))&nbsp;</span>
+                        }
+                    }
+                }
+            </td>
+            <td>@(((item.DefectsNo / item.SamplingNo) * 100).ToString("F1"))%</td>
+            <td>
+                <div class="progress progress-striped">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="@(jd)" aria-valuemin="0" aria-valuemax="100" style="width: @jd%;"></div>
+                </div>
+            </td>
+
+            <td>@Html.ActionLink("详细", "AForm", "Abnormal", new { p = (string.Format("{0},", item.FormNo)).Encrypt() }, new { target = "_blank" })</td>
+        </tr>
+
+    }
+</table>
+
+@Html.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "id",
+    ShowPageIndexBox = true,
+    PageIndexBoxType = PageIndexBoxType.DropDownList,
+    ShowGoButton = false
+})
+
+
+<script type="text/javascript">
+    $(function () {
+        var workstation = $("#workstation");
+        var abnormalImage = $("#AbnormalImage");
+        var abnormalAttribution = $("#AbnormalAttribution");
+        $("#search").click(function () {
+            workstation.val("");
+            abnormalImage.val("");
+            abnormalAttribution.val("");
+            $("input[name=chejian][type=checkbox]:checked").each(function () {
+                workstation.val(workstation.val() + $(this).val());
+            });
+            $("input[name=Image][type=checkbox]:checked").each(function () {
+                abnormalImage.val(abnormalImage.val() + $(this).val());
+            });
+            $("input[name=Attribution][type=checkbox]:checked").each(function () {
+                abnormalAttribution.val(abnormalAttribution.val() + $(this).val());
+            });
+        });
+
+      
+        
+        $("input[name=chejian][type=checkbox]").each(function () {
+            if (workstation.val().indexOf($(this).val()) > -1) {
+                $(this).prop("checked", "checked");
+            }
+        });
+        $("input[name=Image][type=checkbox]").each(function () {
+            if (abnormalImage.val().indexOf($(this).val()) > -1) {
+                $(this).prop("checked", "checked");
+            }
+        });
+        $("input[name=Attribution][type=checkbox]").each(function () {
+            if (abnormalAttribution.val().indexOf($(this).val()) > -1) {
+                $(this).prop("checked", "checked");
+            }
+        });
+    });
+
+
+</script>

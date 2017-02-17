@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Carlzhu.Iooin.Entity.HRMS.DoorInoutReport>
+@{
+    ViewBag.Title = "异常进出查询";
+    Layout = "~/Areas/eSystem/Views/Shared/_eSystem.cshtml";
+    int i = 0;
+}
+
+<ol class="breadcrumb">
+    <li class="disabled"><a href="/">首页</a></li>
+    <li>@Html.ActionLink("异常进出登记", "Index")</li>
+    <li class="disabled">查看</li>
+</ol>
+<div>
+    <form>
+        <div class="input-group" style="width: 750px;">
+
+            <span class="input-group-addon">外出日期起</span>
+            <input type="text" class="form-control datepicker" name="timestart" readonly="readonly" value="@(Request["timestart"] ?? DateTime.Now.ToString("yyyy/MM/dd"))" />
+
+            <span class="input-group-addon">外出日期止</span>
+            <input type="text" class="form-control datepicker" name="timeend" readonly="readonly" value="@(Request["timeend"] ?? DateTime.Now.ToString("yyyy/MM/dd"))" />
+            <span class="input-group-addon">姓名</span>
+            <input type="text" class="form-control" name="user" placeholder="姓名" value="@Request["user"]" style="width: 230px;" />
+            <span class="input-group-btn">
+                <input type="submit" value="查询" class="form-control btn-primary" />
+            </span>
+        </div>
+    </form>
+</div>
+
+<table class="table table-bordered table-condensed table-striped table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>@Html.DisplayNameFor(c => c.Name)</th>
+            <th>@Html.DisplayNameFor(c => c.Department)</th>
+            <th>@Html.DisplayNameFor(c => c.CardNo)</th>
+            <th>@Html.DisplayNameFor(c => c.OutTime)</th>
+            <th>@Html.DisplayNameFor(c => c.InTime)</th>
+            <th>@Html.DisplayNameFor(c => c.SumTime)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@(++i)</td>
+                <td>@item.Name</td>
+                <td>@item.Department</td>
+                <td>@item.CardNo</td>
+                <td>@item.OutTime</td>
+                <td>@item.InTime</td>
+                <td>@item.SumTime</td>
+            </tr>
+        }
+    </tbody>
+</table>

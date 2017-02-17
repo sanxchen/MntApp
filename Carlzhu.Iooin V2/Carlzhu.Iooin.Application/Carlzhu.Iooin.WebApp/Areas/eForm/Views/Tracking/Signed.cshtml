@@ -1,0 +1,92 @@
+﻿@using Carlzhu.Iooin.Business.FormModule
+@using Webdiyer.WebControls.Mvc
+@model PagedList<Carlzhu.Iooin.Entity.FORM.FormSign>
+@{
+    ViewBag.Title = "表单签核查询";
+    Layout = "../Shared/_Bpm.cshtml";
+}
+
+<script type="text/javascript">
+    function onbegin() {
+        LoadQueryData("onbegin","数据加载中,请等待!");
+    }
+
+    function oncomplete(request, status) {
+        LoadQueryData("oncomplete");
+    }
+
+    function onfailure(request, error) {
+        LoadQueryData("oncomplete");
+    }
+
+    function onsuccess(data) {
+        LoadQueryData("oncomplete");
+    }
+</script>
+
+
+<ol class="breadcrumb">
+    <li>@Html.RouteLink("Flow", new { Controller = "Applying", Action = "Index", area = "eForm" }, null)</li>
+    <li>@Html.RouteLink("追寻表单", new { Controller = "Tracking", Action = "Applyed", area = "eForm" }, null)</li>
+    <li class="disabled">追寻签核</li>
+
+    <li class="pull-right">@Html.RouteLink("追寻申请", new { Controller = "Tracking", Action = "Applyed", area = "eForm" }, null)</li>
+</ol>
+<div class="tracking">
+    <div class="panel panel-default">
+        <div class="panel-heading" style="margin:0;padding:0">
+            <div class="querybar">
+                @using (Ajax.BeginForm("signed", "Tracking", new RouteValueDictionary { { "id", "" } }, new AjaxOptions
+                {
+                    UpdateTargetId = "dataarea",
+                    InsertionMode = InsertionMode.Replace,
+                    OnBegin = "onbegin",
+                    OnComplete = "oncomplete",
+                    OnFailure = "onfailure",
+                    OnSuccess = "onsuccess"
+
+                }, new RouteValueDictionary { { "id", "searchForm" } }))
+                {
+
+                @Html.DropDownList("formType", new Applying().GetFormTypeDropdownList(false, false, false), "", new { TITLE = "表单类型" })
+
+                    <input type="text" placeholder="表单创建者" title="表单创建者" name="createUser" id="createUser" />
+
+                    @Html.Label("区间：")  <input type="text" class="datetimepicker" placeholder="开始时间" title="表单申请时间" readonly="readonly" name="startTime" id="startTime" /><span class="to"></span><input type="text" class="datetimepicker" placeholder="结束时间" title="结束时间" readonly="readonly" name="endTime" id="endTime" />
+
+                    <span class="checkboxgroup">
+                        <label><input type="checkbox" name="ckagree" checked="checked" id="ckfinish" />已同意</label>
+                        <label><input type="checkbox" name="ckreject" checked="checked" id="ckreject" />已否决</label>
+                    </span>
+
+                    <input type="text" placeholder="表单号速查" title="可排除其他条件进行表单号速查" class="formno_query" name="formNo" id="formNo" />
+                    <input type="submit" title="条件可多选" value="查询" class="query_submit" />
+
+                }
+
+            </div>
+        </div>
+        <div class="panel-body" style="margin:0;padding:0">
+            <div id="dataarea">
+                @Html.Partial("_Signed", Model, new ViewDataDictionary { { "Tr", ViewData["Page"] } })
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

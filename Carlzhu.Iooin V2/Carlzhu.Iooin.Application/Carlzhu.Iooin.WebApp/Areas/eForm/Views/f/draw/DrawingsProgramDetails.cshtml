@@ -1,0 +1,21 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.draw.FormDrawingsProgram
+@{
+    Layout = "/Areas/eForm/Views/f/formLayout/_DrawingBase.cshtml";
+}
+<tr>
+    <td>@Html.LabelFor(model => model.FileType)</td>
+    <td>@Html.DisplayTextFor(model => model.FileType)</td>
+    
+    <td>@Html.LabelFor(model => model.FileName)</td>
+    <td>@Html.DisplayTextFor(model => model.FileName)</td>
+    
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.FileCode)</td>
+    <td>@Html.DisplayTextFor(model => model.FileCode)</td>
+    
+    <td>@Html.LabelFor(model => model.Author)</td>
+    <td>@Html.DisplayTextFor(model => model.Author)</td>
+    
+</tr>
+

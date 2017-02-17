@@ -1,0 +1,19 @@
+﻿@using Carlzhu.Iooin.Entity.FORM.f.report
+@model FormDewellReport
+
+
+@{
+    var t = ViewData["Model"] as FormDewellReport;
+}
+
+<tr>
+    <th>姓名</th>
+    <td colspan="2">
+        <input type="text" name="EmpNo" value="@(t==null?"":t.EmpNo)" placeholder="7位工号" />
+    </td>
+    <th>班次</th>
+    <td colspan="2"><input type="text" name="Team" value="@(t==null?0:t.Team)" placeholder="数值整数" /></td>
+    <th>班别</th>
+    <td colspan="2"><input type="text" name="Shift" value="@(t==null?0:t.Shift)" placeholder="数值整数" /></td>
+    <td colspan="20"></td>
+</tr>

@@ -1,0 +1,36 @@
+﻿ SELECT 
+		 invcls.itcls as 品号大类,
+		 invcls.clsdsc as 品号大类说明,
+         invbal.itnbr as 品号,   
+         invmas.itdsc as 品名,   
+         invmas.spdsc as 规格,
+		 invbal.wareh as 仓库代号,
+		 invwh.whdsc as 仓库名称,  
+         sum(invbal.onhand1) as 数量一,  
+		 invmas.unmsr1 as 单位一,  
+         sum(invbal.onhand2) as 数量二,
+		 isnull(invmas.unmsr2,'') as 单位二
+    FROM invbal,   
+         invmas,   
+         invwh,   
+         invcls  
+   WHERE ( invbal.itnbr = invmas.itnbr ) and  
+         ( invbal.facno = invwh.facno ) and  
+         ( invbal.prono = invwh.prono ) and  
+         ( invbal.wareh = invwh.wareh ) and  
+         ( invcls.itcls = invmas.itcls ) and  
+         ( ( invwh.mrpco = 'Y' ) )   
+GROUP BY    
+		invbal.wareh,
+		 invcls.itcls,
+		 invcls.clsdsc,
+         invbal.itnbr,   
+         invmas.itdsc,   
+         invmas.spdsc,   
+         invmas.rate2,   
+         invmas.unmsr1,   
+         invmas.unmsr2,
+		 invbal.wareh,
+		 invwh.whdsc,
+		invbal.lindate ,
+		invbal.loudate  

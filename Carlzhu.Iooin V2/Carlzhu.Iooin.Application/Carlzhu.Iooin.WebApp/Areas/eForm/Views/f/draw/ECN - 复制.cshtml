@@ -1,0 +1,171 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.draw.FormDrawingsEcn
+<style type="text/css">
+    input[type=checkbox] {
+        margin-top: -3px;
+        margin-right: 5px;
+    }
+</style>
+<table class="table table-bordered table-condensed">
+    <tr>
+        <th colspan="2">客户名称</th>
+        <td colspan="4"><input type="text" style="width:80px" /></td>
+        <th colspan="2">产品编号</th>
+        <td colspan="4"><input type="text" /></td>
+        <th colspan="2">产品名称</th>
+        <td colspan="3"><input type="text" style="width:123px" /></td>
+        <th colspan="2">版本号</th>
+        <td colspan="2"><input type="text" style="width:50px" /></td>
+    </tr>
+    <tr>
+        <th colspan="2">变更原因</th>
+        <td colspan="19">
+            <input type="radio" name="changereason" checked="checked" />客户通知&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="changereason" />生产变更&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="changereason" />内部变更&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="changereason" />工艺变更&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="changereason" />包装变更&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="changereason" />其它变更&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" readonly="readonly" />
+        </td>
+    </tr>
+    <tr>
+        <th colspan="2">变更内容</th>
+        <td colspan="19"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td colspan="20">
+            <textarea></textarea>
+        </td>
+    </tr>
+    <tr>
+        <th colspan="10" style="text-align:center">相关操作</th>
+        <th colspan="11" style="text-align:center">相关文件</th>
+    </tr>
+
+    <tr>
+        <td>操作部门</td>
+        <td>仓储位置</td>
+        <td>查仓数</td>
+        <td colspan="4">处理办法</td>
+        <td colspan="2">完成时间</td>
+        <td>完成状况</td>
+        <td>是否更新</td>
+        <td colspan="4">相关文件</td>
+        <td colspan="2">更新后文件编号</td>
+        <td colspan="2">版本号</td>
+        <td colspan="2">完成状况</td>
+    </tr>
+    <tr>
+        <td rowspan="3">生产部</td>
+        <td rowspan="3">生产现场</td>
+        <td rowspan="3"><input type="text" style="width:40px;text-align:center" class="cnum" /></td>
+        <td colspan="4"><input type="radio" name="productareadeal" />继续使用</td>
+        <td colspan="2" rowspan="3" style="text-align:center"><input type="text" class="datepicker" style="width: 85px;" /></td>
+        <td colspan="1" rowspan="3"><textarea style="width: 100%; height: 100%;"></textarea></td>
+        <td rowspan="15" style=" text-align:center"><input type="checkbox" disabled="disabled" checked="checked" /></td>
+        <td colspan="4" rowspan="2"><input type="radio" name="aboutfile" />工艺文件</td>
+        <td colspan="2" rowspan="15"><textarea style="width:120px;height:100% ;"></textarea></td>
+        <td colspan="2" rowspan="15"><textarea style="width: 40px; height: 100%;"></textarea></td>
+        <td colspan="2" rowspan="15" style="text-align:center"><input type="checkbox" /></td>
+    </tr>
+    <tr>
+        <td colspan="4"><input type="radio" name="productareadeal" />报废</td>
+    </tr>
+    <tr>
+        <td colspan="4"><input type="radio" name="productareadeal" checked="checked" />返工</td>
+        <td colspan="4" rowspan="2"><input type="radio" name="aboutfile" />内部图纸</td>
+
+    </tr>
+    <tr>
+        <td rowspan="9">资材部</td>
+        <td rowspan="3">供应商处</td>
+        <td rowspan="3"><input type="text" style="width:40px;text-align:center" class="cnum" /></td>
+        <td colspan="4"><input type="radio" name="purchasGdeal" />继续使用</td>
+        <td colspan="2" rowspan="3" style="text-align:center"><input type="text" class="datepicker" style="width: 85px;" /></td>
+        <td colspan="1" rowspan="3"><textarea style="width: 100%;height:100%;"></textarea></td>
+
+    </tr>
+    <tr>
+        <td colspan="4"><input type="radio" name="purchasGdeal" />报废</td>
+        <td colspan="4" rowspan="2"><input type="radio" name="aboutfile" checked="checked" />客户图纸</td>
+
+    </tr>
+    <tr>
+        <td colspan="4"><input type="radio" name="purchasGdeal" checked="checked" />返工</td>
+    </tr>
+    <tr>
+
+        <td rowspan="3">原材料仓</td>
+        <td rowspan="3"><input type="text" style="width:40px;text-align:center" class="cnum" /></td>
+        <td colspan="4"><input type="radio" name="purchasYdeal" />继续使用</td>
+        <td colspan="2" rowspan="3" style="text-align:center"><input type="text" class="datepicker" style="width: 85px;" /></td>
+        <td colspan="1" rowspan="3"><textarea style="width: 100%; height: 100%;"></textarea></td>
+        <td colspan="4" rowspan="2"><input type="radio" name="aboutfile" />作业指导书</td>
+
+
+    </tr>
+    <tr>
+        <td colspan="4"><input type="radio" name="purchasYdeal" />报废</td>
+    </tr>
+    <tr>
+        <td colspan="4"><input type="radio" name="purchasYdeal" checked="checked" />返工</td>
+        <td colspan="4"><input type="radio" name="aboutfile" />包装工艺卡</td>
+
+    </tr>
+    <tr>
+
+        <td rowspan="3">成品仓</td>
+        <td rowspan="3"><input type="text" style="width:40px;text-align:center" class="cnum" /></td>
+        <td colspan="4"><input type="radio" name="purchasCdeal" />继续使用</td>
+        <td colspan="2" rowspan="3" style="text-align:center"><input type="text" class="datepicker" style="width: 85px;" /></td>
+        <td colspan="1" rowspan="3"><textarea style="width: 100%; height: 100%;"></textarea></td>
+        <td colspan="4"><input type="radio" name="aboutfile" />FMEA</td>
+
+    </tr>
+    <tr>
+        <td colspan="4"><input type="radio" name="purchasCdeal" />报废</td>
+        <td colspan="4"><input type="radio" name="aboutfile" />控制计划</td>
+
+    </tr>
+    <tr>
+        <td colspan="4"><input type="radio" name="purchasCdeal" checked="checked" />返工</td>
+        <td colspan="4" rowspan="2"><input type="radio" name="aboutfile" />过程流程图</td>
+
+    </tr>
+    <tr>
+        <td rowspan="3">业务部</td>
+        <td rowspan="3">客户仓库</td>
+        <td rowspan="3"><input type="text" style="width:40px;text-align:center" class="cnum" /></td>
+        <td colspan="4"><input type="radio" name="salseareadeal" />继续使用</td>
+        <td colspan="2" rowspan="3" style="text-align:center"><input type="text" class="datepicker" style="width: 85px;" /></td>
+        <td colspan="1" rowspan="3"><textarea style="width: 100%; height: 100%;"></textarea></td>
+
+    </tr>
+    <tr>
+        <td colspan="4"><input type="radio" name="salseareadeal" />报废</td>
+        <td colspan="4" rowspan="2"><input type="radio" name="aboutfile" />检查基准书</td>
+
+    </tr>
+    <tr>
+        <td colspan="4"><input type="radio" name="salseareadeal" checked="checked" />返工</td>
+    </tr>
+    <tr>
+        <td colspan="2">生效时间</td>
+        <td colspan="8" style="text-align:center"><input type="text" class="datepicker" /></td>
+        <td colspan="11">
+            <input type="radio" name="effectoftime" checked="checked" />实时生效&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="effectoftime" />使用后生效&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="effectoftime" />预计切换日期&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="effectoftime" />首批变更标识&nbsp;&nbsp;&nbsp;&nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">请上传附件</td>
+        <td colspan="8">
+            <span class="input-file">
+                <input type="file" name="fileabc">
+            </span>
+        </td>
+        <td colspan="11"><span id="filename">只能选择一个文件，多个文件请打包后上传</span></td>
+    </tr>
+</table>

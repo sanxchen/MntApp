@@ -1,0 +1,13 @@
+﻿
+
+@using Carlzhu.Iooin.InteractiveAdapter
+@model Carlzhu.Iooin.Entity.FORM.f.FormPath
+
+<tr>
+    <td>表单内容</td>
+    <td colspan="3">@Html.DisplayFor(model => model.Mark)</td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.ParentFormNo)</td>
+    <td colspan="3">@Html.RouteLink(Model.ParentFormNo,  new {area="eSystem", Controller = "Abnormal", Action = "AForm", p = string.Format("{0},{1}", Model.ParentFormNo, Model.FormId).Encrypt() }, new { target = "_blank" })</td>
+</tr>

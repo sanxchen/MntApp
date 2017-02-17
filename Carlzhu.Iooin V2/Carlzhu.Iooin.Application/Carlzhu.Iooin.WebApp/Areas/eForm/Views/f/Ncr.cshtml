@@ -1,0 +1,179 @@
+﻿@using Carlzhu.Iooin.Business.TpaModule
+@using Carlzhu.Iooin.Util.MvcHtml
+@model Carlzhu.Iooin.Entity.FORM.f.FormNcr
+
+<tr>
+    <td>@Html.LabelFor(model => model.FileNo)</td>
+    <td>@Html.TextBoxFor(model => model.FileNo, new { READONLY = "READONLY", CLASS = "disabled" })</td>
+    <td>@Html.ValidationMessageFor(model => model.FileNo)</td>
+    <td>@Html.LabelFor(model => model.Ver)</td>
+    <td>@Html.TextBoxFor(model => model.Ver, new { READONLY = "READONLY" })</td>
+    <td>@Html.ValidationMessageFor(model => model.Ver)</td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.NoticeNo)</td>
+    <td>@Html.TextBoxFor(model => model.NoticeNo)</td>
+    <td>@Html.ValidationMessageFor(model => model.NoticeNo)</td>
+    <td>@Html.LabelFor(model => model.FileGroup)</td>
+    <td>@Html.TextBoxFor(model => model.FileGroup, new { READONLY = "READONLY", placeholder = "点击上传文件", title = "点击上传文件" })</td>
+    <td>@Html.ValidationMessageFor(model => model.FileGroup)</td>
+</tr>
+
+
+<tr>
+    <td>@Html.LabelFor(model => model.PartNo)</td>
+    <td>@Html.TextBoxFor(model => model.PartNo)</td>
+    <td>@Html.ValidationMessageFor(model => model.PartNo)</td>
+    <td>@Html.LabelFor(model => model.CustomerNo)</td>
+    <td>@Html.DropDownList("CustomerNo", new TpaCustomerBll().GetCustomerDropList(""), new { CLASS = "form-contorl" })</td>
+    <td>@Html.ValidationMessageFor(model => model.CustomerNo)</td>
+</tr>
+
+
+<tr>
+    <td>@Html.LabelFor(model => model.CatchTime)</td>
+    <td>@Html.TextBoxFor(model => model.CatchTime, new { CLASS = "datetimepicker", @readonly = "readonly" })</td>
+    <td>@Html.ValidationMessageFor(model => model.CatchTime)</td>
+    <td>@Html.LabelFor(model => model.LotNo)</td>
+    <td>@Html.TextBoxFor(model => model.LotNo)</td>
+    <td>@Html.ValidationMessageFor(model => model.LotNo)</td>
+</tr>
+
+<tr>
+    <td>@Html.LabelFor(model => model.BatchNo)</td>
+    <td>@Html.TextBoxFor(model => model.BatchNo)</td>
+    <td>@Html.ValidationMessageFor(model => model.BatchNo)</td>
+    <td>@Html.LabelFor(model => model.SamplingNo)</td>
+    <td>@Html.TextBoxFor(model => model.SamplingNo)</td>
+    <td>@Html.ValidationMessageFor(model => model.SamplingNo)</td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.DefectsNo)</td>
+    <td>@Html.TextBoxFor(model => model.DefectsNo)</td>
+    <td>@Html.ValidationMessageFor(model => model.DefectsNo)</td>
+    <td>@Html.LabelFor(model => model.DefectsGradeCr)</td>
+    <td>
+
+        <label class="checkbox-inline">
+            @Html.CheckBoxFor(model => model.DefectsGradeCr, true)  致命缺陷 Cr
+        </label>
+        <label class="checkbox-inline">
+            @Html.CheckBoxFor(model => model.DefectsGradeMa, true)  主缺 Ma
+        </label>
+        <label class="checkbox-inline">
+            @Html.CheckBoxFor(model => model.DefectsGradeMi, true)  次缺 Mi
+        </label>
+    </td>
+    <td></td>
+</tr>
+
+<tr>
+
+    <td>@Html.LabelFor(model => model.AcceptanceCriteriaC)</td>
+    <td>
+
+        <label class="checkbox-inline">
+            @Html.CheckBoxFor(model => model.AcceptanceCriteriaC, true)  C=0
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" />
+            AC= @Html.TextBoxFor(model => model.AcceptanceCriteriaAc, new { @class = "keyin" })@Html.ValidationMessageFor(model => model.AcceptanceCriteriaAc)
+            RE= @Html.TextBoxFor(model => model.AcceptanceCriteriaRe, new { @class = "keyin" })@Html.ValidationMessageFor(model => model.AcceptanceCriteriaRe)
+        </label>
+
+    </td>
+    <td></td>
+    <td>@Html.LabelFor(model => model.SamplingStandardSip)</td>
+    <td>
+        <label class="checkbox-inline">
+            @Html.CheckBoxFor(model => model.SamplingStandardSip, true) SIP
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" />
+            GB/T2828-2003 Ⅱ 正常检验单次抽样(AQL:@Html.TextBoxFor(model => model.SamplingStandardAql, new { @class = "keyin" })) @Html.ValidationMessageFor(model => model.SamplingStandardAql)
+        </label>
+    </td>
+    <td></td>
+
+</tr>
+
+<tr>
+
+    <td>@Html.DisplayNameFor(model => model.Inspector)</td>
+    @*<td>@Html.DropDownList("CustomerNo", new TpaCustomerBll().GetCustomerDropList(""), new {CLASS = "form-contorl"})</td>*@
+    <th>@Html.TextBoxFor(model=>model.Inspector,new {placeholder="请输入工号"})</th>
+    <td>@*@Html.Action("GetDepartmentEmployeesByDpCode", "BaseData", new { area = "", departmentCode = "QAA30", element = "Inspector" })*@</td>
+    <td>@Html.ValidationMessageFor(model => model.Inspector)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.AbnormalPoint)</td>
+    <td colspan="4">
+        <div class="radio">
+            <label>
+                <input type="radio" name="AbnormalPoint" value="0" checked="checked">
+                @EnumUtil.GetEnumShowName(typeof(Carlzhu.Iooin.Entity.FORM.f.FormNcr.AbnormalPointEnum), 0)
+                &nbsp;(@Html.DisplayNameFor(model => model.AbnormalPointFeed) &nbsp;
+                @Html.DropDownList("AbnormalPointFeed", new Carlzhu.Iooin.Business.TpaModule.TpaSupplierBll().GetSupplierDropList(), new { style = "width: 100px;border:none;border-bottom: 1px solid silver" }) )
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="AbnormalPoint" value="1">
+                @EnumUtil.GetEnumShowName(typeof(Carlzhu.Iooin.Entity.FORM.f.FormNcr.AbnormalPointEnum), 1)
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="AbnormalPoint" value="2">
+
+                @EnumUtil.GetEnumShowName(typeof(Carlzhu.Iooin.Entity.FORM.f.FormNcr.AbnormalPointEnum), 2)
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="AbnormalPoint" value="3">
+                @EnumUtil.GetEnumShowName(typeof(Carlzhu.Iooin.Entity.FORM.f.FormNcr.AbnormalPointEnum), 3)
+                <br />
+                车间：
+                @Html.DropDownList("AbnormalPointWorkshop", Carlzhu.Iooin.Util.MvcHtml.SelectListExtendExpress.EnumToList(typeof(Carlzhu.Iooin.Entity.FORM.f.FormNcr.AbnormalPointWorkshopEnum)), new { @style = "width:80px;border:none;border-bottom: 1px solid silver" })
+                工序：@Html.TextBoxFor(model => model.AbnormalPointProcess, new { @class = "keyin" })
+
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="AbnormalPoint" value="4">
+                @EnumUtil.GetEnumShowName(typeof(Carlzhu.Iooin.Entity.FORM.f.FormNcr.AbnormalPointEnum), 4)
+            </label>
+        </div>
+
+    </td>
+    <td></td>
+</tr>
+<tr><td class="markarea"><hr /></td></tr>
+<tr><th class="markarea">@Html.DisplayNameFor(model => model.QualityDescription)</th></tr>
+<tr>
+    <td class="markarea">
+        @Html.TextAreaFor(model => model.QualityDescription, new { PLACEHOLDER = "最多输入512个文字", TITLE = "品质问题现像描述", CLASS = "form-control", ROW = "3", maxlength = 512 })
+        @Html.ValidationMessageFor(model => model.QualityDescription)
+    </td>
+</tr>
+
+
+
+
+<style type="text/css">
+    .keyin {
+        border: none;
+        border-bottom: 1px solid silver !important;
+        width: 40px !important;
+    }
+
+    input[type=checkbox] {
+        margin-top: 3px;
+    }
+</style>
+

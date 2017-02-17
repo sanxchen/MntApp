@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Carlzhu.Iooin.Entity.FORM.f.FormEquipmentSop>
+@{
+    ViewBag.Title = "设备SOP";
+    Layout = "~/Views/Shared/_LayoutStyle.cshtml";
+}
+
+<table class="table table-bordered table-condensed">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.EquipmentName)</th>
+        <th>@Html.DisplayNameFor(model => model.PageCount)</th>
+        <th>@Html.DisplayNameFor(model => model.Ver)</th>
+        <th>@Html.DisplayNameFor(model => model.EquipmentName)</th>
+        <th>@Html.DisplayNameFor(model => model.Author)</th>
+        <th>@Html.DisplayNameFor(model => model.FormNo)</th>
+        <th>@Html.DisplayNameFor(model => model.Mark)</th>
+        <td>发行时间</td>
+        <td>文件</td>
+        <td>打印</td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        var files = new Carlzhu.Iooin.Business.BaseModule.FilesFileGroupBll().GetFileListByGroupGuid(item.FileGroup)[0];
+        <tr>
+            <td>@item.EquipmentName</td>
+            <td>@item.PageCount</td>
+            <td>@item.Ver</td>
+            <td>@item.EquipmentName</td>
+            <td>@item.BaseEmployee.Account - @item.BaseEmployee.RealName</td>
+            <td>@item.FormNo</td>
+            <td>@item.Mark</td>
+            <td>@item.Form.CloseTime</td>
+            <td>@Html.ActionLink(string.Format("查看"), "OtherOnline", "Default", new { md5 = files.Md5, method = "view" }, new { TARGET = "_blank" })</td>
+            <td>@Html.ActionLink("打印...", "OtherOnline", "Default", new { md5 = files.Md5, method = "print" }, new { TARGET = "_blank" })</td>
+        </tr>
+    }
+</table>

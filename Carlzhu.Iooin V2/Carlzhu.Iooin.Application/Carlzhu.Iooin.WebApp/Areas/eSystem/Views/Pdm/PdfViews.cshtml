@@ -1,0 +1,127 @@
+﻿@using Carlzhu.Iooin.Entity.FORM
+@using Carlzhu.Iooin.InteractiveAdapter
+@using Carlzhu.Iooin.Entity.FORM.f.draw
+@using Carlzhu.Iooin.Entity.QUALITY
+@using Carlzhu.Iooin.Framework.Data.Repository
+@model Carlzhu.Iooin.Entity.QUALITY.Published
+@{
+    ViewBag.Title = ViewBag.DrawType + "-" + ViewBag.File;
+    Layout = "~/Views/Shared/_LayoutStyle.cshtml";
+}
+@{
+    var publishKey = ViewBag.PublishKey;
+    var md5 = ViewBag.Md5;
+    var drawType = ViewBag.DrawType;
+    var fileName = ViewBag.File;
+    var bBase = (DrawingsBase)ViewBag.Base;
+    var oldRecord = (List<Published>)ViewBag.OldRecord;
+    var contiguous = (List<Published>)ViewBag.Contiguous;
+}
+
+
+<style type="text/css">
+    #pdfview, #pdfview iframe {
+        border: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .panel-body {
+        margin: 0;
+        padding: 0;
+    }
+
+</style>
+
+<div class="panel panel-default" id="normal">
+    <div class="panel-heading">
+        <div class="page-header" style="margin:5px 0;padding:0">
+            <h4>MINICUT- @drawType <small>@fileName</small></h4>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div>
+            <div class="col-md-8" style="margin: 0; padding: 0">
+                <div id="fullscreenbox" style="position: absolute; left: 0; right: 0; top: 0; bottom: 0">
+
+                    <div id="pdfview">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" style="margin:0;padding:0">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <p>
+                            <span>@*<i class="glyphicon glyphicon-fullscreen"></i>@Html.RouteLink("全屏", "Default", new { Controller = "Pdm", Action = "Showing", publishKey = publishKey, md5 = md5 }, new { TARGET = "_blank" })&nbsp;&nbsp;*@</span>
+                            <span id="fullscreenbtn"><i class="glyphicon glyphicon-fullscreen"></i><a href="javascript:void(0);">全屏</a>&nbsp;&nbsp;</span>
+                            <span id="fullclick"><i class="glyphicon glyphicon-download"></i><a href="javascript:alert('无权下载源文件');">下载源文件</a>&nbsp;&nbsp;</span>
+                            <span><i class="glyphicon glyphicon-print"></i>@Html.RouteLink("打印", "Default", new { Controller = "Pdm", Action = "Print", publishKey = publishKey, md5 = md5 }, new { TARGET = "_blank" })&nbsp;&nbsp;</span>
+                            <span class="pull-right"><i class="glyphicon glyphicon-home"></i><a href="/">首页</a></span>
+                        </p>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-condensed table-bordered table-striped">
+                            <tr><td colspan="2">图纸信息:<span class="pull-right text-danger"><i class="glyphicon glyphicon-arrow-right"></i>访问：@Model.Visit</span></td></tr>
+                            <tr><td style="width:70px">发行日期:</td><td>@Model.PublishTime.ToString("yyyy/MM/dd")</td></tr>
+                            <tr><td>发行版本:</td><td>@Model.PublishVer</td></tr>
+                            <tr>
+                                <td>其它版本:</td>
+                                <td>
+                                    @foreach (var o in oldRecord)
+                                    {
+                                        int i = 0;
+                                        @o.PublishVer
+                                        <span>
+                                            @foreach (var file in (new Carlzhu.Iooin.Business.BaseModule.FilesFileGroupBll().GetFileListByGroupGuid(o.FileGroup)))
+                                            {
+                                                var ff = DataFactory.Database().FindEntity<Files>(file.Md5);
+                                                @Html.RouteLink(string.Format("[{0}]", ++i), "Default", new { Controller = "Pdm", Action = "PdfViews", publishKey = o.PubishedGuid, md5 = ff.Md5 }, new { TITLE = ff.FileName, TARGET = "_blank" })
+                                            }
+                                        </span>
+                                        <i>,</i>
+                                    }
+                                </td>
+                            </tr>
+                            <tr><td>客户名称:</td><td>@Model.Customer.CustomerName</td></tr>
+                            <tr><td>发行人:</td><td>@Model.BaseEmployee.RealName</td></tr>
+                            <tr><td>发行单号:</td><td>@Html.RouteLink(Model.FormNo, new { area = "eForm", Action = "Details", Controller = "Tracking", p = (string.Format("{0},{1}", Model.FormNo, "signed").Encrypt()) }, null) &raquo; </td></tr>
+                            <tr><td>发行码:</td><td>@publishKey</td></tr>
+                            <tr><td>文件码:</td><td>@md5</td></tr>
+                            <tr><td>申请人:</td><td>@Model.Form.BaseEmployee.RealName</td></tr>
+                            <tr><td>料号:</td><td>@Model.ProductNo</td></tr>
+                            <tr><td>总页数:</td><td>@bBase.PageSize</td></tr>
+                            <tr><td>发行原因:</td><td><p>@(bBase.Reason)</p> <p>@(bBase.Mark)</p></td></tr>
+                            <tr>
+                                <td>相关文件:</td>
+                                <td>
+                                    @foreach (var o in contiguous)
+                                    {
+                                        int i = 0;
+                                        <p>
+                                            <i class="glyphicon glyphicon-file"></i> [@o.FormType.FormName]
+                                            <span>
+                                                @foreach (var file in (new Carlzhu.Iooin.Business.BaseModule.FilesFileGroupBll().GetFileListByGroupGuid(o.FileGroup)))
+                                                {
+                                                    var ff = DataFactory.Database().FindEntity<Files>(file.Md5);
+                                                    @Html.RouteLink(string.Format("[{0}]", ++i), "Default", new { area = "eSystem", Controller = "Pdm", Action = "PdfViews", publishKey = o.PubishedGuid, md5 = ff.Md5 }, new { TITLE = ff.FileName, TARGET = "_blank" })
+                                                }
+                                            </span>
+                                            <i>,</i>
+                                        </p>
+                                    }
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+    $("<iframe></iframe>").appendTo("#pdfview").attr({ "height": ($(window).height())+ "px", "width": "100%", "src": "/eSystem/Pdm/Showing?publishKey=@publishKey&md5=@md5" });
+
+</script>

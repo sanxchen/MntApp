@@ -1,0 +1,30 @@
+﻿@model Carlzhu.Iooin.Entity.FORM.f.FormPath
+
+<tr>
+    <td colspan="8">
+        @Html.TextAreaFor(model => model.Mark, new { PLACEHOLDER = "最多输入512个文字", TITLE = "临时措施请写在这里", CLASS = "form-control", ROW = "3", maxlength = 512 })
+        <input type="button" value="保存" data-loading-text="数据保存中...." class="btn btn-block" id="savePart" />
+    </td>
+</tr>
+
+<script type="text/javascript">
+
+    $("#savePart").click(function () {
+        var e = $(this);
+        e.button("loading");
+        $.post("@Url.Action("SavePart", "Abnormal")", {
+            "ParentFormNo": "@Model.FormNo",
+            "formid": "@Model.FormId",
+            "Mark": $("#Mark").val()
+        }, function (data) {
+            if (data === "success") {
+                alert("保存成功！");
+                location.reload();
+            } else {
+                alert("保存失败，请重试！");
+                e.button("reset");
+            }
+
+        });
+    });
+</script>

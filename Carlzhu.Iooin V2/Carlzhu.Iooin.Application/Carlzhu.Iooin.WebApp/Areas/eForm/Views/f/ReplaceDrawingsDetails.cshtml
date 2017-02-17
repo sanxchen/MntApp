@@ -1,0 +1,44 @@
+﻿@using System.Web.Mvc.Html
+@using Carlzhu.Iooin.Business.BaseModule
+@using Carlzhu.Iooin.Entity.FORM
+@using Carlzhu.Iooin.Framework.Data.Repository
+@model Carlzhu.Iooin.Entity.FORM.f.FormReplaceDrawings
+
+
+<tr>
+    <td>@Html.LabelFor(model => model.Published.Customer.CustomerName)</td>
+    <td>@Html.DisplayTextFor(model => model.Published.Customer.CustomerName)</td>
+
+    <td>@Html.LabelFor(model => model.Published.ProductNo)</td>
+    <td>@Html.DisplayTextFor(model => model.Published.ProductNo)</td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.Published.FormType.FormName)</td>
+    <td>@Html.DisplayTextFor(model => model.Published.FormType.FormName)</td>
+    <td>@Html.LabelFor(model => model.Published.Form.FormNo)</td>
+    <td>@Html.DisplayTextFor(model => model.Published.Form.FormNo)</td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.Published.PublishTime)</td>
+    <td>@Html.DisplayTextFor(model => model.Published.PublishTime)</td>
+    <td>@Html.LabelFor(model => model.Published.PublishVer)</td>
+    <td>@Html.DisplayTextFor(model => model.Published.PublishVer)</td>
+</tr>
+<tr>
+    <td>@Html.LabelFor(model => model.OldMd5)</td>
+    <td>
+        @Html.Partial("~/Areas/eForm/Views/F/formLayout/_FileDetails.cshtml", new FilesBll().SignFiles(Model.OldMd5))
+    </td>
+
+    <td>@Html.LabelFor(model => model.FileGroup)</td>
+    <td>
+        @foreach (var file in new FilesFileGroupBll().GetFileListByGroupGuid(Model.FileGroup))
+        {
+            @Html.Partial("~/Areas/eForm/Views/F/formLayout/_FileDetails.cshtml", DataFactory.Database().FindEntity<Files>(file.Md5));
+        }
+    </td>
+</tr>
+
+
+
+

@@ -1,0 +1,30 @@
+﻿@using System.Threading.Tasks
+@using Carlzhu.Iooin.Business
+@model Carlzhu.Iooin.Entity.FORM.f.FormPassEntry
+
+@{
+    var i = (int)ViewData["row"];
+    List<SelectListItem> responsibilityDept = (Task.Run(() =>new BaseServices<Carlzhu.Iooin.Entity.FORM.FormClass>().LoadEntities(c => c.FormClassId.Contains("000") && c.CompanyId == "MJCompany")).Result).Select(t => new SelectListItem() { Text = t.ShortName, Value = t.FormClassId, Selected = (t.FormClassId == Model.UseDepartment) }).ToList();
+    List<SelectListItem> customerList = (ViewData["customerList"] as List<SelectListItem>);
+    List<SelectListItem> supplierList = (ViewData["supplierList"] as List<SelectListItem>);
+    customerList.ForEach(c => { c.Selected = c.Value == Model.CustomerName; });
+    supplierList.ForEach(c => { c.Selected = c.Value == Model.SupplierCode; });
+
+}
+
+
+
+
+
+
+
+<tr>
+    <td><label>@i <input type="checkbox" name=@string.Format("IsValid{0}", i) @((!string.IsNullOrEmpty(Model.DetailedContent)) ? "checked='checked'" : "") /></label>@Html.Hidden(string.Format("RowId{0}", i), Model.RowId)</td>
+    <td>@Html.TextBox(string.Format("DetailedContent{0}", i), Model.DetailedContent)</td>
+    <td>@Html.DropDownList(string.Format("CustomerName{0}", i), customerList, "")</td>
+    <td>@Html.DropDownList(string.Format("UseDepartment{0}", i), responsibilityDept, "")</td>
+    <td>@Html.DropDownList(string.Format("SupplierCode{0}", i), (ViewData["supplierList"] as List<SelectListItem>), "")</td>
+    <td>@Html.TextBox(string.Format("AmountOfMoney{0}", i), Model.AmountOfMoney)</td>
+    <td>@Html.TextBox(string.Format("InvoiceNo{0}", i), Model.InvoiceNo)</td>
+    <td>@Html.TextBox(string.Format("TimeOfPayment{0}", i), Model.TimeOfPayment.ToShortDateString(), new { @class = "datepicker" })</td>
+</tr>

@@ -1,0 +1,65 @@
+﻿@using Carlzhu.Iooin.Entity.FORM.f
+@model IEnumerable<Carlzhu.Iooin.Entity.FORM.f.report.FormDewellReportBending>
+
+
+<thead>
+    @Html.Partial("/Areas/eForm/Views/f/formLayout/report/_editHeader.cshtml", new ViewDataDictionary() { { "Model", Model.First() } })
+    <tr>
+        @Html.Partial("/Areas/eForm/Views/f/formLayout/report/_editCommTh.cshtml", new Carlzhu.Iooin.Entity.FORM.f.report.FormDewellReport())
+
+        <th>@Html.DisplayNameFor(model => model.ShutdownReason)</th>
+        <th>@Html.DisplayNameFor(model => model.DownTime)</th>
+        <th>@Html.DisplayNameFor(model => model.BendingKnifeNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.DieChangingTimes)</th>
+        <th>@Html.DisplayNameFor(model => model.ProductSpecifications)</th>
+    </tr>
+</thead>
+<tbody>
+    @{
+        int i = 0;
+
+        foreach (var a in Model)
+        {
+
+            <tr>
+                <td>@(++i)</td>
+                @Html.Partial("/Areas/eForm/Views/f/formLayout/report/_detailsCommTd.cshtml", a)
+                <td>@a.ShutdownReason</td>
+                <td>@a.DownTime</td>
+                <td>@a.BendingKnifeNumber</td>
+                <td>@a.DieChangingTimes</td>
+                <td>@a.ProductSpecifications</td>
+            </tr>
+        }
+        for (int j = i; j < 10; j++)
+        {
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+        }
+
+    }
+    <tr>
+        <td colspan="30" style="text-align: right;">文件编号：MJ4028-2</td>
+    </tr>
+</tbody>
+
+
+
+
+

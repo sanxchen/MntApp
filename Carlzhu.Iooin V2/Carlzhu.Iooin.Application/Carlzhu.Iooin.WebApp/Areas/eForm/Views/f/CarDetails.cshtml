@@ -1,0 +1,44 @@
+﻿@using Carlzhu.Iooin.Business.BaseModule
+@using Carlzhu.Iooin.Entity.TPA
+@model Carlzhu.Iooin.Entity.FORM.f.FormCar
+@{
+    TpaCustomer cs = new Carlzhu.Iooin.Business.TpaModule.TpaCustomerBll().GetList().Single(c => c.CustomerNo == Model.CustomerNo);
+}
+
+<tr>
+    <th>预计开始时间:</th>
+    <td>
+        @Html.DisplayFor(a => a.StartTime)
+    </td>
+</tr>
+<tr>
+    <th>预计结束时间:</th>
+    <td>
+        @Html.DisplayFor(a => a.EndTime)
+    </td>
+</tr>
+<tr>
+    <th>用车类型:</th>
+    <td>
+        @Html.DisplayFor(a => a.Type)
+    </td>
+</tr>
+<tr>
+    <th>用车目的:</th>
+    <td>
+        @Html.DisplayFor(a => a.Purpose)
+    </td>
+</tr>
+<tr>
+    <th>客户名称:</th>
+    <td>
+        @cs.CustomerName
+    </td>
+</tr>
+<tr>
+    <th>客户地址:</th>
+    <td>
+        @cs.CustomerAddr
+    </td>
+</tr>
+
