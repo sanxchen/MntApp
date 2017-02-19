@@ -126,7 +126,7 @@ namespace Carlzhu.Iooin.Business.Initialization
         {
             base.OnException(filterContext);
 
-            var emp = ManageProvider.Provider.Current().UserId;
+            //var emp = ManageProvider.Provider.Current().UserId;
             if (filterContext.ExceptionHandled)
             {
                 var httpExce = filterContext.Exception as HttpException;

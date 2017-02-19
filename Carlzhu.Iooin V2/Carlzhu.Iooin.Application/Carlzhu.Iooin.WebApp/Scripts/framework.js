@@ -295,7 +295,7 @@ function GetWebControls(element) {
 function SetWebControls(data) {
     for (var key in data) {
         var id = $('#' + key);
-        var value = $.trim(data[key]).replace("&nbsp;", "").replace("T00:00:00","").replace("T"," ").replace(/T([0-2][0-9]):([0-5][0-9]):([0-5][0-9]).([0-5][0-9][0-9])/, "");
+        var value = $.trim(data[key]).replace("&nbsp;", "").replace("T00:00:00", "").replace("T", " ").replace(/T([0-2][0-9]):([0-5][0-9]):([0-5][0-9]).([0-5][0-9][0-9])/, "");
         var type = id.attr('type');
         switch (type) {
             case "checkbox":

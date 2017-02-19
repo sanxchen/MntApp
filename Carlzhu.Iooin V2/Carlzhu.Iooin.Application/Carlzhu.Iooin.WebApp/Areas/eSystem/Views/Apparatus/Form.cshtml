@@ -4,17 +4,35 @@
 }
 <script type="text/javascript">
     var KeyValue = GetQuery('KeyValue');//主键
-    $(function () {
+
+
+    $(function() {
         InitControl();
-    })
+        BindCombobox();
+
+
+    });
+
+    function BindCombobox() {
+        BindDropItem("#CalResult", "CalResultEnum", "");
+        BindDropItem("#CalCircle", "CalCircleEnum", "");
+        BindDropItem("#CalType", "CalTypeEnum", "");
+        BindDropItem("#Status", "StatusEnum", "");
+
+    }
+
     //得到一个对象实体
     function InitControl() {
         if (!!GetQuery('KeyValue')) {
+            $("#MntNo").attr("readonly", "readonly");
             AjaxJson("/eSystem/Apparatus/SetForm", { KeyValue: KeyValue }, function (data) {
                 SetWebControls(data);
             });
         }
     }
+
+    
+
     //保存事件
     function AcceptClick() {
         if (!CheckDataValid('#form1')) {
@@ -32,70 +50,76 @@
     <div id="message" style="display: none"></div>
     <table class="form">
         <tr>
-            <th class='formTitle'>MntNo：</th>
+            <th class='formTitle'>编号：</th>
             <td class='formValue'>
                 <input id="MntNo" maxlength=128 type="text" class="txt" datacol="yes" err="MntNo" checkexpession="NotNull"  />
             </td>
-            <th class='formTitle'>Name：</th>
+            <th class='formTitle'>仪器名称：</th>
             <td class='formValue'>
                 <input id="Name" maxlength=-1 type="text" class="txt" datacol="yes" err="Name" checkexpession="NotNull"  />
             </td>
         </tr>
         <tr>
-            <th class='formTitle'>Model：</th>
+            <th class='formTitle'>型号：</th>
             <td class='formValue'>
                 <input id="Model" maxlength=-1 type="text" class="txt" datacol="yes" err="Model" checkexpession="NotNull"  />
             </td>
-            <th class='formTitle'>CalDate：</th>
+            <th class='formTitle'>检定日期：</th>
             <td class='formValue'>
-                <input id="CalDate" maxlength=23 type="text" class="txt" datacol="yes" err="CalDate" checkexpession="Date"  />
+                <input id="CalDate" type="text" class="txt Wdate required" onfocus="WdatePicker({ maxDate: '%y-%M-%d' })"/>
             </td>
         </tr>
         <tr>
-            <th class='formTitle'>CalResult：</th>
+            <th class='formTitle'>检定结果：</th>
             <td class='formValue'>
-                <input id="CalResult" maxlength=10 type="text" class="txt"   />
+                <select id="CalResult" class="txtselect"></select>
             </td>
-            <th class='formTitle'>CertificateResults：</th>
+            <th class='formTitle'>判定：</th>
             <td class='formValue'>
                 <input id="CertificateResults" maxlength=-1 type="text" class="txt"   />
             </td>
         </tr>
         <tr>
-            <th class='formTitle'>CalCircle：</th>
+            <th class='formTitle'>检定周期：</th>
             <td class='formValue'>
-                <input id="CalCircle" maxlength=10 type="text" class="txt"   />
+                <select id="CalCircle" class="txtselect"></select>
             </td>
-            <th class='formTitle'>NextCalDate：</th>
+            <th class='formTitle'>下次检定日期：</th>
             <td class='formValue'>
-                <input id="NextCalDate" maxlength=23 type="text" class="txt" datacol="yes" err="NextCalDate" checkexpession="DateOrNull"  />
+                <input id="NextCalDate" type="text" class="txt Wdate required" onfocus="WdatePicker()" checkexpession="DateOrNull"/>
             </td>
         </tr>
         <tr>
-            <th class='formTitle'>CalType：</th>
+            <th class='formTitle'>检定类型：</th>
             <td class='formValue'>
-                <input id="CalType" maxlength=10 type="text" class="txt"   />
+                <select id="CalType" class="txtselect"></select>
             </td>
-            <th class='formTitle'>UseEmp：</th>
+            <th class='formTitle'>使用人：</th>
             <td class='formValue'>
                 <input id="UseEmp" maxlength=-1 type="text" class="txt"   />
             </td>
         </tr>
         <tr>
-            <th class='formTitle'>UseAdd：</th>
-            <td class='formValue'>
-                <input id="UseAdd" maxlength=-1 type="text" class="txt"   />
+            <th class='formTitle'>使用位置：</th>
+            <td class='formValue' colspan="3">
+                <input id="UseAdd" maxlength=-1 type="text" class="txt"/>
             </td>
-            <th class='formTitle'>Mark：</th>
-            <td class='formValue'>
-                <input id="Mark" maxlength=-1 type="text" class="txt"   />
-            </td>
+
         </tr>
         <tr>
-            <th class='formTitle'>UseEmpId：</th>
-            <td class='formValue'>
-                <input id="UseEmpId" maxlength=-1 type="text" class="txt"   />
+            <th class='formTitle'>使用状态：</th>
+            <td class='formValue' colspan="3">
+                <select id="Status" class="txtselect"></select>
+            </td>
+
+        </tr>
+        <tr>
+            <th class="formTitle">
+                说明：
+            </th>
+            <td class="formValue" colspan="3">
+                <textarea id="Remark" class="txtArea" rows="6"></textarea>
             </td>
         </tr>
-    </table>
+        </table>
 </form>

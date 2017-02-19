@@ -4,12 +4,14 @@
 }
 <script type="text/javascript">
     $(function () {
-        $("#EmpNo").val(GetQuery('k'));
 
+        if (!!GetQuery('k')) {
+            $("#EmpNo").val(GetQuery('k')).attr("readonly", "readonly");
+        }
     })
     //加载上级
- 
-  
+
+
     //保存事件
     function AcceptClick() {
         if (!CheckDataValid('#form1')) {
@@ -19,10 +21,9 @@
         window.setTimeout(function () {
             var keyValue = GetQuery('k');
             var postData = GetWebControls("#form1");
-            
+
             AjaxJson("/Hrms/Attendnce/SubmitFillCard?KeyValue=" + keyValue, postData, function (data) {
-                tipDialog(data.Message, 5, 5);
-                closeDialog();
+                alertDialog(data.Message, 1);
             });
         }, 200);
     }
@@ -30,20 +31,21 @@
 <form id="form1" style="margin: 1px">
     <div id="message" style="display: none"></div>
     <table class="form">
- 
+
         <tr>
-            <th class="formTitle">补卡工号<font face="宋体">*</font>：
+            <th class="formTitle">
+                补卡工号<font face="宋体">*</font>：
             </th>
             <td class="formValue">
-                <input id="EmpNo" maxlength="50" type="text" datacol="yes" err="补卡工号" checkexpession="NotNull" class="txt" readonly="readonly" />
+                <input id="EmpNo" maxlength="50" type="text" datacol="yes" err="补卡工号" checkexpession="NotNull" class="txt" />
             </td>
         </tr>
         <tr>
             <th class="formTitle">补卡时间<font face="宋体">*</font>：</th>
             <td class="formValue">
-                <input id="FillTime" type="text" class="txt Wdate"  />
+                <input id="FillTime" type="text" class="txt Wdate" />
             </td>
         </tr>
-     
+
     </table>
 </form>

@@ -211,6 +211,10 @@
     <Compile Include="Migrations\201702150805300_RemoveArr5.Designer.cs">
       <DependentUpon>201702150805300_RemoveArr5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702191032083_UpdateEnum.cs" />
+    <Compile Include="Migrations\201702191032083_UpdateEnum.Designer.cs">
+      <DependentUpon>201702191032083_UpdateEnum.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="TaskSch.cs" />
     <Compile Include="TPA\TpaCustomer.cs" />
@@ -303,6 +307,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702150805300_RemoveArr5.resx">
       <DependentUpon>201702150805300_RemoveArr5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702191032083_UpdateEnum.resx">
+      <DependentUpon>201702191032083_UpdateEnum.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

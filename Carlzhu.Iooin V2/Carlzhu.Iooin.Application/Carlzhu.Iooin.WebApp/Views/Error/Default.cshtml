@@ -31,8 +31,10 @@
             <dd><a href="@ViewData["Url"]">@(ViewData["Url"].ToString().ToCut(50))</a></dd>
         </dl>
 
-        <p >
-            <a class="btn  btn-danger pull-right" href="/" role="button">主页 &raquo;</a>
+        <p  class="text-right">
+            <a class="btn  btn-danger " href="/" role="button">主页 &raquo;</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a class="btn  btn-info " href="/Login/index" role="button">登陆 &raquo;</a>
         </p>
     </div>
 

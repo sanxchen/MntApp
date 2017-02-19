@@ -31,21 +31,25 @@ namespace Carlzhu.Iooin.Entity.QUALITY
 
 
         [DisplayName("校验结果")]
-        public int CalResult { get; set; }
+        public string CalResult { get; set; }
 
 
         public string CertificateResults { get; set; }
 
 
         [DisplayName("校验周期")]
-        public int CalCircle { get; set; }
+        public string CalCircle { get; set; }
 
 
         public DateTime? NextCalDate { get; set; }
 
         [DisplayName("校验类型")]
-        public int CalType { get; set; }
+        public string CalType { get; set; }
 
+        /// <summary>
+        /// 使用状态
+        /// </summary>
+        public string Status { get; set; }
 
         /// <summary>
         /// 使用人

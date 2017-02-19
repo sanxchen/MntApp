@@ -50,11 +50,11 @@ namespace Carlzhu.Iooin.WebApp.Areas.Hrms.Controllers
 
             if (e > 0)
             {
-                return base.Content("²¹¿¨³É¹¦");
+             return   Json(new { Code = "1", Message = "²¹¿¨³É¹¦" });
             }
             else
             {
-                return base.Content("²¹¿¨Ê§°Ü");
+                return Json(new { Code = "-1", Message = "²¹¿¨Ê§°Ü" });
             }
 
 

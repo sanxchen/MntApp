@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
@@ -11,6 +12,7 @@ using Carlzhu.Iooin.Business.CommonModule;
 
 using Carlzhu.Iooin.Entity.CommonModule;
 using Carlzhu.Iooin.Framework.Data.DataAccess;
+using Carlzhu.Iooin.Framework.Data.DataAccess.DbProvider;
 using Carlzhu.Iooin.Framework.Data.Repository;
 using Carlzhu.Iooin.Framework.Data.WebControl;
 using Carlzhu.Iooin.Util;
@@ -44,7 +46,7 @@ namespace Carlzhu.Iooin.WebApp.Areas.CommonModule.Controllers
         public ActionResult Autocomplete(string keywords)
         {
             DataTable listData = _baseuserbll.OptionUserList(keywords);
-            return Content(Util.Json.ToJson(listData));
+            return Content(listData.ToJson());
         }
 
         /// <summary>
@@ -68,7 +70,7 @@ namespace Carlzhu.Iooin.WebApp.Areas.CommonModule.Controllers
                     costtime = CommonHelper.TimerEnd(watch),
                     rows = listData,
                 };
-                return Content(Util.Json.ToJson(jsonData));
+                return Content(jsonData.ToJson());
             }
             catch (Exception ex)
             {
@@ -128,15 +130,17 @@ namespace Carlzhu.Iooin.WebApp.Areas.CommonModule.Controllers
 
                 if (old.CardNo != Baseemployee.CardNo)
                 {
-                    //新增卡片,用于发卡机发卡
-                    for (int i = 0; i < 6; i++)
-                    {
-                        StringBuilder sql = new StringBuilder($"INSERT INTO EASTRIVER.DBO.WhiteCardTask ( " +
-                                     "  card_id,                    emp_id,                 emp_fname,              flag,   clock_id,   cardtype, cardtypecode,     areacode,   opdate,     operator,   executedate,    realcardno )            VALUES " +
-                                     $"('{Baseemployee.CardNo}', '{Baseemployee.EmpNo}', '{Baseemployee.RealName}', '1',    '{i}',          1,      '8669',         '0000',     getdate(),  'Admin',        getdate(),  '{Baseemployee.CardNo}')");
+                    StringBuilder sql = new StringBuilder("INSERT INTO [EastRiver].[dbo].[WhiteCardTask] ([card_id] ,[card_Sn],[emp_id],[emp_fname],[flag],[clock_id],[cardtype],[cardtypecode],[areacode],[opdate],[operator],[ExecuteDate],[RealCardNo],[timebound])" +
+                                           $" VALUES (@CARD_NO, '', @EMP_NO, @EMP_NAME, 1, 2, 1, '8669', '0000', GETDATE(), 'Admin', null, '', '')");
 
-                        database.ExecuteBySql(sql, isOpenTrans);
-                    }
+                    List<DbParameter> parameter = new List<DbParameter>
+                        {
+                            DbFactory.CreateDbParameter("@CARD_NO", Baseemployee.CardNo),
+                            DbFactory.CreateDbParameter("@EMP_NO", Baseemployee.EmpNo),
+                            DbFactory.CreateDbParameter("@EMP_NAME", Baseemployee.RealName)
+                        };
+
+                    database.ExecuteBySql(sql, parameter.ToArray(), isOpenTrans);
                 }
 
                 database.Commit();
@@ -164,7 +168,7 @@ namespace Carlzhu.Iooin.WebApp.Areas.CommonModule.Controllers
             }
             BaseEmployee Baseemployee = DataFactory.Database().FindEntity<BaseEmployee>(KeyValue);
             BaseCompany Basecompany = DataFactory.Database().FindEntity<BaseCompany>(Baseuser.CompanyId);
-            string strJson = Util.Json.ToJson(Baseuser);
+            string strJson = Baseuser.ToJson();
             //公司
             strJson = strJson.Insert(1, "\"CompanyName\":\"" + Basecompany.FullName + "\",");
             //员工信息

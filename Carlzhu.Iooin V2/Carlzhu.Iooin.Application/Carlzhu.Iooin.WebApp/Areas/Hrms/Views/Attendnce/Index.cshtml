@@ -63,7 +63,11 @@
         btn_Search(GridTreeSelect());
     }
 
-  
+    function btn_fillcard(empno) {
+        openDialog("/Hrms/Attendnce/FillCard?", "Form", "手工补卡", 400, 80, function (iframe) {
+            top.frames[iframe].AcceptClick();
+        });
+    }
 
     function btn_tempTo() {
 
