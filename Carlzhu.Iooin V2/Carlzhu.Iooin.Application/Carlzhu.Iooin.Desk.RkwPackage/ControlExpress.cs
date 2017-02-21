@@ -16,7 +16,7 @@ namespace Carlzhu.Iooin.Desk.RkwPackage
     public class ControlExpress
     {
 
-        static ApplicationClass lbl = new ApplicationClass();
+      public  static ApplicationClass lbl = new ApplicationClass();
 
         /// <summary>
         /// 打印程序执行信息
@@ -97,7 +97,7 @@ namespace Carlzhu.Iooin.Desk.RkwPackage
         public void PrintDbSn(List<MesRkwSn> sns)
         {
             ConsoleWriteToLabelMsg("打印开始....");
-            for (int i = 110; i < sns.Count; i = i + 2)
+            for (int i = 0; i < sns.Count; i = i + 2)
             {
                 int j = i + 1;
                 if (j >= sns.Count) j = i;

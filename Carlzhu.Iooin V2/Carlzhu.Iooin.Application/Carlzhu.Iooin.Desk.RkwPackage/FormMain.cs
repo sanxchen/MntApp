@@ -1145,6 +1145,11 @@ namespace Carlzhu.Iooin.Desk.RkwPackage
                 cE.PrintDbSn(rkwSns);
             }
         }
+
+        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ControlExpress.lbl.Quit();
+        }
     }
 
 }
