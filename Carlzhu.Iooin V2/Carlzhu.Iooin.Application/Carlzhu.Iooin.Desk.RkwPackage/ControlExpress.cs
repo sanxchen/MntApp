@@ -11,8 +11,12 @@ namespace Carlzhu.Iooin.Desk.RkwPackage
 {
 
 
+
+
     public class ControlExpress
     {
+
+        static ApplicationClass lbl = new ApplicationClass();
 
         /// <summary>
         /// 打印程序执行信息
@@ -35,10 +39,8 @@ namespace Carlzhu.Iooin.Desk.RkwPackage
         void Print(string print, string lab, Dictionary<string, string> dictionary, int qty)
         {
 
-            ApplicationClass lbl = new ApplicationClass();
-
             // 调用设计好的label文件
-            lbl.Documents.Open(lab, false);
+            lbl.Documents.Open(lab, true);
 
             Document doc = lbl.ActiveDocument;
 
@@ -52,10 +54,11 @@ namespace Carlzhu.Iooin.Desk.RkwPackage
             if (doc.Printer.Name != print) lbl.Dialogs.Item(enumDialogType.lppxPrinterSelectDialog).Show();
 
             //打印数量
+
             doc.PrintDocument(qty);
 
             //退出
-            lbl.Quit();
+            // lbl.Quit();
         }
 
 
@@ -94,7 +97,7 @@ namespace Carlzhu.Iooin.Desk.RkwPackage
         public void PrintDbSn(List<MesRkwSn> sns)
         {
             ConsoleWriteToLabelMsg("打印开始....");
-            for (int i = 0; i < sns.Count; i = i + 2)
+            for (int i = 110; i < sns.Count; i = i + 2)
             {
                 int j = i + 1;
                 if (j >= sns.Count) j = i;
@@ -114,6 +117,7 @@ namespace Carlzhu.Iooin.Desk.RkwPackage
 
                 ConsoleWriteToLabelMsg($"打印SN：{sns[i].Sn}/{sns[j].Sn}");
                 Print(LocalPrint.DefaultPrinter(), Parameters.DbSnLabel, snLabel, 1);
+
             }
             ConsoleWriteToLabelMsg($"打印完成！");
         }

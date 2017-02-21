@@ -25,7 +25,7 @@ namespace Carlzhu.Iooin.WebApp.Areas.eSystem.Controllers
         public ActionResult SendMail()
         {
 
-            List<Apparatus> apparatuses = base.Repositoryfactory.Repository().FindList($"AND CALTYPE==1 AND  NEXTCALDATE<'{DateTime.Now.AddDays(-10)}' ");
+            List<Apparatus> apparatuses = base.Repositoryfactory.Repository().FindList($"AND CALTYPE=1 AND  NEXTCALDATE<'{DateTime.Now.AddDays(-10)}' ");
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("<tr><th>仪器名称</th><th>仪器编号</th><th>使用人</th><th>位置</th><th>下次效验时间</th><th>使用状态</th></tr>");
             foreach (var apparatuse in apparatuses)

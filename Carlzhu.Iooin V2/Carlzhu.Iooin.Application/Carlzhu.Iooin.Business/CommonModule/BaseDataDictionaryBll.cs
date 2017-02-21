@@ -47,7 +47,7 @@ namespace Carlzhu.Iooin.Business.CommonModule
             {
                 StringBuilder whereSql = new StringBuilder();
                 whereSql.Append(" AND DataDictionaryId IN(SELECT DataDictionaryId FROM BaseDataDictionary WHERE Code=@Code)");
-                whereSql.Append(" ORDER BY SortCode ASC");
+                whereSql.Append(" ORDER BY SortCode DESC");
                 List<DbParameter> parameter = new List<DbParameter> {DbFactory.CreateDbParameter("@Code", code)};
                 return DataFactory.Database().FindList<BaseDataDictionaryDetail>(whereSql.ToString(), parameter.ToArray());
             }

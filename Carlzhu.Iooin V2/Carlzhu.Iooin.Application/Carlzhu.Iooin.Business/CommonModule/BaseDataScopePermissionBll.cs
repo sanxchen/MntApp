@@ -371,7 +371,7 @@ namespace Carlzhu.Iooin.Business.CommonModule
 
             //最近一个月离职人员
           
-
+          
 
             if (!ManageProvider.Provider.Current().IsSystem)
             {

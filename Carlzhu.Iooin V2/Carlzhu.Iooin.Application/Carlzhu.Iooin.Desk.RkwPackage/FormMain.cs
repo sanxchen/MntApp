@@ -1101,7 +1101,7 @@ namespace Carlzhu.Iooin.Desk.RkwPackage
 
             ConsoleWriteToLabelMsg("准备打印中....");
 
-           
+
 
             cE.PrintCkWh(checkWhares);
 
@@ -1135,6 +1135,15 @@ namespace Carlzhu.Iooin.Desk.RkwPackage
             ConsoleWriteToLabelMsg($"打印SN：ok");
             cE.PrintDTryPrint(snLabel);
             //Print(LocalPrint.DefaultPrinter(), Parameters.DbSnLabel, snLabel, 1);
+        }
+
+        private void btnCY_Click(object sender, EventArgs e)
+        {
+            using (var context = Carlzhu.Iooin.Business.BaseUtility.ContextFactory.ContextHelper)
+            {
+                var rkwSns = context.MesRkwSns.Where(c => c.ManNo == "MA11720314").ToList();
+                cE.PrintDbSn(rkwSns);
+            }
         }
     }
 

@@ -135,6 +135,7 @@
     <Compile Include="BaseUtility\CustomerAttribute.cs" />
     <Compile Include="BaseUtility\FormHeaderAttribute.cs" />
     <Compile Include="FORM\f\draw\BehandQuery.cs" />
+    <Compile Include="FORM\f\draw\FormDrawingsEngineeringChange.cs" />
     <Compile Include="FORM\f\draw\FormDrawingsSopDewell.cs" />
     <Compile Include="FORM\f\FormJumpTheQueue.cs" />
     <Compile Include="FORM\f\FormInvolvingUser.cs" />

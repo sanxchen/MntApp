@@ -73,7 +73,7 @@
     </Reference>
     <Reference Include="Carlzhu.Iooin.Util, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\References\Carlzhu.Iooin.Util.dll</HintPath>
+      <HintPath>..\..\..\..\MJ\V2\code\Carlzhu.Iooin V2\References\Carlzhu.Iooin.Util.dll</HintPath>
     </Reference>
     <Reference Include="Carlzhu.Iooin.Util.MvcHtml, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

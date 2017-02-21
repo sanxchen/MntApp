@@ -114,6 +114,7 @@
             this.btnPrintExcelBySelect = new System.Windows.Forms.Button();
             this.txtCheckWarehouseExcelPath = new System.Windows.Forms.TextBox();
             this.btnReadExcel = new System.Windows.Forms.Button();
+            this.btnCY = new System.Windows.Forms.Button();
             this.gpbMain.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tabMainPage1.SuspendLayout();
@@ -341,6 +342,7 @@
             // 
             // tabMainPage3
             // 
+            this.tabMainPage3.Controls.Add(this.btnCY);
             this.tabMainPage3.Controls.Add(this.btnPrintMode);
             this.tabMainPage3.Controls.Add(this.btnPrintSn);
             this.tabMainPage3.Controls.Add(this.cbbWattingPringMan);
@@ -1018,6 +1020,17 @@
             this.btnReadExcel.UseVisualStyleBackColor = true;
             this.btnReadExcel.Click += new System.EventHandler(this.btnReadExcel_Click);
             // 
+            // btnCY
+            // 
+            this.btnCY.Enabled = false;
+            this.btnCY.Location = new System.Drawing.Point(533, 244);
+            this.btnCY.Name = "btnCY";
+            this.btnCY.Size = new System.Drawing.Size(83, 23);
+            this.btnCY.TabIndex = 31;
+            this.btnCY.Text = "测印";
+            this.btnCY.UseVisualStyleBackColor = true;
+            this.btnCY.Click += new System.EventHandler(this.btnCY_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1147,6 +1160,7 @@
         private System.Windows.Forms.Button btnCkWhAllSelect;
         private System.Windows.Forms.Button btnPrintMode;
         private System.Windows.Forms.Button btnDSnTry;
+        private System.Windows.Forms.Button btnCY;
     }
 }
 

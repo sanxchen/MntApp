@@ -45,7 +45,7 @@ namespace Carlzhu.Iooin.WebApp.Areas.Hrms.Controllers
 
   
 
-            StringBuilder sql = new StringBuilder($"insert into eastriver.dbo.timerecords  (clock_id, emp_id,card_id,sign_time,dcollecttime,pos_sequ )  select '2' as clock_id, emp_no as emp_id,card_no as card_id,'{signTime}' as sign_time,getdate() as dcollecttime,'0' as pos_sequ from rms.dbo.employee where emp_no = '{empNo}' ");
+            StringBuilder sql = new StringBuilder($"insert into eastriver.dbo.timerecords  (clock_id, emp_id,card_id,sign_time,dcollecttime,pos_sequ )  select '2' as clock_id, empno as emp_id,cardno as card_id,'{signTime}' as sign_time,getdate() as dcollecttime,'0' as pos_sequ from dbo.baseemployee where empno = '{empNo}' ");
             int e = DataFactory.Database().ExecuteBySql(sql);
 
             if (e > 0)
