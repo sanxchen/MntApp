@@ -172,59 +172,6 @@
     <Compile Include="MANAGER\SystemRecover.cs" />
     <Compile Include="BaseUtility\CarlzhuContext.cs" />
     <Compile Include="DownLoad.cs" />
-    <Compile Include="Migrations\201611210110549_DeleteFile.cs" />
-    <Compile Include="Migrations\201611210110549_DeleteFile.Designer.cs">
-      <DependentUpon>201611210110549_DeleteFile.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611220054396_RemoveTpa.cs" />
-    <Compile Include="Migrations\201611220054396_RemoveTpa.Designer.cs">
-      <DependentUpon>201611220054396_RemoveTpa.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612042345110_AddMaritalStatus.cs" />
-    <Compile Include="Migrations\201612042345110_AddMaritalStatus.Designer.cs">
-      <DependentUpon>201612042345110_AddMaritalStatus.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612280359164_AddTaskSch.cs" />
-    <Compile Include="Migrations\201612280359164_AddTaskSch.Designer.cs">
-      <DependentUpon>201612280359164_AddTaskSch.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702140718142_AddEmployeeManager.cs" />
-    <Compile Include="Migrations\201702140718142_AddEmployeeManager.Designer.cs">
-      <DependentUpon>201702140718142_AddEmployeeManager.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702150603345_RemoveArr.cs" />
-    <Compile Include="Migrations\201702150603345_RemoveArr.Designer.cs">
-      <DependentUpon>201702150603345_RemoveArr.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702150640452_RemoveArr2.cs" />
-    <Compile Include="Migrations\201702150640452_RemoveArr2.Designer.cs">
-      <DependentUpon>201702150640452_RemoveArr2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702150722223_RemoveArr3.cs" />
-    <Compile Include="Migrations\201702150722223_RemoveArr3.Designer.cs">
-      <DependentUpon>201702150722223_RemoveArr3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702150731162_RemoveArr4.cs" />
-    <Compile Include="Migrations\201702150731162_RemoveArr4.Designer.cs">
-      <DependentUpon>201702150731162_RemoveArr4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702150805300_RemoveArr5.cs" />
-    <Compile Include="Migrations\201702150805300_RemoveArr5.Designer.cs">
-      <DependentUpon>201702150805300_RemoveArr5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702191032083_UpdateEnum.cs" />
-    <Compile Include="Migrations\201702191032083_UpdateEnum.Designer.cs">
-      <DependentUpon>201702191032083_UpdateEnum.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702220033289_AddNcr.cs" />
-    <Compile Include="Migrations\201702220033289_AddNcr.Designer.cs">
-      <DependentUpon>201702220033289_AddNcr.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702220045352_AddNcrNo.cs" />
-    <Compile Include="Migrations\201702220045352_AddNcrNo.Designer.cs">
-      <DependentUpon>201702220045352_AddNcrNo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="TaskSch.cs" />
     <Compile Include="TPA\TpaCustomer.cs" />
     <Compile Include="Email.cs" />
@@ -286,47 +233,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611210110549_DeleteFile.resx">
-      <DependentUpon>201611210110549_DeleteFile.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611220054396_RemoveTpa.resx">
-      <DependentUpon>201611220054396_RemoveTpa.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612042345110_AddMaritalStatus.resx">
-      <DependentUpon>201612042345110_AddMaritalStatus.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612280359164_AddTaskSch.resx">
-      <DependentUpon>201612280359164_AddTaskSch.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702140718142_AddEmployeeManager.resx">
-      <DependentUpon>201702140718142_AddEmployeeManager.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702150603345_RemoveArr.resx">
-      <DependentUpon>201702150603345_RemoveArr.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702150640452_RemoveArr2.resx">
-      <DependentUpon>201702150640452_RemoveArr2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702150722223_RemoveArr3.resx">
-      <DependentUpon>201702150722223_RemoveArr3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702150731162_RemoveArr4.resx">
-      <DependentUpon>201702150731162_RemoveArr4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702150805300_RemoveArr5.resx">
-      <DependentUpon>201702150805300_RemoveArr5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702191032083_UpdateEnum.resx">
-      <DependentUpon>201702191032083_UpdateEnum.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702220033289_AddNcr.resx">
-      <DependentUpon>201702220033289_AddNcr.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702220045352_AddNcrNo.resx">
-      <DependentUpon>201702220045352_AddNcrNo.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
