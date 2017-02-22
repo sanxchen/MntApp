@@ -1,0 +1,436 @@
+﻿@using Carlzhu.Iooin.Business.TpaModule
+@model Carlzhu.Iooin.Entity.FORM.f.draw.FormDrawingsEngineeringChange
+<style type="text/css">
+    input[type=checkbox], input[type=radio] {
+        margin-top: 2px;
+        /*margin-right: 3px;*/
+    }
+
+
+
+    .desc {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    input[type=text] {
+        width: 100%;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        min-width: 20px;
+        border-bottom: 1px solid silver;
+    }
+
+        input[type=text]:active, input[type=text]:focus {
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            margin: 0;
+            padding: 0;
+            border-bottom: 1px solid silver;
+        }
+</style>
+<table class="table table-bordered table-condensed">
+    <tr>
+        <td colspan="21">
+            <div class="row-fluid">
+                <div class="pull-right">
+                    @Html.LabelFor(model => model.No) @Html.TextBoxFor(model => model.No)
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th colspan="2">@Html.LabelFor(model => model.CustomerNo)</th>
+        <td colspan="4">@Html.DropDownList("CustomerNo", new TpaCustomerBll().GetCustomerDropList(""), new { @style = "width:100px" })</td>
+        <th colspan="2">@Html.LabelFor(model => model.ProductNo)</th>
+        <td colspan="4">@Html.TextBoxFor(model => model.ProductNo)</td>
+        <th colspan="2">@Html.LabelFor(model => model.ProductName)</th>
+        <td colspan="3">@Html.TextBoxFor(model => model.ProductName, new { @style = "width:123px" })</td>
+        <th colspan="2">@Html.LabelFor(model => model.Ver)</th>
+        <td colspan="2">@Html.TextBoxFor(model => model.Ver, new { @style = "width:50px" })</td>
+    </tr>
+    <tr>
+        <th colspan="2">变更原因</th>
+        <td colspan="19">
+            <label class="radio-inline">
+                @Html.RadioButtonFor(model => model.ChangeMethod, 0)客户通知&nbsp;&nbsp;&nbsp;&nbsp;
+            </label>
+            <label class="radio-inline">
+                @Html.RadioButtonFor(model => model.ChangeMethod, 1)内部变更&nbsp;&nbsp;&nbsp;&nbsp;
+            </label>
+            <label class="radio-inline">
+                @Html.RadioButtonFor(model => model.ChangeMethod, 2)EOL&nbsp;&nbsp;&nbsp;&nbsp;
+            </label>
+            <label class="radio-inline">
+                @Html.RadioButtonFor(model => model.ChangeMethod, 3)其它变更&nbsp;&nbsp;&nbsp;&nbsp;
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <th colspan="2">变更内容</th>
+        <td colspan="19">
+            @Html.TextAreaFor(model => model.ChangeContent, new { @class = "form-control" })
+        </td>
+    </tr>
+    <tr>
+        <th colspan="2">变更验证内容</th>
+        <td colspan="19">
+            <div>
+                <div class="row-fluid">
+                    <div class="checkbox">
+                        <label>
+                            @Html.RadioButtonFor(model => model.HasValidate, 0) @Html.LabelFor(model => model.NoValidateReason) @Html.TextBoxFor(model => model.NoValidateReason, new { @placeholder = "请注明不需验证原因" })
+                        </label>
+                    </div>
+                    <div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.RadioButtonFor(model => model.HasValidate, 1)需要验证，钩选此项，需要填写如下内容：
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="row-fluid">
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.VerificationDate)：@Html.TextBoxFor(model => model.VerificationDate, new { @class = "datepicker", @readonly = "readonly", @style = "width: 100px", Value = Model.VerificationDate.ToString("yyyy-MM-dd") })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.InputQuantity)：@Html.TextBoxFor(model => model.InputQuantity, new { @style = "width: 50px" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.OKQuantity)：@Html.TextBoxFor(model => model.OKQuantity, new { @style = "width: 50px" })
+                        </div>
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.Yield)：@Html.TextBoxFor(model => model.Yield, new { @style = "width: 50px", @placeholder = "%" })
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.VerificationConclusion)：@Html.TextBoxFor(model => model.VerificationConclusion)
+                </div>
+                <div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.ValidateApproval)：@Html.TextBoxFor(model => model.ValidateApproval, new { @style = "width: 80px;", @readonly = "readonly" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.ValidateAuditing)：@Html.TextBoxFor(model => model.ValidateAuditing, new { @style = "width: 80px;", @readonly = "readonly" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.ValidateForm)：@Html.TextBoxFor(model => model.ValidateForm, new { @style = "width: 80px;", @readonly = "readonly" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.ValiDateTime)：@Html.TextBoxFor(model => model.ValiDateTime, new { @style = "width: 80px;", @class = "datepicker", @readonly = "readonly", Value = Model.ValiDateTime.ToString("yyyy-MM-dd") })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <th colspan="2">生效时间</th>
+        <td colspan="19">
+            <div>
+                <label class="radio-inline">
+                    @Html.RadioButtonFor(model => model.EntryTime, 0)实时生效
+                </label>
+                <label class="radio-inline">
+                    @Html.RadioButtonFor(model => model.EntryTime, 1)使用后生效
+                </label>
+                <label class="radio-inline">
+                    @Html.RadioButtonFor(model => model.EntryTime, 2)预计切换日期
+                </label>
+                <label class="radio-inline">
+                    @Html.RadioButtonFor(model => model.EntryTime, 3)首批变更标识
+                </label>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th colspan="2">通报及会签部门：</th>
+        <td colspan="19"></td>
+    </tr>
+    <tr>
+        <td colspan="21">
+            <div class="row" style="margin-left: 10px">
+                <div class="col-md-3 col-sm-3">
+                    <div class="row-fluid">
+                        <div class="checkbox" style="display: inline-block">
+                            <label>
+                                @Html.CheckBoxFor(model => model.Department1, true)
+                                @Html.LabelFor(model => model.Department1)
+                            </label>
+                        </div>
+                        <span>
+                            <label class="radio-inline">
+                                @Html.RadioButtonFor(model => model.NoticeOrJointlySign1, 0)通知
+                            </label>
+                            <label class="radio-inline">
+                                @Html.RadioButtonFor(model => model.NoticeOrJointlySign1, 1)会签
+                            </label>
+                        </span>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="checkbox" style="display: inline-block">
+                            <label>
+                                @Html.CheckBoxFor(model => model.Department2)
+                                @Html.LabelFor(model => model.Department2)
+                            </label>
+                        </div>
+                        <span>
+                            <label class="radio-inline">
+                                @Html.RadioButtonFor(model => model.NoticeOrJointlySign2, 0)通知
+                            </label>
+                            <label class="radio-inline">
+                                @Html.RadioButtonFor(model => model.NoticeOrJointlySign2, 1)会签
+                            </label>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <div class="row-fluid">
+                        <div class="checkbox" style="display: inline-block">
+                            <label>
+                                @Html.CheckBoxFor(model => model.Department3)
+                                @Html.LabelFor(model => model.Department3)
+                            </label>
+                        </div>
+                        <span>
+                            <label class="radio-inline">
+                                @Html.RadioButtonFor(model => model.NoticeOrJointlySign3, 0)通知
+                            </label>
+                            <label class="radio-inline">
+                                @Html.RadioButtonFor(model => model.NoticeOrJointlySign3, 1)会签
+                            </label>
+                        </span>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="checkbox" style="display: inline-block">
+                            <label>
+                                @Html.CheckBoxFor(model => model.Department4)
+                                @Html.LabelFor(model => model.Department4)
+                            </label>
+                        </div>
+                        <span>
+                            <label class="radio-inline">
+                                @Html.RadioButtonFor(model => model.NoticeOrJointlySign4, 0)通知
+                            </label>
+                            <label class="radio-inline">
+                                @Html.RadioButtonFor(model => model.NoticeOrJointlySign4, 1)会签
+                            </label>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <div class="row-fluid">
+                        <div class="checkbox" style="display: inline-block">
+                            <label>
+                                @Html.CheckBoxFor(model => model.Department5)@Html.LabelFor(model => model.Department5)
+                            </label>
+                        </div>
+                        <span>
+                            <label class="radio-inline">
+                                @Html.RadioButtonFor(model => model.NoticeOrJointlySign5, 0)通知
+                            </label>
+                            <label class="radio-inline">
+                                @Html.RadioButtonFor(model => model.NoticeOrJointlySign5, 1)会签
+                            </label>
+                        </span>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="checkbox" style="display: inline-block">
+                            <label>
+                                @Html.CheckBoxFor(model => model.Department6)@Html.LabelFor(model => model.Department6)
+                            </label>
+                        </div>
+                        <span>
+                            <label class="radio-inline">
+                                @Html.RadioButtonFor(model => model.NoticeOrJointlySign6, 0)通知
+                            </label>
+                            <label class="radio-inline">
+                                @Html.RadioButtonFor(model => model.NoticeOrJointlySign6, 1)会签
+                            </label>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <div class="row-fluid">
+                        <div class="checkbox" style="display: inline-block">
+                            <label>
+                                @Html.CheckBoxFor(model => model.Department7)@Html.LabelFor(model => model.Department7)
+                            </label>
+                        </div>
+                        <span>
+                            <label class="radio-inline">
+                                @Html.RadioButtonFor(model => model.NoticeOrJointlySign7, 0)通知
+                            </label>
+                            <label class="radio-inline">
+                                @Html.RadioButtonFor(model => model.NoticeOrJointlySign7, 1)会签
+                            </label>
+                        </span>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="checkbox" style="display: inline-block">
+                            <label>
+                                @Html.CheckBoxFor(model => model.CustomerValidate) 客户确认
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="21">
+            <div class="col-md-3">@Html.LabelFor((model => model.ReleaseDept))：@Html.TextBoxFor(model => model.ReleaseDept, new { @style = "width: 80px;" })</div>
+            <div class="col-md-3">@Html.LabelFor((model => model.ReleaseEmp))：@Html.TextBoxFor(model => model.ReleaseEmp, new { @style = "width: 80px;" })</div>
+            <div class="col-md-3">@Html.LabelFor((model => model.ReleaseAudit))：@Html.TextBoxFor(model => model.ReleaseAudit, new { @style = "width: 80px;" })</div>
+            <div class="col-md-3">@Html.LabelFor((model => model.ReleaseApproval))：@Html.TextBoxFor(model => model.ReleaseApproval, new { @style = "width: 80px;" })</div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="21">
+            <div class="col-md-3">@Html.LabelFor((model => model.ReleaseDeptDate))：@Html.TextBoxFor(model => model.ReleaseDeptDate, new { @style = "width: 100px;", @class = "datepicker", @readonly = "readonly", Value = Model.ReleaseDeptDate.ToString("yyyy-MM-dd") })</div>
+            <div class="col-md-3">@Html.LabelFor((model => model.ReleaseEmpDate))：@Html.TextBoxFor(model => model.ReleaseEmpDate, new { @style = "width: 100px;", @class = "datepicker", @readonly = "readonly", Value = Model.ReleaseEmpDate.ToString("yyyy-MM-dd") })</div>
+            <div class="col-md-3">@Html.LabelFor((model => model.ReleaseAuditDate))：@Html.TextBoxFor(model => model.ReleaseAuditDate, new { @style = "width: 100px;", @class = "datepicker", @readonly = "readonly", Value = Model.ReleaseAuditDate.ToString("yyyy-MM-dd") })</div>
+            <div class="col-md-3">@Html.LabelFor((model => model.ReleaseApprovalDate))：@Html.TextBoxFor(model => model.ReleaseApprovalDate, new { @style = "width: 100px;", @class = "datepicker", @readonly = "readonly", Value = Model.ReleaseApprovalDate.ToString("yyyy-MM-dd") })</div>
+        </td>
+    </tr>
+    @*<tr>
+            <th colspan="10" style="text-align:center">相关操作</th>
+            <th colspan="11" style="text-align:center">相关文件</th>
+        </tr>
+
+        <tr>
+            <td>操作部门</td>
+            <td>仓储位置</td>
+            <td>查仓数</td>
+            <td colspan="4">处理办法</td>
+            <td colspan="2">完成时间</td>
+            <td>完成状况</td>
+            <td>是否更新</td>
+            <td colspan="4">相关文件</td>
+            <td colspan="2">更新后文件编号</td>
+            <td colspan="2">版本号</td>
+            <td colspan="2">完成状况</td>
+        </tr>
+        <tr>
+            <td rowspan="3">生产部</td>
+            <td rowspan="3">生产现场</td>
+            <td rowspan="3"><input type="text" style="width:40px;text-align:center" class="cnum" /></td>
+            <td colspan="4"><input type="radio" name="productareadeal" />继续使用</td>
+            <td colspan="2" rowspan="3" style="text-align:center"><input type="text" class="datepicker" style="width: 85px;" /></td>
+            <td colspan="1" rowspan="3"><textarea style="width: 100%; height: 100%;"></textarea></td>
+            <td rowspan="15" style=" text-align:center"><input type="checkbox" disabled="disabled"  /></td>
+            <td colspan="4" rowspan="2"><input type="radio" name="aboutfile" />工艺文件</td>
+            <td colspan="2" rowspan="15"><textarea style="width:120px;height:100% ;"></textarea></td>
+            <td colspan="2" rowspan="15"><textarea style="width: 40px; height: 100%;"></textarea></td>
+            <td colspan="2" rowspan="15" style="text-align:center"><input type="checkbox" /></td>
+        </tr>
+        <tr>
+            <td colspan="4"><input type="radio" name="productareadeal" />报废</td>
+        </tr>
+        <tr>
+            <td colspan="4"><input type="radio" name="productareadeal"  />返工</td>
+            <td colspan="4" rowspan="2"><input type="radio" name="aboutfile" />内部图纸</td>
+
+        </tr>
+        <tr>
+            <td rowspan="9">资材部</td>
+            <td rowspan="3">供应商处</td>
+            <td rowspan="3"><input type="text" style="width:40px;text-align:center" class="cnum" /></td>
+            <td colspan="4"><input type="radio" name="purchasGdeal" />继续使用</td>
+            <td colspan="2" rowspan="3" style="text-align:center"><input type="text" class="datepicker" style="width: 85px;" /></td>
+            <td colspan="1" rowspan="3"><textarea style="width: 100%;height:100%;"></textarea></td>
+
+        </tr>
+        <tr>
+            <td colspan="4"><input type="radio" name="purchasGdeal" />报废</td>
+            <td colspan="4" rowspan="2"><input type="radio" name="aboutfile"  />客户图纸</td>
+
+        </tr>
+        <tr>
+            <td colspan="4"><input type="radio" name="purchasGdeal"  />返工</td>
+        </tr>
+        <tr>
+
+            <td rowspan="3">原材料仓</td>
+            <td rowspan="3"><input type="text" style="width:40px;text-align:center" class="cnum" /></td>
+            <td colspan="4"><input type="radio" name="purchasYdeal" />继续使用</td>
+            <td colspan="2" rowspan="3" style="text-align:center"><input type="text" class="datepicker" style="width: 85px;" /></td>
+            <td colspan="1" rowspan="3"><textarea style="width: 100%; height: 100%;"></textarea></td>
+            <td colspan="4" rowspan="2"><input type="radio" name="aboutfile" />作业指导书</td>
+
+
+        </tr>
+        <tr>
+            <td colspan="4"><input type="radio" name="purchasYdeal" />报废</td>
+        </tr>
+        <tr>
+            <td colspan="4"><input type="radio" name="purchasYdeal"  />返工</td>
+            <td colspan="4"><input type="radio" name="aboutfile" />包装工艺卡</td>
+
+        </tr>
+        <tr>
+
+            <td rowspan="3">成品仓</td>
+            <td rowspan="3"><input type="text" style="width:40px;text-align:center" class="cnum" /></td>
+            <td colspan="4"><input type="radio" name="purchasCdeal" />继续使用</td>
+            <td colspan="2" rowspan="3" style="text-align:center"><input type="text" class="datepicker" style="width: 85px;" /></td>
+            <td colspan="1" rowspan="3"><textarea style="width: 100%; height: 100%;"></textarea></td>
+            <td colspan="4"><input type="radio" name="aboutfile" />FMEA</td>
+
+        </tr>
+        <tr>
+            <td colspan="4"><input type="radio" name="purchasCdeal" />报废</td>
+            <td colspan="4"><input type="radio" name="aboutfile" />控制计划</td>
+
+        </tr>
+        <tr>
+            <td colspan="4"><input type="radio" name="purchasCdeal"  />返工</td>
+            <td colspan="4" rowspan="2"><input type="radio" name="aboutfile" />过程流程图</td>
+
+        </tr>
+        <tr>
+            <td rowspan="3">业务部</td>
+            <td rowspan="3">客户仓库</td>
+            <td rowspan="3"><input type="text" style="width:40px;text-align:center" class="cnum" /></td>
+            <td colspan="4"><input type="radio" name="salseareadeal" />继续使用</td>
+            <td colspan="2" rowspan="3" style="text-align:center"><input type="text" class="datepicker" style="width: 85px;" /></td>
+            <td colspan="1" rowspan="3"><textarea style="width: 100%; height: 100%;"></textarea></td>
+
+        </tr>
+        <tr>
+            <td colspan="4"><input type="radio" name="salseareadeal" />报废</td>
+            <td colspan="4" rowspan="2"><input type="radio" name="aboutfile" />检查基准书</td>
+
+        </tr>
+        <tr>
+            <td colspan="4"><input type="radio" name="salseareadeal"  />返工</td>
+        </tr>
+        <tr>
+            <td colspan="2">生效时间</td>
+            <td colspan="8" style="text-align:center"><input type="text" class="datepicker" /></td>
+            <td colspan="11">
+                <input type="radio" name="effectoftime"  />实时生效&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="effectoftime" />使用后生效&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="effectoftime" />预计切换日期&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="effectoftime" />首批变更标识&nbsp;&nbsp;&nbsp;&nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">请上传附件</td>
+            <td colspan="8">
+                <span class="input-file">
+                    <input type="file" name="fileabc">
+                </span>
+            </td>
+            <td colspan="11"><span id="filename">只能选择一个文件，多个文件请打包后上传</span></td>
+        </tr>*@
+</table>
+

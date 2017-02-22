@@ -10763,9 +10763,10 @@
     <Content Include="Areas\eForm\Views\f\WorkshopInspectionDetails.cshtml" />
     <Content Include="Content\Images\zoom\gallery\Thumbs.db" />
     <Content Include="Content\Images\zoom\icons\Thumbs.db" />
-    <Content Include="Areas\eForm\Views\f\draw\ECN - 复制.cshtml" />
+    <Content Include="Areas\eForm\Views\f\draw\DrawingsEngineeringChange.cshtml" />
     <Content Include="Areas\eSystem\Views\Apparatus\Form.cshtml" />
     <Content Include="Areas\eSystem\Views\Apparatus\Index.cshtml" />
+    <Content Include="Areas\eForm\Views\f\draw\DrawingsEngineeringChangeDetails.cshtml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.3.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />

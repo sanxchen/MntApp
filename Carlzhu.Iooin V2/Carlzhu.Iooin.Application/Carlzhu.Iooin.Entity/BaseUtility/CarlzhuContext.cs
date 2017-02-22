@@ -165,7 +165,7 @@ namespace Carlzhu.Iooin.Entity.BaseUtility
         public virtual DbSet<FileReplaceRecords> FileReplaceRecordses { get; set; }
 
 
-
+        public virtual DbSet<FormDrawingsEngineeringChange> FormDrawingsEngineeringChanges { get; set; }
 
 
 

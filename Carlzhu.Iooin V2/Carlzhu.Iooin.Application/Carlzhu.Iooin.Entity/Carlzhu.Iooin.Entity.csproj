@@ -216,6 +216,14 @@
     <Compile Include="Migrations\201702191032083_UpdateEnum.Designer.cs">
       <DependentUpon>201702191032083_UpdateEnum.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702220033289_AddNcr.cs" />
+    <Compile Include="Migrations\201702220033289_AddNcr.Designer.cs">
+      <DependentUpon>201702220033289_AddNcr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702220045352_AddNcrNo.cs" />
+    <Compile Include="Migrations\201702220045352_AddNcrNo.Designer.cs">
+      <DependentUpon>201702220045352_AddNcrNo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="TaskSch.cs" />
     <Compile Include="TPA\TpaCustomer.cs" />
@@ -311,6 +319,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702191032083_UpdateEnum.resx">
       <DependentUpon>201702191032083_UpdateEnum.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702220033289_AddNcr.resx">
+      <DependentUpon>201702220033289_AddNcr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702220045352_AddNcrNo.resx">
+      <DependentUpon>201702220045352_AddNcrNo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
